@@ -1,0 +1,7 @@
+#Idea Files
+.idea
+
+#Vim files
+*.swp
+*.swo
+*.swn
