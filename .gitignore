@@ -1,5 +1,6 @@
 #Idea Files
 .idea
+*.iml
 
 #Vim files
 *.swp
