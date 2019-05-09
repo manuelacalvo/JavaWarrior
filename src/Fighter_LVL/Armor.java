@@ -1,14 +1,13 @@
 package Fighter_LVL;
 
-import org.jetbrains.annotations.Contract;
 
-public abstract class Armor {
+public abstract class Armor extends AbstractItem {
 
   protected String type;
   protected String legend;
   protected int protection;
 
-  @Contract(pure = true)
+
   public Armor(String type, String legend, int protection){
     this.protection = protection;
     this.legend = legend;
