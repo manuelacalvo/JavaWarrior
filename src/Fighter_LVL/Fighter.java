@@ -1,6 +1,8 @@
 package Fighter_LVL;
 
-public class Fighter {
+import java.util.Random;
+
+public class Fighter extends AbstractItem {
 
     private Weapon weapon;
     private Armor armor;
@@ -8,7 +10,6 @@ public class Fighter {
     private int hitPoints;
 
     /**
-     *
      * @param weapon
      * @param armor
      * @param treasures
@@ -28,16 +29,17 @@ public class Fighter {
 
     /**
      * Get a random number between two bounds
-     * @method randomNumberGenerator
+     *
      * @param min The minimum value
      * @param max The maximum value
+     * @method randomNumberGenerator
      */
-    private int randomNumberGenerator(int min, int max){
+    private int randomNumberGenerator(int min, int max) {
         //Maths.random VS Random.next()
         //https://stackoverflow.com/questions/738629/math-random-versus-random-nextintint
         Random rand = new Random();
-        int span = max-min+1;
-        return (rand.nextInt(span)+min);
+        int span = max - min + 1;
+        return (rand.nextInt(span) + min);
 
         /* TEST :
         for(int i=0;i<100;i++){
@@ -67,4 +69,5 @@ public class Fighter {
     }
     /*
 
+     */
 }

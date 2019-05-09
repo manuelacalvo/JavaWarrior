@@ -1,8 +1,8 @@
 package Fighter_LVL;
 
-import org.jetbrains.annotations.Contract;
 
-public class Weapon {
+
+public class Weapon extends AbstractItem {
 
   private String name;
   private String type;
@@ -10,7 +10,7 @@ public class Weapon {
   private int minDamage;
   private int maxDamage;
 
-  @Contract(pure = true)
+
   public Weapon(String name,String type, int attacksPerTurn, int minDamage, int maxDmamage){
     this.name = name;
     this.type = type;
@@ -61,6 +61,7 @@ public class Weapon {
 
   @Override
   public String toString() {
-    return super.toString();
+    String def = " this is a weapon";
+    return def;
   }
 }

@@ -1,13 +1,13 @@
 package Fighter_LVL;
 
-import org.jetbrains.annotations.Contract;
 
-public abstract class Treasure {
+
+public abstract class Treasure extends AbstractItem {
 
   protected String name;
   protected int actionPoint;
 
-  @Contract(pure = true)
+
   public Treasure(String name, int actionPoint){
     this.actionPoint = actionPoint;
     this.name = name;
