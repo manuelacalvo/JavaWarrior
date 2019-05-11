@@ -2,26 +2,23 @@ package com.fighterlvl.warrior;
 
 
 
-public class Weapon extends AbstractItem {
+public class Weapon {
 
   private String name;
-  private String type;
   private int attacksPerTurn;
   private int minDamage;
   private int maxDamage;
 
 
-  public Weapon(String name,String type, int attacksPerTurn, int minDamage, int maxDmamage){
+  public Weapon(String name, int attacksPerTurn, int minDamage, int maxDmamage){
     this.name = name;
-    this.type = type;
+
     this.attacksPerTurn = attacksPerTurn;
     this.minDamage = minDamage;
     this.maxDamage = maxDmamage;
   }
 
-  public void setType(String type) {
-    this.type = type;
-  }
+
 
   public void setName(String name) {
     this.name = name;
@@ -43,9 +40,7 @@ public class Weapon extends AbstractItem {
     return name;
   }
 
-  public String getType() {
-    return type;
-  }
+
 
   public int getAttacksPerTurn() {
     return attacksPerTurn;
