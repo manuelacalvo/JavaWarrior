@@ -1,9 +1,6 @@
 package com.adventuregames;
 
-
-
 import com.shopmanagement.Collection;
-
 
 public class Main {
     public static void main(String[] args){
@@ -13,7 +10,6 @@ public class Main {
         coll.loadFighter();
 
         coll.combatTest();
-
 
     }
 }

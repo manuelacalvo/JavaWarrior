@@ -1,7 +1,5 @@
 package com.fighterlvl.warrior;
 
-
-
 public class Weapon {
 
   private String name;
@@ -39,8 +37,6 @@ public class Weapon {
   public String getName() {
     return name;
   }
-
-
 
   public int getAttacksPerTurn() {
     return attacksPerTurn;

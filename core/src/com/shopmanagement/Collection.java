@@ -29,14 +29,13 @@ public class Collection {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("pas de fichier");
-
         }
+
         read_f.useDelimiter(Pattern.compile("; "));
 
         while (read_f.hasNextLine()) {
 
             ArrayList<Treasure> treasures = new ArrayList<Treasure>();
-
 
             String fighterName = read_f.next();
             System.out.print(fighterName);
@@ -72,44 +71,39 @@ public class Collection {
             Armor armor1 = new Armor(nameArmor1, 1, protection1);
 
 
-            if(potionNumber != 0)
-            {
+            if(potionNumber != 0) {
                 Treasure potion = new Treasure("potion", 1, potionNumber);
                 treasures.add(potion);
             }
-            if(scrollNumber != 0)
-            {
+
+            if(scrollNumber != 0) {
                 Treasure scroll = new Treasure("scroll", 2, scrollNumber);
                 treasures.add(scroll);
             }
-            if(goldNumber != 0)
-            {
+
+            if(goldNumber != 0) {
                 Treasure gold = new Treasure("gold", 3, goldNumber);
                 treasures.add(gold);
             }
-            if(silverNumber != 0)
-            {
+
+            if(silverNumber != 0) {
                 Treasure silver = new Treasure("silver", 4, potionNumber);
                 treasures.add(silver);
             }
 
             Fighter f = new Fighter(fighterName, weapon, armor1, treasures, hitPoints, 0);
-            if(nameArmor2 != "null")
-            {
+            if(nameArmor2 != "null") {
                 Armor armor2= new Armor(nameArmor2, 2, protection2);
                 f.setArmor2(armor2);
-
             }
 
             // sauvegarde dans une liste  Nom_Prenom
             fighterVector.add(f);
-
         }
         read_f.close();
     }
 
-    public  void combatTest()
-    {
+    public  void combatTest() {
         fighterVector.get(0).fightTurn(fighterVector.get(1));
     }
 }

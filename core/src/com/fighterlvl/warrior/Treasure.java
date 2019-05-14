@@ -1,15 +1,11 @@
 package com.fighterlvl.warrior;
 
-
-
 public class Treasure {
 
   private String name;
   private int type;
   private int number;
   private int actionPoint;
-
-
 
   public Treasure(String name, int type, int number){
 
@@ -53,12 +49,10 @@ public class Treasure {
   }
 
   @Override
-  public String toString()
-  {
+  public String toString() {
     String def = " ";
 
-    if(this.type == 1)
-    {
+    if(this.type == 1) {
       if (actionPoint > 0){
         def = "You used the potion and won " + actionPoint + " life points.";
       } else if (actionPoint == 0) {
@@ -66,10 +60,9 @@ public class Treasure {
       } else {
         def = "You used the potion and lose " + actionPoint + " life points" + '\n' + "That is certainly because you didn't put it to the fridge yesterday.";
       }
-
     }
-    if(this.type == 2)
-    {
+
+    if(this.type == 2) {
       if (actionPoint > 0){
         def = "You used the scroll and double your strengths.";
       } else if (actionPoint == 0) {
@@ -78,8 +71,8 @@ public class Treasure {
         def = "You used the scroll and died" + '\n' + "Mama told you to not accept stuff from everybody.";
       }
     }
-    if(this.type == 3 || this.type == 4)
-    {
+
+    if(this.type == 3 || this.type == 4) {
       def = "You won "+ number + " " + name +".";
     }
     return def;

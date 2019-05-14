@@ -1,12 +1,10 @@
 package com.fighterlvl.warrior;
 
-
 public class Armor {
 
   private   String name;
   private int type;
   private int protection;
-
 
 
   public Armor(String name, int type, int protection){

@@ -14,8 +14,6 @@ public class Fighter {
     private int generator;
 
 
-
-
     public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int generator ) {
         this.name = name;
         this.weapon = weapon;
@@ -26,9 +24,8 @@ public class Fighter {
         this.generator = generator;
     }
 
-    public String getName()
-    {
-        return  name;
+    public String getName() {
+        return name;
     }
 
     public Weapon getWeapon() {
@@ -91,7 +88,6 @@ public class Fighter {
     }
 
 
-
     /**
      * Get a random number between two bounds
      *
@@ -113,12 +109,11 @@ public class Fighter {
         */
     }
 
-    public void takesDamage( int points)
-    {
+    public void takesDamage( int points) {
         this.hitPoints -= points;
     }
-    public boolean isAlive()
-    {
+
+    public boolean isAlive() {
         boolean alive;
         if (getHitPoints()>0)
         {
@@ -149,33 +144,20 @@ public class Fighter {
                     enemy.takesDamage(hitPower);
                     System.out.println("Vie de " + enemy.getName()+ " est de " + enemy.getHitPoints());
                 } else enemy.takesDamage(0);
-
-
             }
         }
-
-
     }
-    public void fightTurn(Fighter enemy)
-    {
-        while(this.isAlive() && enemy.isAlive())
-        {
+
+    public void fightTurn(Fighter enemy) {
+        while(this.isAlive() && enemy.isAlive()) {
             this.fight(enemy);
             enemy.fight(this);
         }
-        if(!this.isAlive())
-        {
+        if(!this.isAlive()) {
             System.out.println("vous avez perdu");
         }
-        if(!enemy.isAlive())
-        {
+        if(!enemy.isAlive()) {
             System.out.println("vous avez gagné");
         }
     }
-
-
-
-
-
-
 }
