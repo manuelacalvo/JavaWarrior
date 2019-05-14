@@ -19,6 +19,38 @@ public class Collection {
     private Vector<Armor> armorVector = new Vector<Armor>();
     private Vector<Treasure> treasureVector = new Vector<Treasure>();
 
+    public Vector<Fighter> getFighterVector() {
+        return fighterVector;
+    }
+
+    public Vector<Armor> getArmorVector() {
+        return armorVector;
+    }
+
+    public Vector<Weapon> getWeaponVector() {
+        return weaponVector;
+    }
+
+    public Vector<Treasure> getTreasureVector() {
+        return treasureVector;
+    }
+
+    public void setArmorVector(Vector<Armor> armorVector) {
+        this.armorVector = armorVector;
+    }
+
+    public void setFighterVector(Vector<Fighter> fighterVector) {
+        this.fighterVector = fighterVector;
+    }
+
+    public void setWeaponVector(Vector<Weapon> weaponVector) {
+        this.weaponVector = weaponVector;
+    }
+
+    public void setTreasureVector(Vector<Treasure> treasureVector) {
+        this.treasureVector = treasureVector;
+    }
+
     public void loadFighter() {
 
         File file = new File("fighters.txt");
@@ -101,15 +133,12 @@ public class Collection {
 
             }
 
-            // sauvegarde dans une liste  Nom_Prenom
+
             fighterVector.add(f);
 
         }
         read_f.close();
     }
 
-    public  void combatTest()
-    {
-        fighterVector.get(0).fightTurn(fighterVector.get(1));
-    }
+
 }
