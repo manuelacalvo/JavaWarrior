@@ -7,11 +7,15 @@ import java.util.Scanner;
 
 public class GameController {
     private Collection coll;
+    private Fighter fighter;
     private boolean quitFight;
+    private int nbFights;
 
     public GameController(Collection coll) {
         this.coll = coll;
         this.quitFight = false;
+        this.fighter = null;
+        this.nbFights = 0;
     }
 
     public Collection getColl() {
@@ -21,6 +25,22 @@ public class GameController {
     public boolean getQuitFight()
     {
         return quitFight;
+    }
+
+    public Fighter getFighter() {
+        return fighter;
+    }
+
+    public void setFighter(Fighter fighter) {
+        this.fighter = fighter;
+    }
+
+    public int getNbFights() {
+        return nbFights;
+    }
+
+    public void setNbFights(int nbFights) {
+        this.nbFights = nbFights;
     }
 
     public void setColl(Collection coll) {
@@ -37,7 +57,7 @@ public class GameController {
 
     }
 
-    public void choiceMenuFight(Fighter enemy)
+    public int choiceMenuFight(Fighter enemy)
     {
         int choice;
         Scanner keyboard = new Scanner(System.in);
@@ -54,29 +74,38 @@ public class GameController {
         switch (choice)
         {
             case 1 :
-                //takeItem();
+                fighter.takeItem();
                 break;
 
             case 2 :
-                //takeARest(enemy);
+                fighter.takeARest(enemy);
                 break;
 
             case 3 :
                 quitFight = true;
+                System.out.println(" You choose to quit the game. You've got " + fighter.getHitPoints() + " and you've made " + nbFights + " fights");
                 break;
 
             case 4 :
-                break;
+
         }
+        return choice;
     }
 
     public void gameLoop()
     {
+        int choice = 0;
         for(int i=1; i< coll.getFighterVector().size(); i++)
         {
-            if(!quitFight) {
+            if(!quitFight && fighter.isAlive()) {
+                nbFights ++;
+
                 coll.getFighterVector().get(0).fightTurn(coll.getFighterVector().get(i));
-                choiceMenuFight(coll.getFighterVector().get(i));
+                while(choice!= 4)
+                {
+                    choice = choiceMenuFight(coll.getFighterVector().get(i));
+                }
+
             }
         }
     }
@@ -84,6 +113,7 @@ public class GameController {
     public void shopOpen()
     {
         coll.loadFighter();
+        this.setFighter(this.coll.getFighterVector().get(0));
     }
 
     public void deskConstitution()

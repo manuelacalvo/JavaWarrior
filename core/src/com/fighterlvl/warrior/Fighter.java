@@ -264,17 +264,98 @@ public class Fighter {
 
     public void takeARest(Fighter enemy)
     {
-        int random = randomNumberGenerator(11, 20);
         int attack = randomNumberGenerator(0, 1);
 
-        this.setHitPoints(-random);
+            if(attack == 0)
+            {
+                int random = randomNumberGenerator(11, 20);
+                this.setHitPoints(-random);
+                System.out.println("You choose to rest and you regain " + random + "points");
+            }else
+            {
+                System.out.println("You choose to rest but your enemy attacked you, you don't regain any points... ");
+                enemy.fight(this);
+            }
 
+    }
 
+    public void usePotion()
+    {
+        int random =  (int)(Math.random() * (10-1)) + 1;
+        int hitPoint;
+        if(random < 4) // 30%
+        {
+            hitPoint = this.randomNumberGenerator(5, 10);
+            this.setHitPoints(-hitPoint);
+            System.out.println("You earn " + hitPoint + " points");
+        }
+        else if(random < 8) //40%
+        {
+            hitPoint = this.randomNumberGenerator(11, 20);
+            this.setHitPoints(-hitPoint);
+            System.out.println("You earn " + hitPoint + " points");
+        }
+        else if(random < 10) //20%
+        {
+            hitPoint = this.randomNumberGenerator(21, 30);
+            this.setHitPoints(-hitPoint);
+            System.out.println("You earn " + hitPoint + " points");
+        }
+        else if(random < 11) //10%
+        {
+            hitPoint = this.randomNumberGenerator(1, 20);
+            this.setHitPoints(hitPoint);
+            System.out.println("You loose " + hitPoint + " points");
+        }
+
+    }
+
+    public void useScroll()
+    {
+        int random = randomNumberGenerator(1,3);
+
+        if(random == 1)
+        {
+            System.out.println("You double your points ");
+            this.setHitPoints(-(this.getHitPoints()*2));
+
+        }
+        else if(random == 2)
+        {
+            System.out.println("The scroll do nothing sorry");
+        }
+        else if(random == 3)
+        {
+            System.out.println("The scroll kill you... Too bad!!");
+            this.setHitPoints(0);
+
+        }
     }
 
     public void takeItem()
     {
+        int choice = 0;
+        Scanner keyboard = new Scanner(System.in);
 
+        if(this.treasures.get(0).getNumber() != 0) {
+            System.out.println("You have " + this.treasures.get(0).getNumber() + " potions, do you want to use one? (1: take it 2: don't take it");
+            choice =  keyboard.nextInt();
+
+            if(choice == 1)
+            {
+                this.usePotion();
+            }
+        }
+
+        if(this.treasures.get(1).getNumber() != 0) {
+            System.out.println("You have " + this.treasures.get(1).getNumber() + " scroll, do you want to use one? (1: take it 2: don't take it");
+            choice =  keyboard.nextInt();
+
+            if(choice == 1)
+            {
+                this.useScroll();
+            }
+        }
     }
 
 }
