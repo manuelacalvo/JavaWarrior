@@ -6,10 +6,9 @@ public class Main {
     public static void main(String[] args){
 
         Collection coll = new Collection();
+        GameController game = new GameController(coll);
 
-        coll.loadFighter();
-
-        coll.combatTest();
-
+        game.shopOpen();
+        game.gameLoop();
     }
 }
