@@ -82,13 +82,17 @@ public class Collection {
             System.out.print(minDamage);
             int maxDamage = Integer.parseInt(read_f.next());
             System.out.print(maxDamage);
+            boolean takeableWeapon = Boolean.parseBoolean(read_f.next());
+            System.out.print(takeableWeapon);
             String nameArmor1 = read_f.next();
             System.out.print(nameArmor1);
             int protection1 = Integer.parseInt(read_f.next());
+            boolean takeable1 = Boolean.parseBoolean(read_f.next());
             System.out.print(protection1);
             String nameArmor2 = read_f.next();
             System.out.print(nameArmor2);
             int protection2 = Integer.parseInt(read_f.next());
+            boolean takeable2 = Boolean.parseBoolean(read_f.next());
             System.out.print(protection2);
             int potionNumber = Integer.parseInt(read_f.next());
             System.out.print(potionNumber);
@@ -100,35 +104,29 @@ public class Collection {
             System.out.println(silverNumber);
 
 
-            Weapon weapon = new Weapon(weaponName,attacksPerTurn,minDamage,maxDamage);
-            Armor armor1 = new Armor(nameArmor1, 1, protection1);
+            Weapon weapon = new Weapon(weaponName,attacksPerTurn,minDamage,maxDamage, takeableWeapon);
+            Armor armor1 = new Armor(nameArmor1, 1, takeable1,protection1);
 
 
-            if(potionNumber != 0)
-            {
-                Treasure potion = new Treasure("potion", 1, potionNumber);
-                treasures.add(potion);
-            }
-            if(scrollNumber != 0)
-            {
-                Treasure scroll = new Treasure("scroll", 2, scrollNumber);
-                treasures.add(scroll);
-            }
-            if(goldNumber != 0)
-            {
-                Treasure gold = new Treasure("gold", 3, goldNumber);
-                treasures.add(gold);
-            }
-            if(silverNumber != 0)
-            {
-                Treasure silver = new Treasure("silver", 4, potionNumber);
-                treasures.add(silver);
-            }
+
+            Treasure potion = new Treasure("potion", 1, potionNumber);
+            treasures.add(potion);
+
+
+            Treasure scroll = new Treasure("scroll", 2, scrollNumber);
+            treasures.add(scroll);
+
+            Treasure gold = new Treasure("gold", 3, goldNumber);
+            treasures.add(gold);
+
+            Treasure silver = new Treasure("silver", 4, potionNumber);
+            treasures.add(silver);
+
 
             Fighter f = new Fighter(fighterName, weapon, armor1, treasures, hitPoints, 0);
             if(nameArmor2 != "null")
             {
-                Armor armor2= new Armor(nameArmor2, 2, protection2);
+                Armor armor2= new Armor(nameArmor2, 2, takeable2, protection2);
                 f.setArmor2(armor2);
 
             }

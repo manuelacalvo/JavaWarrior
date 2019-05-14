@@ -1,7 +1,10 @@
 package com.fighterlvl.warrior;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
+
 
 public class Fighter {
 
@@ -134,7 +137,7 @@ public class Fighter {
      */
 
     public void fight(Fighter enemy){
-        System.out.println("Tour de " + this.name);
+        System.out.println("Turn of " + this.name);
         //Different attacks based on weapon's attacks per turn
         if(this.isAlive() && enemy.isAlive()) {
 
@@ -147,7 +150,7 @@ public class Fighter {
                     int hitPower = randomNumberGenerator(getWeapon().getMinDamage(), getWeapon().getMaxDamage());
                     System.out.println("hit : " + hitPower);
                     enemy.takesDamage(hitPower);
-                    System.out.println("Vie de " + enemy.getName()+ " est de " + enemy.getHitPoints());
+                    System.out.println("Life of " + enemy.getName()+ " is " + enemy.getHitPoints());
                 } else enemy.takesDamage(0);
 
 
@@ -165,17 +168,113 @@ public class Fighter {
         }
         if(!this.isAlive())
         {
-            System.out.println("vous avez perdu");
+            System.out.println("You loose");
         }
         if(!enemy.isAlive())
         {
-            System.out.println("vous avez gagné");
+            System.out.println("You won");
+            getEnnemyRessources(enemy);
         }
     }
 
+    public void getEnnemyWeapon(Fighter enemy)
+    {
+        Scanner keyboard = new Scanner(System.in);
+
+        if(enemy.weapon.getTakeable() && this.weapon.isBetter(enemy.weapon))
+        {
+            System.out.println(" You won, do you want to take your enemy's weapon? (1: take it 0: don't take it");
+            System.out.println(enemy.weapon.toString());
+            int choice = keyboard.nextInt();
+
+            if(choice == 1)
+            {
+                System.out.println(" You change your weapon with success");
+                this.setWeapon(enemy.getWeapon());
+            }
+            if(choice == 2)
+            {
+                System.out.println(" You choose to keep your weapon");
+            }
+        }
+    }
+
+    public void getEnnemyArmor(Fighter enemy)
+    {
+        Scanner keyboard = new Scanner(System.in);
+
+        if(enemy.armor1.getTakeable() && this.armor1.isBetter(enemy.armor1))
+        {
+            System.out.println(" You won, do you want to take your enemy's first armor? (1: take it 0: don't take it");
+            System.out.println(enemy.armor1.toString());
+            int choice = keyboard.nextInt();
+
+            if(choice == 1)
+            {
+                System.out.println(" You change your first armor with success");
+                this.setArmor1(enemy.getArmor1());
+            }
+            if(choice == 2)
+            {
+                System.out.println(" You choose to keep your first armor");
+            }
+
+            if(enemy.getArmor2() != null)
+            {
+                System.out.println(" Do you want to take your enemy's second armor? (1: take it 0: don't take it");
+                System.out.println(enemy.armor2.toString());
+                choice = keyboard.nextInt();
+
+                if(choice == 1)
+                {
+                    System.out.println(" You change your second armor with success");
+                    this.setArmor2(enemy.getArmor2());
+                }
+                if(choice == 2)
+                {
+                    System.out.println(" You choose to keep your second armor");
+                }
+            }
+        }
+    }
+
+    public void getEnnemyTreasure(Fighter enemy)
+    {
+
+        for(int j= 0; j<this.getTreasures().size(); j++) {
+
+            for (int i = 0; i < enemy.getTreasures().size(); i++) {
+
+                if(this.getTreasures().get(j).getName() == enemy.getTreasures().get(i).getName())
+                {
+                    this.getTreasures().get(j).setNumber(this.getTreasures().get(j).getNumber() + 1);
+                }
+            }
+        }
+
+    }
 
 
+    public void  getEnnemyRessources(Fighter enemy)
+    {
+        getEnnemyWeapon(enemy);
+        getEnnemyArmor(enemy);
+        getEnnemyTreasure(enemy);
+    }
+
+    public void takeARest(Fighter enemy)
+    {
+        int random = randomNumberGenerator(11, 20);
+        int attack = randomNumberGenerator(0, 1);
+
+        this.setHitPoints(-random);
 
 
+    }
+
+    public void takeItem()
+    {
+
+    }
 
 }

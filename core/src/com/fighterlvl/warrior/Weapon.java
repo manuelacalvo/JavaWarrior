@@ -8,11 +8,12 @@ public class Weapon {
   private int attacksPerTurn;
   private int minDamage;
   private int maxDamage;
+  private  boolean takeable;
 
 
-  public Weapon(String name, int attacksPerTurn, int minDamage, int maxDmamage){
+  public Weapon(String name, int attacksPerTurn, int minDamage, int maxDmamage, boolean takeable){
     this.name = name;
-
+    this.takeable = takeable;
     this.attacksPerTurn = attacksPerTurn;
     this.minDamage = minDamage;
     this.maxDamage = maxDmamage;
@@ -40,7 +41,14 @@ public class Weapon {
     return name;
   }
 
+  public void setTakeable(boolean takeable) {
+    this.takeable = takeable;
+  }
 
+  public boolean getTakeable()
+  {
+    return takeable;
+  }
 
   public int getAttacksPerTurn() {
     return attacksPerTurn;
@@ -58,5 +66,26 @@ public class Weapon {
   public String toString() {
     String def = " this is a weapon";
     return def;
+  }
+
+  public double average()
+  {
+    double average;
+
+    average = this.attacksPerTurn*((this.minDamage + this.maxDamage)/2);
+
+    return  average;
+  }
+
+  public boolean isBetter(Weapon enemyWeapon)
+  {
+    boolean better;
+
+        if(this.average() < enemyWeapon.average())
+        {
+          better = true;
+        }else better = false;
+
+    return better;
   }
 }

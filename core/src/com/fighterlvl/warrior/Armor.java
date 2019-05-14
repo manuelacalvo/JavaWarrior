@@ -5,14 +5,16 @@ public class Armor {
 
   private   String name;
   private int type;
+  private boolean takeable;
   private int protection;
 
 
 
-  public Armor(String name, int type, int protection){
+  public Armor(String name, int type, boolean takeable, int protection){
     this.protection = protection;
     this.name = name;
     this.type = type;
+    this.takeable = takeable;
 
   }
 
@@ -42,7 +44,17 @@ public class Armor {
     this.name = name;
   }
 
-  @Override
+  public void setTakeable (boolean takeable)
+  {
+      this.takeable = takeable;
+  }
+  public boolean getTakeable()
+  {
+      return takeable;
+  }
+
+
+    @Override
   public String toString()
   {
     String def = " ";
@@ -58,5 +70,17 @@ public class Armor {
     }
     return  def;
   }
+
+    public boolean isBetter(Armor enemyArmor)
+    {
+        boolean better;
+
+        if(this.protection < enemyArmor.protection)
+        {
+            better = true;
+        }else better = false;
+
+        return better;
+    }
 }
 
