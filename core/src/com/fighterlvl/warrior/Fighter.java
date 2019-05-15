@@ -80,7 +80,7 @@ public class Fighter {
     }
 
     public void setHitPoints(int hitPoints) {
-        this.hitPoints = hitPoints;
+        this.hitPoints -= hitPoints;
     }
 
     public void setTreasures(ArrayList<Treasure> treasures) {
@@ -118,7 +118,7 @@ public class Fighter {
 
     public void takesDamage( int points)
     {
-        this.hitPoints -= points;
+        this.setHitPoints(points);
     }
     public boolean isAlive()
     {
@@ -275,12 +275,14 @@ public class Fighter {
             {
                 System.out.println("You choose to rest but your enemy attacked you, you don't regain any points... ");
                 enemy.fight(this);
+                System.out.println("You have " + hitPoints + " life points");
             }
 
     }
 
     public void usePotion()
     {
+        this.getTreasures().get(0).setNumber(this.getTreasures().get(0).getNumber() - 1);
         int random =  (int)(Math.random() * (10-1)) + 1;
         int hitPoint;
         if(random < 4) // 30%
@@ -308,10 +310,13 @@ public class Fighter {
             System.out.println("You loose " + hitPoint + " points");
         }
 
+        System.out.println("Hit points" + this.hitPoints);
+
     }
 
     public void useScroll()
     {
+        this.getTreasures().get(1).setNumber(this.getTreasures().get(1).getNumber() - 1);
         int random = randomNumberGenerator(1,3);
 
         if(random == 1)
@@ -327,7 +332,8 @@ public class Fighter {
         else if(random == 3)
         {
             System.out.println("The scroll kill you... Too bad!!");
-            this.setHitPoints(0);
+            this.setHitPoints(this.getHitPoints());
+
 
         }
     }
@@ -337,7 +343,7 @@ public class Fighter {
         int choice = 0;
         Scanner keyboard = new Scanner(System.in);
 
-        if(this.treasures.get(0).getNumber() != 0) {
+        while(this.treasures.get(0).getNumber() != 0 && choice != 2 && this.isAlive()) {
             System.out.println("You have " + this.treasures.get(0).getNumber() + " potions, do you want to use one? (1: take it 2: don't take it");
             choice =  keyboard.nextInt();
 
@@ -345,9 +351,10 @@ public class Fighter {
             {
                 this.usePotion();
             }
-        }
 
-        if(this.treasures.get(1).getNumber() != 0) {
+        }
+        choice = 0;
+        while(this.treasures.get(1).getNumber() != 0 && choice != 2 && this.isAlive()) {
             System.out.println("You have " + this.treasures.get(1).getNumber() + " scroll, do you want to use one? (1: take it 2: don't take it");
             choice =  keyboard.nextInt();
 
