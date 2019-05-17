@@ -15,11 +15,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
-public class GameDisplay extends ApplicationAdapter {
+public class FightMenuDisplay extends ApplicationAdapter {
     Stage stage;
-    TextButton buttonFightMode;
-    TextButton buttonMapMode;
-    TextButton buttonConnectedMode;
+    TextButton buttonPotion;
+    TextButton buttonRest;
+    TextButton buttonQuit;
+    TextButton buttonFight;
     TextButtonStyle textButtonStyle;
     BitmapFont font;
     Skin skin;
@@ -27,7 +28,7 @@ public class GameDisplay extends ApplicationAdapter {
     GameController gameController;
 
 
-    public GameDisplay(GameController gameController)
+    public FightMenuDisplay(GameController gameController)
     {
         this.gameController = gameController;
     }
@@ -49,32 +50,41 @@ public class GameDisplay extends ApplicationAdapter {
         //textButtonStyle.up = skin.getDrawable("up-button");
         //textButtonStyle.down = skin.getDrawable("down-button");
         //textButtonStyle.checked = skin.getDrawable("checked-button");
-        buttonFightMode = new TextButton("Fight Mode", textButtonStyle);
-        buttonFightMode.addListener(new ChangeListener() {
+        buttonPotion = new TextButton("Use Potions or Scroll", textButtonStyle);
+        buttonPotion.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 gameController.fightMode();
             }
         });
-        buttonMapMode = new TextButton("Adventure Mode", textButtonStyle);
-        buttonMapMode.addListener(new ChangeListener() {
+        buttonRest = new TextButton("Rest", textButtonStyle);
+        buttonRest.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                System.out.println("Button 2 Pressed");
+                System.out.println("Button rest Pressed");
 
             }
         });
-        buttonConnectedMode = new TextButton("Connected Mode", textButtonStyle);
-        buttonConnectedMode.addListener(new ChangeListener() {
+        buttonQuit = new TextButton("Quit", textButtonStyle);
+        buttonQuit.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                System.out.println("Button 3 Pressed");
+                System.out.println("Button quit Pressed");
 
             }
         });
-        table.add(buttonFightMode).width(200).height(50);
-        table.add(buttonMapMode).width(115).height(50);
-        table.add(buttonConnectedMode).width(110).height(50);
+        buttonFight = new TextButton("Next Fight", textButtonStyle);
+        buttonFight.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                System.out.println("Button 4 Pressed");
+
+            }
+        });
+        table.add(buttonPotion).width(200).height(50);
+        table.add(buttonRest).width(200).height(60);
+        table.add(buttonQuit).width(200).height(70);
+        table.add(buttonFight).width(200).height(80);
 
         stage.addActor(table);
     }
@@ -87,4 +97,5 @@ public class GameDisplay extends ApplicationAdapter {
         stage.draw();
     }
 
-    }
+
+}

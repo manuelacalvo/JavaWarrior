@@ -1,28 +1,23 @@
 package com.adventuregames;
 
-import com.shopmanagement.Collection;
-
-import javax.swing.*;
-
 public class GameController {
     private int mainMenuChoice;
     private GameModel gameModel;
-    private GameDisplay gameDisplay;
 
-    public  void GameController(GameModel gameModel, GameDisplay gameDisplay)
+
+
+    public GameController(GameModel gameModel)
     {
         mainMenuChoice = 0;
         this.gameModel = gameModel;
-        this.gameDisplay = gameDisplay;
+
     }
 
     public int getMainMenuChoice() {
         return mainMenuChoice;
     }
 
-    public GameDisplay getGameDisplay() {
-        return gameDisplay;
-    }
+
 
     public GameModel getGameModel() {
         return gameModel;
@@ -32,22 +27,21 @@ public class GameController {
         this.mainMenuChoice = mainMenuChoice;
     }
 
-    public void setGameDisplay(GameDisplay gameDisplay) {
-        this.gameDisplay = gameDisplay;
-    }
+
 
     public void setGameModel(GameModel gameModel) {
         this.gameModel = gameModel;
     }
 
-    public void playChoice()
+    public void fightMode()
     {
-        int choice = 0;
 
-        choice = gameDisplay.getChoiceMainMenu();
-        if(choice == 1)
-        {
+            gameModel.shopOpen();
             gameModel.gameLoop();
-        }
+
+
     }
+
+
+
 }
