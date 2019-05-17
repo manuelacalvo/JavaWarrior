@@ -9,3 +9,8 @@
 
 # System
 .DS_Store
+out/
+*.class
+
+#Gradle
+.gradle/
