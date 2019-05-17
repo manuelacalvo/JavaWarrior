@@ -203,27 +203,25 @@ public class Fighter {
     {
         Scanner keyboard = new Scanner(System.in);
 
-        if(enemy.armor1.getTakeable() && this.armor1.isBetter(enemy.armor1))
-        {
+        if(enemy.armor1.getTakeable() && this.armor1.isBetter(enemy.armor1)) {
             System.out.println(" You won, do you want to take your enemy's first armor? (1: take it 0: don't take it");
             System.out.println(enemy.armor1.toString());
             int choice = keyboard.nextInt();
 
-            if(choice == 1)
-            {
+            if (choice == 1) {
                 System.out.println(" You change your first armor with success");
                 this.setArmor1(enemy.getArmor1());
             }
-            if(choice == 2)
-            {
+            if (choice == 2) {
                 System.out.println(" You choose to keep your first armor");
             }
-
-            if(enemy.getArmor2() != null)
+        }
+            if(enemy.getArmor2() != null && enemy.armor2.getTakeable() && this.armor2.isBetter(enemy.armor2))
             {
+
                 System.out.println(" Do you want to take your enemy's second armor? (1: take it 0: don't take it");
                 System.out.println(enemy.armor2.toString());
-                choice = keyboard.nextInt();
+                int choice = keyboard.nextInt();
 
                 if(choice == 1)
                 {
@@ -235,7 +233,7 @@ public class Fighter {
                     System.out.println(" You choose to keep your second armor");
                 }
             }
-        }
+
     }
 
     public void getEnnemyTreasure(Fighter enemy)
@@ -271,12 +269,15 @@ public class Fighter {
                 int random = randomNumberGenerator(11, 20);
                 this.setHitPoints(-random);
                 System.out.println("You choose to rest and you regain " + random + "points");
+
             }else
             {
                 System.out.println("You choose to rest but your enemy attacked you, you don't regain any points... ");
                 enemy.fight(this);
                 System.out.println("You have " + hitPoints + " life points");
+
             }
+
 
     }
 

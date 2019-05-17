@@ -10,16 +10,22 @@ public class GameController {
     private Fighter fighter;
     private boolean quitFight;
     private int nbFights;
+    private boolean restOnce;
 
     public GameController(Collection coll) {
         this.coll = coll;
         this.quitFight = false;
         this.fighter = null;
         this.nbFights = 0;
+        this.restOnce = false;
     }
 
     public Collection getColl() {
         return coll;
+    }
+
+    public boolean isRestOnce() {
+        return restOnce;
     }
 
     public boolean getQuitFight()
@@ -52,15 +58,21 @@ public class GameController {
         this.quitFight = quitFight;
     }
 
+    public void setRestOnce(boolean restOnce) {
+        this.restOnce = restOnce;
+    }
+
     public void choiceMainMenu()
     {
 
     }
 
-    public int choiceMenuFight(Fighter enemy, int number)
+    public int choiceMenuFight(Fighter enemy, int action)
     {
         int choice = 0;
+
         Scanner keyboard = new Scanner(System.in);
+
 
         System.out.println("What do you want to do now?");
         System.out.println("1. Utilize a magic potion or a scroll");
@@ -78,10 +90,10 @@ public class GameController {
                 break;
 
             case 2 :
-                if(number == 0)
+                if( isRestOnce() != true)
                 {
                     fighter.takeARest(enemy);
-                    number = 1;
+                    setRestOnce(true);
                 } else System.out.println("You already take a rest you can't do it again before the next fight");
 
                 break;
@@ -105,17 +117,22 @@ public class GameController {
             if(!quitFight && fighter.isAlive()) {
                 nbFights ++;
                 int choice = 0;
-                int number= 0;
+                int number = 0;
                 coll.getFighterVector().get(0).fightTurn(coll.getFighterVector().get(i));
-                while(choice!= 4 && fighter.isAlive() && number == 0)
+                restOnce = false;
+                while(choice!= 4 && fighter.isAlive() && choice !=5 && !quitFight)
                 {
                     choice = choiceMenuFight(coll.getFighterVector().get(i), number);
-                    number= 0;
                     System.out.println("is Alive : " + fighter.isAlive());
                 }
 
             }
 
+
+        }
+        if(!fighter.isAlive())
+        {
+            System.out.println(" You are dead. You've got \" + fighter.getHitPoints() + \" life points and you've made \" + nbFights + \" fights\");");
         }
     }
 
