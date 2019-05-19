@@ -15,11 +15,12 @@ public class Fighter {
     private ArrayList<Treasure> treasures;
     private int hitPoints;
     private int generator;
+    private int price;
 
 
 
 
-    public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int generator ) {
+    public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int generator, int price ) {
         this.name = name;
         this.weapon = weapon;
         this.armor1 = armor1;
@@ -27,6 +28,7 @@ public class Fighter {
         this.treasures = treasures;
         this.hitPoints = hitPoints;
         this.generator = generator;
+        this.price = price;
     }
 
     public String getName()
@@ -87,6 +89,13 @@ public class Fighter {
         this.treasures = treasures;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 
     @Override
     public String toString() {

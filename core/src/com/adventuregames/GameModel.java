@@ -140,7 +140,7 @@ public class GameModel {
 
     public void shopOpen()
     {
-        coll.loadFighter();
+        coll.loadFighters();
         this.setFighter(this.coll.getFighterVector().get(0));
     }
 

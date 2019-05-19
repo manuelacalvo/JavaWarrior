@@ -9,14 +9,16 @@ public class Weapon {
   private int minDamage;
   private int maxDamage;
   private  boolean takeable;
+  private int price;
 
 
-  public Weapon(String name, int attacksPerTurn, int minDamage, int maxDmamage, boolean takeable){
+  public Weapon(String name, int attacksPerTurn, int minDamage, int maxDmamage, boolean takeable, int price){
     this.name = name;
     this.takeable = takeable;
     this.attacksPerTurn = attacksPerTurn;
     this.minDamage = minDamage;
     this.maxDamage = maxDmamage;
+    this.price = price;
   }
 
 
@@ -60,6 +62,14 @@ public class Weapon {
 
   public int getMinDamage() {
     return minDamage;
+  }
+
+  public int getPrice() {
+    return price;
+  }
+
+  public void setPrice(int price) {
+    this.price = price;
   }
 
   @Override

@@ -8,15 +8,17 @@ public class Treasure {
   private int type;
   private int number;
   private int actionPoint;
+  private int price;
 
 
 
-  public Treasure(String name, int type, int number){
+  public Treasure(String name, int type, int number, int price){
 
     this.name = name;
     this.number = number;
     this.type = type;
     this.actionPoint = 0;
+    this.price = price;
   }
 
 
@@ -50,6 +52,14 @@ public class Treasure {
 
   public void setActionPoint(int actionPoint) {
     this.actionPoint = actionPoint;
+  }
+
+  public void setPrice(int price) {
+    this.price = price;
+  }
+
+  public int getPrice() {
+    return price;
   }
 
   @Override

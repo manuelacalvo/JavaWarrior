@@ -7,14 +7,16 @@ public class Armor {
   private int type;
   private boolean takeable;
   private int protection;
+  private int price;
 
 
 
-  public Armor(String name, int type, boolean takeable, int protection){
+  public Armor(String name, int type, boolean takeable, int protection, int price){
     this.protection = protection;
     this.name = name;
     this.type = type;
     this.takeable = takeable;
+    this.price = price;
 
   }
 
@@ -53,8 +55,15 @@ public class Armor {
       return takeable;
   }
 
+  public int getPrice() {
+    return price;
+  }
 
-    @Override
+  public void setPrice(int price) {
+    this.price = price;
+  }
+
+  @Override
   public String toString()
   {
     String def = " ";
