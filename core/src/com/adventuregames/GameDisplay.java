@@ -3,9 +3,7 @@ package com.adventuregames;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -16,21 +14,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class GameDisplay extends ApplicationAdapter {
-    Stage stage;
-    TextButton buttonFightMode;
-    TextButton buttonMapMode;
-    TextButton buttonConnectedMode;
-    TextButtonStyle textButtonStyle;
-    BitmapFont font;
-    Skin skin;
-    TextureAtlas buttonAtlas;
-    GameController gameController;
+    private Stage stage;
+    private TextButton buttonFightMode;
+    private TextButton buttonMapMode;
+    private TextButton buttonConnectedMode;
+    private TextButtonStyle textButtonStyle;
+    private BitmapFont font;
+    private Skin skin;
+    private TextureAtlas buttonAtlas;
+    private int choice = 0;
 
 
-    public GameDisplay(GameController gameController)
-    {
-        this.gameController = gameController;
-    }
 
 
 
@@ -46,14 +40,14 @@ public class GameDisplay extends ApplicationAdapter {
         skin.addRegions(buttonAtlas);
         textButtonStyle = new TextButtonStyle();
         textButtonStyle.font = font;
-        //textButtonStyle.up = skin.getDrawable("up-button");
-        //textButtonStyle.down = skin.getDrawable("down-button");
-        //textButtonStyle.checked = skin.getDrawable("checked-button");
         buttonFightMode = new TextButton("Fight Mode", textButtonStyle);
         buttonFightMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                gameController.fightMode();
+                //gameController.fightMode();
+                choice = 1;
+                Gdx.app.exit();
+
             }
         });
         buttonMapMode = new TextButton("Adventure Mode", textButtonStyle);
@@ -61,6 +55,8 @@ public class GameDisplay extends ApplicationAdapter {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 System.out.println("Button 2 Pressed");
+                choice = 2;
+
 
             }
         });
@@ -69,6 +65,8 @@ public class GameDisplay extends ApplicationAdapter {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 System.out.println("Button 3 Pressed");
+                choice = 3;
+
 
             }
         });
@@ -79,12 +77,32 @@ public class GameDisplay extends ApplicationAdapter {
         stage.addActor(table);
     }
 
+    @Override
+    public void dispose() {
+        font.dispose();
+        skin.dispose();
+        buttonAtlas.dispose();
+        buttonFightMode.clear();
+        buttonMapMode.clear();
+        buttonConnectedMode.clear();
+        stage.clear();
+        stage.dispose();
+    }
+    @Override
+    public void pause() {
+    }
 
     @Override
     public void render() {
         super.render();
 
-        stage.draw();
-    }
+
+            stage.draw();
 
     }
+
+    public int getChoice(){
+        return choice;
+    }
+
+}

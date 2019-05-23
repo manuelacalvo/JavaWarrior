@@ -18,10 +18,9 @@ public class DesktopLauncher {
 		GameModel gameModel = new GameModel(coll);
 		GameController gameController = new GameController(gameModel);
 
+		gameController.choiceMainMenu();
 
 
-		//LwjglApplicationConfiguration config= new LwjglApplicationConfiguration();
-		//new LwjglApplication(new GameDisplay(gameController), config);
 
 
 
