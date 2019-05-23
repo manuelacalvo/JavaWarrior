@@ -1,8 +1,10 @@
 package com.actor;
 
+import com.PackAnimations.EffectsInit;
 import com.badlogic.gdx.math.Interpolation;
 import com.enumfile.ACTOR_STATE;
 import com.IndependantTiles.TileMap;
+import com.enumfile.WAY;
 
 public class Actor {
 
@@ -14,6 +16,10 @@ public class Actor {
   private int destX, destY;
   private float TimerForAnim;
   private float TIME_ANIME = 0.5f;
+  private float TimeOfWalk;
+  private boolean MRF; //Move Request on that Frame ?
+  private WAY lookingAt;
+  private EffectsInit Effects;
 
   /*
   Tile's position
@@ -26,29 +32,22 @@ public class Actor {
     this.MovementY = y;
     map.getTile(x, y).setActor(this);
     this.state = ACTOR_STATE.STANDING;
+    this.lookingAt = WAY.DOWN;
   }
 
   /*
   dx,y = direction character
   */
-  public boolean move(int dx, int dy){
+  public boolean move(WAY dir){
 
-    if (state != ACTOR_STATE.STANDING){
-      return false;
-    }
+    if (state != ACTOR_STATE.STANDING){ return false; }
+    if (x + dir.getDirx() >= map.getWidth() || x + dir.getDirx() < 0 || y + dir.getDiry() >= map.getHeight() || y + dir.getDiry() < 0){ return false; }
+    if (map.getTile(x+dir.getDirx(), y+dir.getDiry()).getActor() != null){ return false; }
 
-    if (x + dx >= map.getWidth() || x + dx < 0 || y + dy >= map.getHeight() || y + dy < 0){
-      return false;
-    }
-
-    if (map.getTile(x+dx, y+dy).getActor() != null){
-      return false;
-    }
-
-    initMove(x, y, dx, dy);
+    initMove(x, y, dir.getDirx(), dir.getDiry());
     map.getTile(x, y).setActor(null);
-    x += dx;
-    y += dy;
+    x += dir.getDirx();
+    y += dir.getDiry();
     map.getTile(x, y).setActor(this);
     return true;
   }
@@ -57,13 +56,13 @@ public class Actor {
   oldx,y = old position
   dirx,y = direction of movement
   */
-  private void initMove(int oldx, int oldy, int dirx, int diry){
-    this.srcX = oldx;
-    this.srcY = oldy;
-    this.destX = oldx+dirx;
-    this.destY = oldy+diry;
-    this.MovementX = oldx;
-    this.MovementX = oldy;
+  private void initMove(WAY dir){
+    this.srcX = x;
+    this.srcY = y;
+    this.destX = x+dir.getDirx();
+    this.destY = y+dir.getDiry();
+    this.MovementX = x;
+    this.MovementY = y;
     TimerForAnim = 0f;
     state = ACTOR_STATE.WALKING;
   }

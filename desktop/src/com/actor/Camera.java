@@ -13,7 +13,6 @@ public class Camera {
   public float getCameraX(){
     return cameraX;
   }
-
   public float getCameraY(){
     return cameraY;
   }

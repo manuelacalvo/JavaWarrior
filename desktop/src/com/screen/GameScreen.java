@@ -8,13 +8,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.idea.Settings;
-import com.tiles.TileMap;
+import com.IndependantTiles.TileMap;
 
 public class GameScreen extends AbstractScreen {
 
   private Camera camera;
   private PlayerController controller;
-  private Actor player;
+  private Actor Character;
   private TileMap map;
 
   private SpriteBatch batch;
@@ -25,9 +25,9 @@ public class GameScreen extends AbstractScreen {
   public GameScreen(JavaWarrior app)
   {
     super(app);
-    StandingSouth = new Texture("Resources/brendan_stand_south.png");
-    INDOOR_DARK = new Texture("Resources/indoor_tiles.png");
-    INDOOR_LIGHT = new Texture("Resources/indoor_tiles_shadow.png");
+    StandingSouth = new Texture("RessourcesTiles/brendan_stand_south.png");
+    INDOOR_DARK = new Texture("RessourcesTiles/indoor_tiles.png");
+    INDOOR_LIGHT = new Texture("RessourcesTiles/indoor_tiles_shadow.png");
     batch = new SpriteBatch();
 
     /*
@@ -37,9 +37,9 @@ public class GameScreen extends AbstractScreen {
     /*
     Origin Position
      */
-    player = new Actor(map,0,0);
+    Character = new Actor(map,0,0);
 
-    controller = new PlayerController(player);
+    controller = new PlayerController(Character);
     camera = new Camera();
   }
 
@@ -52,16 +52,23 @@ public class GameScreen extends AbstractScreen {
   @Override
   public void render(float delta)
   {
-  /*
-  Character's Position
-  */
-    camera.update(player.getX() + 0.5f , player.getY() + 0.5f);
+    controller.updateMove(delta);
+
+    /*
+    Update each frame Character
+    */
+    Character.updateMove(delta);
+
+    /*
+    Character's Position
+    */
+    camera.update(Character.getMovementX() + 0.5f , Character.getMovementY() + 0.5f);
 
     batch.begin();
 
     /*
     Camera Position
-     */
+    */
     float worldStartX = Gdx.graphics.getWidth()/2 - camera.getCameraX()*Settings.SCALED_TILE_SIZE;
     float worldStartY = Gdx.graphics.getHeight()/2 - camera.getCameraY()* Settings.SCALED_TILE_SIZE;
 
@@ -81,8 +88,8 @@ public class GameScreen extends AbstractScreen {
     }
 
     batch.draw(StandingSouth,
-            worldStartX+player.getX()* Settings.SCALED_TILE_SIZE,
-            worldStartY+player.getY()*Settings.SCALED_TILE_SIZE,
+            worldStartX+ Character.getMovementX()* Settings.SCALED_TILE_SIZE,
+            worldStartY+ Character.getMovementY()*Settings.SCALED_TILE_SIZE,
             Settings.SCALED_TILE_SIZE,
             Settings.SCALED_TILE_SIZE*1.5f
     );
@@ -90,32 +97,17 @@ public class GameScreen extends AbstractScreen {
   }
 
   @Override
-  public void resize(int width, int height)
-  {
-
-  }
+  public void resize(int width, int height){}
 
   @Override
-  public void pause()
-  {
-
-  }
+  public void pause(){}
 
   @Override
-  public void resume()
-  {
-
-  }
+  public void resume(){}
 
   @Override
-  public void hide()
-  {
-
-  }
+  public void hide(){}
 
   @Override
-  public void dispose()
-  {
-
-  }
+  public void dispose(){}
 }

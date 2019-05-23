@@ -1,4 +1,4 @@
-package com.enumtile;
+package com.enumfile;
 
 public enum ACTOR_STATE {
     WALKING,

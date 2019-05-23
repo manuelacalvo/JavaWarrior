@@ -1,4 +1,4 @@
-package com.adventuregames;
+/*package com.adventuregames;
 
 import com.shopmanagement.Collection;
 
@@ -12,3 +12,4 @@ public class Main {
         game.gameLoop();
     }
 }
+*/

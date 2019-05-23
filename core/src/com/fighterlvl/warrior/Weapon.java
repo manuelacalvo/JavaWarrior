@@ -8,14 +8,13 @@ public class Weapon {
   private int maxDamage;
 
 
-  public Weapon(String name, int attacksPerTurn, int minDamage, int maxDmamage){
+  public Weapon(String name, int attacksPerTurn, int minDamage, int maxDmamage) {
     this.name = name;
 
     this.attacksPerTurn = attacksPerTurn;
     this.minDamage = minDamage;
     this.maxDamage = maxDmamage;
   }
-
 
 
   public void setName(String name) {

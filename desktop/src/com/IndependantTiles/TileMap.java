@@ -1,6 +1,6 @@
-package com.tiles;
+package com.IndependantTiles;
 
-import com.enumtile.TERRAIN;
+import com.enumfile.TERRAIN;
 
 public class TileMap {
 
@@ -13,7 +13,7 @@ public class TileMap {
     tiles = new Tile[width][height];
 
     /*
-    Mapping of the map (Putting step by step each tile)
+    Mapping of the map (Putting step by step each tiles)
      */
     for (int x = 0; x < width; x++){
       for (int y = 0; y < height; y++){
@@ -25,11 +25,9 @@ public class TileMap {
   public Tile getTile(int x, int y){
     return tiles[x][y];
   }
-
   public int getWidth(){
     return width;
   }
-
   public int getHeight(){
     return height;
   }

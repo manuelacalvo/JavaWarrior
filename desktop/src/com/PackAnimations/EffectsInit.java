@@ -7,13 +7,13 @@ import com.enumfile.WAY;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AnimationsInit {
+public class EffectsInit {
 
     private Map<WAY, Animation> walking;
     private Map<WAY, TextureRegion> standing;
 
     // #TODO "what the hell is the HashMap" ?
-    public AnimationsInit(Animation walkUp, Animation walkDown, Animation walkLeft, Animation walkRight, TextureRegion standUp, TextureRegion standDown, TextureRegion standLeft, TextureRegion standRight){
+    public EffectsInit(Animation walkUp, Animation walkDown, Animation walkLeft, Animation walkRight, TextureRegion standUp, TextureRegion standDown, TextureRegion standLeft, TextureRegion standRight){
         walking = new HashMap<WAY, Animation>();
             walking.put(WAY.UP, walkUp);
             walking.put(WAY.DOWN, walkDown);

@@ -1,7 +1,7 @@
-package com.tiles;
+package com.IndependantTiles;
 
 import com.actor.Actor;
-import com.enumtile.TERRAIN;
+import com.enumfile.TERRAIN;
 
 public class Tile {
 
@@ -11,15 +11,12 @@ public class Tile {
   public Tile(TERRAIN terrain){
     this.terrain = terrain;
   }
-
   public TERRAIN getTerrain(){
     return terrain;
   }
-
   public Actor getActor(){
     return actor;
   }
-
   public void setActor(Actor actor){
     this.actor = actor;
   }

@@ -1,4 +1,4 @@
-package com.Tilset;
+package src.OtherProgramme;
 
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 

@@ -1,16 +1,15 @@
 package com.enumfile;
 
-public enum DIRECTIONS {
+public enum WAY {
 
-    NORTH(0,1),
-    SOUTH(0,-1),
-    EAST(1,0),
-    WEST(-1,0),
+    UP(0,1),
+    DOWN(0,-1),
+    RIGHT(1,0),
+    LEFT(-1,0),
     ;
 
     private int dirx, diry;
-
-    private DIRECTIONS(int dirx, int diry) {
+    private WAY(int dirx, int diry) {
         this.dirx = dirx;
         this.diry =diry;
     }
