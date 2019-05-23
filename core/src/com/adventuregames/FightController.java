@@ -1,24 +1,28 @@
 package com.adventuregames;
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.fighterlvl.warrior.Fighter;
 import com.shopmanagement.Collection;
 
 import java.util.Scanner;
 
-public class GameModel {
+public class FightController {
     private Collection coll;
     private Fighter fighter;
     private boolean quitFight;
     private int nbFights;
     private boolean restOnce;
+    private FightMenuDisplay fightMenuDisplay;
     ;
 
-    public GameModel(Collection coll) {
+    public FightController(Collection coll) {
         this.coll = coll;
         this.quitFight = false;
         this.fighter = null;
         this.nbFights = 0;
         this.restOnce = false;
+        this.fightMenuDisplay = new FightMenuDisplay();
     }
 
     public Collection getColl() {
@@ -64,16 +68,13 @@ public class GameModel {
         this.restOnce = restOnce;
     }
 
-    public void choiceMainMenu()
+
+
+    public int choiceMenuFight(Fighter enemy)
     {
 
-    }
 
-    public int choiceMenuFight(Fighter enemy, int action)
-    {
-        int choice = 0;
-
-        Scanner keyboard = new Scanner(System.in);
+        /*Scanner keyboard = new Scanner(System.in);
 
 
         System.out.println("What do you want to do now?");
@@ -82,34 +83,41 @@ public class GameModel {
         System.out.println("3. Quit");
         System.out.println("4. Fight newt Fighter");
         choice = keyboard.nextInt();
+*/
+        int choice = 0;
 
 
 
-        switch (choice)
-        {
-            case 1 :
-                fighter.takeItem();
-                break;
+        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        new LwjglApplication(fightMenuDisplay, config);
 
-            case 2 :
-                if( isRestOnce() != true)
-                {
-                    fighter.takeARest(enemy);
-                    setRestOnce(true);
-                } else System.out.println("You already take a rest you can't do it again before the next fight");
+        
+        while(choice == 0) {
+            switch (choice) {
+                case 1:
+                    fighter.takeItem();
+                    break;
 
-                break;
+                case 2:
+                    if (isRestOnce() != true) {
+                        fighter.takeARest(enemy);
+                        setRestOnce(true);
+                    } else System.out.println("You already take a rest you can't do it again before the next fight");
 
-            case 3 :
-                quitFight = true;
-                System.out.println(" You choose to quit the game. You've got " + fighter.getHitPoints() + " life points and you've made " + nbFights + " fights");
-                break;
+                    break;
 
-            case 4 :
+                case 3:
+                    quitFight = true;
+                    System.out.println(" You choose to quit the game. You've got " + fighter.getHitPoints() + " life points and you've made " + nbFights + " fights");
+                    break;
 
+                case 4:
+
+            }
         }
         return choice;
     }
+
 
     public void gameLoop()
     {
@@ -119,13 +127,12 @@ public class GameModel {
             if(!quitFight && fighter.isAlive()) {
                 nbFights ++;
                 int choice = 0;
-                int number = 0;
                 coll.getFighterVector().get(0).fightTurn(coll.getFighterVector().get(i));
                 restOnce = false;
                 while(choice!= 4 && fighter.isAlive() && choice !=5 && !quitFight)
                 {
-                    choice = choiceMenuFight(coll.getFighterVector().get(i), number);
-                    System.out.println("is Alive : " + fighter.isAlive());
+                    choice = choiceMenuFight(coll.getFighterVector().get(i));
+
                 }
 
             }

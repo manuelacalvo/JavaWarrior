@@ -1,11 +1,7 @@
 package com.java.warrior.desktop;
 
 import com.adventuregames.GameController;
-import com.adventuregames.GameDisplay;
-import com.adventuregames.GameModel;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.adventuregames.GameDisplay;
+import com.adventuregames.FightController;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
 
@@ -15,8 +11,8 @@ public class DesktopLauncher {
 
 		Player player = new Player("Manuela");
 		Collection coll = new Collection(player);
-		GameModel gameModel = new GameModel(coll);
-		GameController gameController = new GameController(gameModel);
+		FightController fightController = new FightController(coll);
+		GameController gameController = new GameController(fightController);
 
 		gameController.choiceMainMenu();
 

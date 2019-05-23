@@ -5,15 +5,15 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
 public class GameController {
     private int mainMenuChoice;
-    private GameModel gameModel;
+    private FightController fightController;
     private GameDisplay gameDisplay;
 
 
 
-    public GameController(GameModel gameModel)
+    public GameController(FightController fightController)
     {
         mainMenuChoice = 0;
-        this.gameModel = gameModel;
+        this.fightController = fightController;
         this.gameDisplay = new GameDisplay();
 
     }
@@ -24,8 +24,8 @@ public class GameController {
 
 
 
-    public GameModel getGameModel() {
-        return gameModel;
+    public FightController getFightController() {
+        return fightController;
     }
 
     public void setMainMenuChoice(int mainMenuChoice) {
@@ -34,8 +34,8 @@ public class GameController {
 
 
 
-    public void setGameModel(GameModel gameModel) {
-        this.gameModel = gameModel;
+    public void setFightController(FightController fightController) {
+        this.fightController = fightController;
     }
 
     public void fightMode()
@@ -50,7 +50,7 @@ public class GameController {
     public void choiceMainMenu()
     {
         int choice = 0;
-        gameModel.shopOpen();
+        fightController.shopOpen();
         gameDisplay = new GameDisplay();
 
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
@@ -62,7 +62,7 @@ public class GameController {
 
             switch (choice) {
                 case 1:
-                    gameModel.gameLoop();
+                    fightController.gameLoop();
                     break;
 
                 case 2:

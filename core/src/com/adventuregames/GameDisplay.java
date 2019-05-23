@@ -46,7 +46,7 @@ public class GameDisplay extends ApplicationAdapter {
             public void changed (ChangeEvent event, Actor actor) {
                 //gameController.fightMode();
                 choice = 1;
-                Gdx.app.exit();
+                //Gdx.app.exit();
 
             }
         });

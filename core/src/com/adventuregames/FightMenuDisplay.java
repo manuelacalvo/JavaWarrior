@@ -16,22 +16,20 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
 public class FightMenuDisplay extends ApplicationAdapter {
-    Stage stage;
-    TextButton buttonPotion;
-    TextButton buttonRest;
-    TextButton buttonQuit;
-    TextButton buttonFight;
-    TextButtonStyle textButtonStyle;
-    BitmapFont font;
-    Skin skin;
-    TextureAtlas buttonAtlas;
-    GameController gameController;
+    private Stage stage;
+    private TextButton buttonPotion;
+    private TextButton buttonRest;
+    private TextButton buttonQuit;
+    private TextButton buttonFight;
+    private TextButtonStyle textButtonStyle;
+    private BitmapFont font;
+    private Skin skin;
+    private TextureAtlas buttonAtlas;
+    private GameController gameController;
+    private int choice = 0;
 
 
-    public FightMenuDisplay(GameController gameController)
-    {
-        this.gameController = gameController;
-    }
+
 
 
 
@@ -47,21 +45,20 @@ public class FightMenuDisplay extends ApplicationAdapter {
         skin.addRegions(buttonAtlas);
         textButtonStyle = new TextButtonStyle();
         textButtonStyle.font = font;
-        //textButtonStyle.up = skin.getDrawable("up-button");
-        //textButtonStyle.down = skin.getDrawable("down-button");
-        //textButtonStyle.checked = skin.getDrawable("checked-button");
         buttonPotion = new TextButton("Use Potions or Scroll", textButtonStyle);
         buttonPotion.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                gameController.fightMode();
+                choice = 1;
+                Gdx.app.exit();
             }
         });
         buttonRest = new TextButton("Rest", textButtonStyle);
         buttonRest.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                System.out.println("Button rest Pressed");
+                choice = 2;
+                Gdx.app.exit();
 
             }
         });
@@ -69,7 +66,8 @@ public class FightMenuDisplay extends ApplicationAdapter {
         buttonQuit.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                System.out.println("Button quit Pressed");
+                choice = 3;
+                Gdx.app.exit();
 
             }
         });
@@ -77,7 +75,8 @@ public class FightMenuDisplay extends ApplicationAdapter {
         buttonFight.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                System.out.println("Button 4 Pressed");
+                choice = 4;
+                Gdx.app.exit();
 
             }
         });
@@ -91,10 +90,32 @@ public class FightMenuDisplay extends ApplicationAdapter {
 
 
     @Override
+    public void dispose() {
+        font.dispose();
+        skin.dispose();
+        buttonAtlas.dispose();
+        buttonPotion.clear();
+        buttonRest.clear();
+        buttonQuit.clear();
+        buttonFight.clear();
+        stage.clear();
+        stage.dispose();
+    }
+    @Override
+    public void pause() {
+    }
+
+    @Override
     public void render() {
         super.render();
 
+
         stage.draw();
+
+    }
+
+    public int getChoice(){
+        return choice;
     }
 
 
