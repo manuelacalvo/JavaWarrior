@@ -1,0 +1,216 @@
+
+textures.png
+size: 256,64
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+brendan_stand_east
+  rotate: false
+  xy: 36, 38
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+brendan_walk_east
+  rotate: false
+  xy: 36, 38
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_stand_north
+  rotate: false
+  xy: 54, 38
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+brendan_walk_north
+  rotate: false
+  xy: 54, 38
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_stand_south
+  rotate: false
+  xy: 72, 38
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+brendan_walk_south
+  rotate: false
+  xy: 72, 38
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_stand_west
+  rotate: false
+  xy: 90, 38
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: -1
+brendan_walk_west
+  rotate: false
+  xy: 90, 38
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 1
+brendan_walk_east
+  rotate: false
+  xy: 108, 38
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_walk_east
+  rotate: false
+  xy: 126, 38
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_walk_north
+  rotate: false
+  xy: 144, 38
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_walk_north
+  rotate: false
+  xy: 162, 38
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_walk_south
+  rotate: false
+  xy: 180, 38
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_walk_south
+  rotate: false
+  xy: 198, 38
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brendan_walk_west
+  rotate: false
+  xy: 216, 38
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 0
+brendan_walk_west
+  rotate: false
+  xy: 234, 38
+  size: 16, 24
+  orig: 16, 24
+  offset: 0, 0
+  index: 2
+brown_path
+  rotate: false
+  xy: 2, 4
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+brown_path_grass_east
+  rotate: false
+  xy: 36, 20
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+brown_path_grass_north
+  rotate: false
+  xy: 54, 20
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+brown_path_grass_northeast
+  rotate: false
+  xy: 20, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+brown_path_grass_northwest
+  rotate: false
+  xy: 38, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+brown_path_grass_south
+  rotate: false
+  xy: 56, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+brown_path_grass_southeast
+  rotate: false
+  xy: 72, 20
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+brown_path_grass_southwest
+  rotate: false
+  xy: 74, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+brown_path_grass_west
+  rotate: false
+  xy: 90, 20
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+indoor_tiles
+  rotate: false
+  xy: 92, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+indoor_tiles_shadow
+  rotate: false
+  xy: 108, 20
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+large_tree
+  rotate: false
+  xy: 2, 22
+  size: 32, 40
+  orig: 32, 40
+  offset: 0, 0
+  index: -1
+wall_bottom
+  rotate: false
+  xy: 110, 2
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+wall_top
+  rotate: false
+  xy: 126, 20
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
