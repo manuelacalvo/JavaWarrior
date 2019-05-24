@@ -21,14 +21,12 @@ public class GameScreen extends AbstractScreen {
   private TileMap map;
 
   private SpriteBatch batch;
-  private Texture StandingSouth;
   private Texture INDOOR_DARK;
   private Texture INDOOR_LIGHT;
 
   public GameScreen(JavaWarrior app)
   {
     super(app);
-    StandingSouth = new Texture("RessourcesTiles/brendan_stand_south.png");
     INDOOR_DARK = new Texture("RessourcesTiles/indoor_tiles.png");
     INDOOR_LIGHT = new Texture("RessourcesTiles/indoor_tiles_shadow.png");
     batch = new SpriteBatch();

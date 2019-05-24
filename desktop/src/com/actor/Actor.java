@@ -15,9 +15,10 @@ public class Actor {
   private float MovementX ,MovementY;
   private int srcX, srcY;
   private int destX, destY;
-  private float TimerForAnim;
-  private float TIME_ANIME = 0.3f;
-  private float TimeOfWalk;
+  private float REFACE_TIME_EFFECT = 0.1F;
+  private float EffectTimer;
+  private float WALK_TIME_EFFECT = 0.3f;
+  private float WalkTimer;
   private boolean MRF; //Move Request on that Frame ?
   private WAY lookingAt;
   private EffectsInit Effect;
@@ -69,7 +70,7 @@ public class Actor {
     this.destY = y+dir.getDiry();
     this.MovementX = x;
     this.MovementY = y;
-    TimerForAnim = 0f;
+    EffectTimer = 0f;
     state = ACTOR_STATE.WALKING;
   }
 
@@ -85,17 +86,31 @@ public class Actor {
 
   public void updateMove(float delta){
     if(state == ACTOR_STATE.WALKING){
-      TimerForAnim += delta;
-      TimeOfWalk += delta;
-      MovementX = Interpolation.linear.apply(srcX, destX, TimerForAnim/TIME_ANIME);
-      MovementY = Interpolation.linear.apply(srcY, destY, TimerForAnim/TIME_ANIME);
-      if(TimerForAnim > TIME_ANIME){
-        TimeOfWalk = TimerForAnim-TIME_ANIME;
+      EffectTimer += delta;
+      WalkTimer += delta;
+      MovementX = Interpolation.linear.apply(srcX, destX, EffectTimer / WALK_TIME_EFFECT);
+      MovementY = Interpolation.linear.apply(srcY, destY, EffectTimer / WALK_TIME_EFFECT);
+      if(EffectTimer > WALK_TIME_EFFECT){
+        WalkTimer = EffectTimer - WALK_TIME_EFFECT;
         moveDone();
-        if (MRF){ move(lookingAt); } else { TimeOfWalk = 0f; }
+        if (MRF){ move(lookingAt); } else { WalkTimer = 0f; }
+      }
+    }
+    if (state == ACTOR_STATE.REFACING){
+      EffectTimer += delta;
+      if (EffectTimer > REFACE_TIME_EFFECT){
+        state = ACTOR_STATE.STANDING;
       }
     }
     MRF = false;
+  }
+
+  public void reface(WAY dir){
+    if (state != ACTOR_STATE.STANDING){ return; } // Can't reface if you're walking.
+    if (lookingAt == dir){ return; } // Can't reface if you're already looking at.
+    lookingAt = dir;
+    state = ACTOR_STATE.STANDING;
+    EffectTimer = 0f;
   }
 
   public int getX(){
@@ -110,12 +125,15 @@ public class Actor {
   public float getMovementY() {
     return MovementY;
   }
+
   public TextureRegion getSpirit(){
     if (state == ACTOR_STATE.WALKING){
-      // #Todo "return Effect.getWalking(lookingAt).getKeyFrame(TimeOfWalk);" not working ?
-      return (TextureRegion) Effect.getWalking(lookingAt).getKeyFrame(TimeOfWalk);
+      // #Todo "return Effect.getWalking(lookingAt).getKeyFrame(WalkTimer);" not working ? Casting (TextureRegion ?)
+      return (TextureRegion) Effect.getWalking(lookingAt).getKeyFrame(WalkTimer);
     } else if (state == ACTOR_STATE.STANDING){
       return Effect.getStanding(lookingAt);
+    } else if (state == ACTOR_STATE.REFACING){
+      return (TextureRegion) Effect.getWalking(lookingAt).getKeyFrames()[0];
     }
     return Effect.getStanding(WAY.DOWN);
   }
