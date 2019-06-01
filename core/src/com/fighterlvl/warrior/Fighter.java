@@ -146,7 +146,7 @@ public class Fighter {
      */
 
     public void fight(Fighter enemy){
-        System.out.println("Turn of " + this.name);
+        System.out.println("Turn of " + this.name + "life : " + this.getHitPoints());
         //Different attacks based on weapon's attacks per turn
         if(this.isAlive() && enemy.isAlive()) {
 

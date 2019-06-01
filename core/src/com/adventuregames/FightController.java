@@ -5,7 +5,6 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.fighterlvl.warrior.Fighter;
 import com.shopmanagement.Collection;
 
-import java.util.Scanner;
 
 public class FightController {
     private Collection coll;
@@ -14,7 +13,7 @@ public class FightController {
     private int nbFights;
     private boolean restOnce;
     private FightMenuDisplay fightMenuDisplay;
-    ;
+
 
     public FightController(Collection coll) {
         this.coll = coll;
@@ -73,33 +72,22 @@ public class FightController {
     public int choiceMenuFight(Fighter enemy)
     {
 
-
-        /*Scanner keyboard = new Scanner(System.in);
-
-
-        System.out.println("What do you want to do now?");
-        System.out.println("1. Utilize a magic potion or a scroll");
-        System.out.println("2. Rest");
-        System.out.println("3. Quit");
-        System.out.println("4. Fight newt Fighter");
-        choice = keyboard.nextInt();
-*/
         int choice = 0;
+        fightMenuDisplay.setChoice(0);
 
 
 
-        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        new LwjglApplication(fightMenuDisplay, config);
 
-        
         while(choice == 0) {
+            choice = fightMenuDisplay.getChoice();
+
             switch (choice) {
                 case 1:
                     fighter.takeItem();
                     break;
 
                 case 2:
-                    if (isRestOnce() != true) {
+                    if (!isRestOnce()) {
                         fighter.takeARest(enemy);
                         setRestOnce(true);
                     } else System.out.println("You already take a rest you can't do it again before the next fight");
@@ -111,7 +99,9 @@ public class FightController {
                     System.out.println(" You choose to quit the game. You've got " + fighter.getHitPoints() + " life points and you've made " + nbFights + " fights");
                     break;
 
+
                 case 4:
+
 
             }
         }
@@ -122,6 +112,11 @@ public class FightController {
     public void gameLoop()
     {
 
+        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        config.forceExit = false;
+        LwjglApplication game = new LwjglApplication(fightMenuDisplay, config);
+
+
         for(int i=1; i< coll.getFighterVector().size(); i++)
         {
             if(!quitFight && fighter.isAlive()) {
@@ -129,11 +124,14 @@ public class FightController {
                 int choice = 0;
                 coll.getFighterVector().get(0).fightTurn(coll.getFighterVector().get(i));
                 restOnce = false;
+
                 while(choice!= 4 && fighter.isAlive() && choice !=5 && !quitFight)
                 {
+
                     choice = choiceMenuFight(coll.getFighterVector().get(i));
 
                 }
+
 
             }
 

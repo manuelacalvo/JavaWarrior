@@ -1,5 +1,6 @@
 package com.adventuregames;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -54,7 +55,8 @@ public class GameController {
         gameDisplay = new GameDisplay();
 
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        new LwjglApplication(gameDisplay, config);
+        config.forceExit = false;
+        LwjglApplication game = new LwjglApplication(gameDisplay, config);
 
         while(choice == 0) {
 
@@ -62,19 +64,27 @@ public class GameController {
 
             switch (choice) {
                 case 1:
+                    game.exit();
                     fightController.gameLoop();
+
                     break;
 
                 case 2:
                     ///
+                    game.exit();
                     break;
 
                 case 3:
                     //
+                    game.exit();
                     break;
 
             }
         }
+
+
+
+
     }
 
 

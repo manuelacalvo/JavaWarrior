@@ -3,13 +3,12 @@ package com.adventuregames;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 
@@ -23,6 +22,10 @@ public class GameDisplay extends ApplicationAdapter {
     private Skin skin;
     private TextureAtlas buttonAtlas;
     private int choice = 0;
+    private Image image;
+    private  Image iB1;
+    private Image iB2;
+    private Image iB3;
 
 
 
@@ -32,22 +35,26 @@ public class GameDisplay extends ApplicationAdapter {
     public void create() {
         stage = new Stage();
         Table table=new Table();
-        table.setSize(800,480);
+        Texture texture = new Texture(Gdx.files.internal("main_background.png"));
+        image = new Image(texture);
+        Texture texture1 = new Texture(Gdx.files.internal("Graphics/Pictures/partyCancelSel.png"));
+        iB1 = new Image(texture1);
+        iB2 = new Image(texture1);
+        iB3 = new Image(texture1);
+
+        table.setSize(stage.getWidth(),stage.getHeight());
         Gdx.input.setInputProcessor(stage);
         font = new BitmapFont();
         skin = new Skin();
-        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/ui-blue.atlas")); //
-        skin.addRegions(buttonAtlas);
         textButtonStyle = new TextButtonStyle();
         textButtonStyle.font = font;
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/ui-blue.atlas"));
+        skin.addRegions(buttonAtlas);
         buttonFightMode = new TextButton("Fight Mode", textButtonStyle);
         buttonFightMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                //gameController.fightMode();
                 choice = 1;
-                //Gdx.app.exit();
-
             }
         });
         buttonMapMode = new TextButton("Adventure Mode", textButtonStyle);
@@ -56,25 +63,43 @@ public class GameDisplay extends ApplicationAdapter {
             public void changed (ChangeEvent event, Actor actor) {
                 System.out.println("Button 2 Pressed");
                 choice = 2;
-
-
             }
         });
+
         buttonConnectedMode = new TextButton("Connected Mode", textButtonStyle);
         buttonConnectedMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 System.out.println("Button 3 Pressed");
                 choice = 3;
-
-
             }
         });
-        table.add(buttonFightMode).width(200).height(50);
-        table.add(buttonMapMode).width(115).height(50);
-        table.add(buttonConnectedMode).width(110).height(50);
 
+
+        buttonFightMode.setPosition(250, 250);
+        iB1.setSize(buttonFightMode.getWidth()+30,buttonFightMode.getHeight()+30);
+
+        buttonMapMode.setPosition(400, 250);
+        iB2.setSize(buttonMapMode.getWidth()+30,buttonMapMode.getHeight()+30);
+
+        buttonConnectedMode.setPosition(550, 250);
+        iB3.setSize(buttonConnectedMode.getWidth()+30,buttonConnectedMode.getHeight()+30);
+
+        table.add(buttonFightMode).width(0).height(50);
+        table.add(buttonMapMode).width(250).height(50);
+        table.add(iB1);
+        table.add(buttonConnectedMode).width(0).height(50);
+
+        iB1.setPosition(buttonFightMode.getX()-105, buttonFightMode.getY()-35);
+        iB2.setPosition(buttonMapMode.getX()-147, buttonMapMode.getY()-35);
+        iB3.setPosition(buttonConnectedMode.getX()-170, buttonConnectedMode.getY()-35);
+
+        stage.addActor(image);
+        stage.addActor(iB1);
+        stage.addActor(iB2);
+        stage.addActor(iB3);
         stage.addActor(table);
+
     }
 
     @Override
