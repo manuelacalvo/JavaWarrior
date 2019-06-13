@@ -19,6 +19,13 @@ public class CollectionDisplay  extends ApplicationAdapter {
     private Stage stage;
     private Image shop;
     private ImageButton fighter1;
+    private ImageButton fighter2;
+    private ImageButton fighter3;
+    private ImageButton fighter4;
+    private ImageButton fighter5;
+    private ImageButton fighter6;
+    private ImageButton fighter7;
+    private ImageButton fighter8;
     private int choice;
 
 
@@ -39,12 +46,92 @@ public class CollectionDisplay  extends ApplicationAdapter {
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(f1));
         fighter1 = new ImageButton(drawable);
 
+        Texture f2 = new Texture(Gdx.files.internal("fighter_picture/Nest of snakes.jpg"));
+        Drawable drawable2 = new TextureRegionDrawable(new TextureRegion(f2));
+        fighter2 = new ImageButton(drawable2);
+
+        Texture f3 = new Texture(Gdx.files.internal("fighter_picture/Troll.jpg"));
+        Drawable drawable3 = new TextureRegionDrawable(new TextureRegion(f3));
+        fighter3 = new ImageButton(drawable3);
+
+        Texture f4 = new Texture(Gdx.files.internal("fighter_picture/Berserker.jpg"));
+        Drawable drawable4 = new TextureRegionDrawable(new TextureRegion(f4));
+        fighter4 = new ImageButton(drawable4);
+
+        Texture f5 = new Texture(Gdx.files.internal("fighter_picture/Ninja.jpg"));
+        Drawable drawable5 = new TextureRegionDrawable(new TextureRegion(f5));
+        fighter5 = new ImageButton(drawable5);
+
+        Texture f6 = new Texture(Gdx.files.internal("fighter_picture/Dragon.jpg"));
+        Drawable drawable6 = new TextureRegionDrawable(new TextureRegion(f6));
+        fighter6 = new ImageButton(drawable6);
+
+        Texture f7 = new Texture(Gdx.files.internal("fighter_picture/Doppleganger.jpg"));
+        Drawable drawable7 = new TextureRegionDrawable(new TextureRegion(f7));
+        fighter7 = new ImageButton(drawable7);
+
+        Texture f8 = new Texture(Gdx.files.internal("fighter_picture/Wizard.jpg"));
+        Drawable drawable8 = new TextureRegionDrawable(new TextureRegion(f8));
+        fighter8 = new ImageButton(drawable8);
+
+
+
 
 
         fighter1.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 choice = 1;
+                System.out.println("test");
+            }
+        });
+        fighter2.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                choice = 2;
+                System.out.println("test");
+            }
+        });
+        fighter3.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                choice = 3;
+                System.out.println("test");
+            }
+        });
+        fighter4.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                choice = 4;
+                System.out.println("test");
+            }
+        });
+        fighter5.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                choice = 5;
+                System.out.println("test");
+            }
+        });
+        fighter6.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                choice = 6;
+                System.out.println("test");
+            }
+        });
+        fighter7.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                choice = 7;
+                System.out.println("test");
+            }
+        });
+        fighter8.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                choice = 8;
+                System.out.println("test");
             }
         });
 
@@ -53,6 +140,13 @@ public class CollectionDisplay  extends ApplicationAdapter {
 
         stage.addActor(shop);
         stage.addActor(fighter1);
+        stage.addActor(fighter2);
+        stage.addActor(fighter3);
+        stage.addActor(fighter4);
+        stage.addActor(fighter5);
+        stage.addActor(fighter6);
+        stage.addActor(fighter7);
+        stage.addActor(fighter8);
 
     }
 

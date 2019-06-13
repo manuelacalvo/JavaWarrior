@@ -93,6 +93,8 @@ public class GameController {
 
                 case 4 :
                     game.exit();
+                    fightController.shopOpen();
+                    shop = fightController.getColl();
                     shop.openShop();
                     break;
 

@@ -75,7 +75,7 @@ public class GameDisplay extends ApplicationAdapter {
             }
         });
 
-        buttonShop = new TextButton("Inventory", textButtonStyle);
+        buttonShop = new TextButton("Shop", textButtonStyle);
         buttonShop.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
