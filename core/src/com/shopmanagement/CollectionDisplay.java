@@ -148,6 +148,7 @@ public class CollectionDisplay  extends ApplicationAdapter {
         stage.addActor(fighter7);
         stage.addActor(fighter8);
 
+
     }
 
 
