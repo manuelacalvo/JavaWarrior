@@ -1,5 +1,6 @@
 package com.fighterlvl.warrior;
 
+
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Random;
@@ -20,6 +21,8 @@ public class Fighter {
 
 
 
+
+
     public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int generator, int price ) {
         this.name = name;
         this.weapon = weapon;
@@ -29,6 +32,9 @@ public class Fighter {
         this.hitPoints = hitPoints;
         this.generator = generator;
         this.price = price;
+        //String path = "fighter_picture/" + this.getName() + ".jpg";
+
+        //this.picture = new ImageIcon(path);
     }
 
     public String getName()

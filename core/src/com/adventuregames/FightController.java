@@ -149,8 +149,5 @@ public class FightController {
         this.setFighter(this.coll.getFighterVector().get(0));
     }
 
-    public void deskConstitution()
-    {
 
-    }
 }

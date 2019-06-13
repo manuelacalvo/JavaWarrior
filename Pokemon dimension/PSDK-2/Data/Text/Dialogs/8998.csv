@@ -1,0 +1,35 @@
+Index,en,fr
+0,Key PSDK,Tch. PSDK
+1,Description,Description
+2,Binding,Association
+3,,
+4,A,A
+5,B,B
+6,X,X
+7,Y,Y
+8,UP,HAUT
+9,DOWN,BAS
+10,RIGHT,DROITE
+11,LEFT,GAUCHE
+12,,
+13,"Validate, Speak, Action","Valider, Parler, Agir"
+14,"Cancel, Run, Quit","Annuler, Courir, Quitter"
+15,Open menu,Ouvrir le menu
+16,Shortcut,Raccourcis
+17,Move Up,Déplacement haut
+18,Move Down,Déplacement bas
+19,Move Right,Déplacement droite
+20,Move Left,Déplacement gauche
+21,,
+22,: Sel. key,: Chx. touche
+23,: JoyPad k.,: t. manette
+24,: Reset,: R. à Zéro
+25,: Quit,: Quitter
+26,: Chg. key,: Chg. Touche
+27,,
+28,No joypad connected.,Aucune manette connectée.
+29,Press a key,Appuyez sur une touche
+30,Invalid key,Touche invalide
+31,Do you want to cancel or use this key ?,Voulez-vous annuler ou utiliser cette touche ?
+32,Cancel,Annuler
+33,Use key,Utiliser la touche

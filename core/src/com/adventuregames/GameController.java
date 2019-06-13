@@ -11,6 +11,7 @@ public class GameController {
 
 
 
+
     public GameController(FightController fightController)
     {
         mainMenuChoice = 0;
@@ -76,6 +77,10 @@ public class GameController {
 
                 case 3:
                     //
+                    game.exit();
+                    break;
+
+                case 4 :
                     game.exit();
                     break;
 
