@@ -3,11 +3,16 @@ package com.adventuregames;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.fighterlvl.warrior.Player;
+import com.shopmanagement.Collection;
 
 public class GameController {
     private int mainMenuChoice;
     private FightController fightController;
     private GameDisplay gameDisplay;
+    private Collection shop;
+    private Player player;
+
 
 
 
@@ -17,14 +22,14 @@ public class GameController {
         mainMenuChoice = 0;
         this.fightController = fightController;
         this.gameDisplay = new GameDisplay();
+        this.player = null;
+        this.shop = null;
 
     }
 
     public int getMainMenuChoice() {
         return mainMenuChoice;
     }
-
-
 
     public FightController getFightController() {
         return fightController;
@@ -34,7 +39,11 @@ public class GameController {
         this.mainMenuChoice = mainMenuChoice;
     }
 
-
+    public void startPlayer()
+    {
+        String nom = "Manuela";
+        player = new Player(nom);
+    }
 
     public void setFightController(FightController fightController) {
         this.fightController = fightController;
@@ -54,6 +63,8 @@ public class GameController {
         int choice = 0;
         fightController.shopOpen();
         gameDisplay = new GameDisplay();
+        this.startPlayer();
+        shop = new Collection(player);
 
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
         config.forceExit = false;
@@ -82,6 +93,7 @@ public class GameController {
 
                 case 4 :
                     game.exit();
+                    shop.openShop();
                     break;
 
             }

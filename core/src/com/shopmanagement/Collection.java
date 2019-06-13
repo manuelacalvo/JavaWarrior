@@ -1,5 +1,7 @@
 package com.shopmanagement;
 
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.fighterlvl.warrior.*;
 
 import java.io.File;
@@ -15,6 +17,7 @@ public class Collection {
     private Vector<Weapon> weaponVector;
     private Vector<Armor> armorVector ;
     private Vector<Treasure> treasureVector ;
+    private CollectionDisplay collectionDisplay;
 
 
     public Collection( Player player)
@@ -24,7 +27,9 @@ public class Collection {
         weaponVector = new Vector<Weapon>();
         armorVector = new Vector<Armor>();
         treasureVector= new Vector<Treasure>();
+        this.collectionDisplay = new CollectionDisplay();
     }
+
     public Player getPlayer() {
         return player;
     }
@@ -155,6 +160,49 @@ public class Collection {
     }
 
 
+    public void openShop()
+    {
+        int choice = 0;
+
+        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        config.forceExit = false;
+        LwjglApplication game = new LwjglApplication(collectionDisplay, config);
+
+        while(choice == 0) {
+
+            choice = collectionDisplay.getChoice();
+
+            switch (choice) {
+                case 1:
+                    game.exit();
+                    buyFighter(fighterVector.get(1));
+
+                    break;
+
+                case 2:
+                    game.exit();
+                    buyFighter(fighterVector.get(2));
+                    break;
+
+                case 3:
+                    game.exit();
+                    buyFighter(fighterVector.get(3));
+                    break;
+
+                case 4 :
+                    game.exit();
+                    buyFighter(fighterVector.get(4));
+                    break;
+
+                case 5 :
+                    game.exit();
+                    buyFighter(fighterVector.get(5));
+                    break;
+
+            }
+        }
+
+    }
     public void buyFighter(Fighter f)
     {
         if(getPlayer().getMoney()> f.getPrice())

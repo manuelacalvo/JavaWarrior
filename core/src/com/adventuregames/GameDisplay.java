@@ -121,8 +121,6 @@ public class GameDisplay extends ApplicationAdapter {
     @Override
     public void dispose() {
         font.dispose();
-
-        buttonAtlas.dispose();
         buttonFightMode.clear();
         buttonMapMode.clear();
         buttonConnectedMode.clear();
