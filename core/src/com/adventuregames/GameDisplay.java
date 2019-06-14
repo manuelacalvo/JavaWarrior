@@ -31,8 +31,8 @@ public class GameDisplay implements Screen {
     private Image iB2;
     private Image iB3;
 
-    public GameDisplay(Game game) {
-        this.game = game;
+    public GameDisplay(Game aGame) {
+        this.game = aGame;
         stage = new Stage(new ScreenViewport());
 
 

@@ -33,8 +33,8 @@ public class CollectionDisplay  implements Screen {
 
 
 
-    public CollectionDisplay(Game game) {
-        this.game = game;
+    public CollectionDisplay(Game aGame) {
+        this.game = aGame;
         stage = new Stage(new ScreenViewport());
 
         Gdx.input.setInputProcessor(stage);

@@ -39,8 +39,8 @@ public class FightMenuDisplay implements Screen {
     private  Image iB4;
 
 
-    public FightMenuDisplay(Game game) {
-        this.game = game;
+    public FightMenuDisplay(Game aGame) {
+        this.game = aGame;
         stage = new Stage(new ScreenViewport());
 
         Table table=new Table();
@@ -56,7 +56,7 @@ public class FightMenuDisplay implements Screen {
         iB4 = new Image(texture1);
         font = new BitmapFont();
         skin = new Skin();
-        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/ui-blue.atlas")); //
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/ui/ui-blue.atlas")); //
         skin.addRegions(buttonAtlas);
         textButtonStyle = new TextButtonStyle();
         textButtonStyle.font = font;
