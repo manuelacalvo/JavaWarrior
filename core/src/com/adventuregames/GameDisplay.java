@@ -65,7 +65,6 @@ public class GameDisplay implements Screen {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 choice = 2;
-
             }
         });
 

@@ -46,10 +46,10 @@ public class FightMenuDisplay implements Screen {
         Table table=new Table();
         table.setSize(stage.getWidth(),stage.getHeight());
         Gdx.input.setInputProcessor(stage);
-        Texture texture = new Texture(Gdx.files.internal("main_background.png"));
+        Texture texture = new Texture(Gdx.files.internal("core/assets/graphics/pictures/main_background.png"));
         image = new Image(texture);
         image.setSize(stage.getWidth(), stage.getHeight());
-        Texture texture1 = new Texture(Gdx.files.internal("Graphics/Pictures/partyCancelSel.png"));
+        Texture texture1 = new Texture(Gdx.files.internal("core/assets/graphics/buttons/partyCancelSel.png"));
         iB1 = new Image(texture1);
         iB2 = new Image(texture1);
         iB3 = new Image(texture1);

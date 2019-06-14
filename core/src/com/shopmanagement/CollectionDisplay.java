@@ -39,42 +39,42 @@ public class CollectionDisplay  implements Screen {
 
         Gdx.input.setInputProcessor(stage);
 
-        Texture textureShop = new Texture("shop.jpg");
+        Texture textureShop = new Texture("core/assets/graphics/pictures/shop.jpg");
         shop = new Image(textureShop);
         shop.setSize(stage.getWidth(), stage.getHeight());
 
 
 
 
-        Texture f1 = new Texture(Gdx.files.internal("fighter_picture/Orc.jpg"));
+        Texture f1 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Orc.jpg"));
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(f1));
         fighter1 = new ImageButton(drawable);
 
-        Texture f2 = new Texture(Gdx.files.internal("fighter_picture/Nest of snakes.jpg"));
+        Texture f2 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Nest of snakes.jpg"));
         Drawable drawable2 = new TextureRegionDrawable(new TextureRegion(f2));
         fighter2 = new ImageButton(drawable2);
 
-        Texture f3 = new Texture(Gdx.files.internal("fighter_picture/Troll.jpg"));
+        Texture f3 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Troll.jpg"));
         Drawable drawable3 = new TextureRegionDrawable(new TextureRegion(f3));
         fighter3 = new ImageButton(drawable3);
 
-        Texture f4 = new Texture(Gdx.files.internal("fighter_picture/Berserker.jpg"));
+        Texture f4 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Berserker.jpg"));
         Drawable drawable4 = new TextureRegionDrawable(new TextureRegion(f4));
         fighter4 = new ImageButton(drawable4);
 
-        Texture f5 = new Texture(Gdx.files.internal("fighter_picture/Ninja.jpg"));
+        Texture f5 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Ninja.jpg"));
         Drawable drawable5 = new TextureRegionDrawable(new TextureRegion(f5));
         fighter5 = new ImageButton(drawable5);
 
-        Texture f6 = new Texture(Gdx.files.internal("fighter_picture/Dragon.jpg"));
+        Texture f6 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Dragon.jpg"));
         Drawable drawable6 = new TextureRegionDrawable(new TextureRegion(f6));
         fighter6 = new ImageButton(drawable6);
 
-        Texture f7 = new Texture(Gdx.files.internal("fighter_picture/Doppleganger.jpg"));
+        Texture f7 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Doppleganger.jpg"));
         Drawable drawable7 = new TextureRegionDrawable(new TextureRegion(f7));
         fighter7 = new ImageButton(drawable7);
 
-        Texture f8 = new Texture(Gdx.files.internal("fighter_picture/Wizard.jpg"));
+        Texture f8 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Wizard.jpg"));
         Drawable drawable8 = new TextureRegionDrawable(new TextureRegion(f8));
         fighter8 = new ImageButton(drawable8);
 
