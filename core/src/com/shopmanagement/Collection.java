@@ -27,7 +27,7 @@ public class Collection {
         weaponVector = new Vector<Weapon>();
         armorVector = new Vector<Armor>();
         treasureVector= new Vector<Treasure>();
-        this.collectionDisplay = new CollectionDisplay();
+        //this.collectionDisplay = new CollectionDisplay();
     }
 
     public Player getPlayer() {
@@ -164,9 +164,6 @@ public class Collection {
     {
         int choice = 0;
 
-        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.forceExit = false;
-        LwjglApplication game = new LwjglApplication(collectionDisplay, config);
 
         while(choice == 0) {
 
@@ -174,28 +171,28 @@ public class Collection {
 
             switch (choice) {
                 case 1:
-                    game.exit();
+
                     buyFighter(fighterVector.get(1));
 
                     break;
 
                 case 2:
-                    game.exit();
+
                     buyFighter(fighterVector.get(2));
                     break;
 
                 case 3:
-                    game.exit();
+
                     buyFighter(fighterVector.get(3));
                     break;
 
                 case 4 :
-                    game.exit();
+
                     buyFighter(fighterVector.get(4));
                     break;
 
                 case 5 :
-                    game.exit();
+
                     buyFighter(fighterVector.get(5));
                     break;
 

@@ -1,27 +1,29 @@
 package com.adventuregames;
 
 
-import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.shopmanagement.CollectionDisplay;
 
-public class GameDisplay extends ApplicationAdapter {
+public class GameDisplay implements Screen {
     private Stage stage;
+    private Game game;
     private TextButton buttonFightMode;
     private TextButton buttonMapMode;
     private TextButton buttonConnectedMode;
     private TextButton buttonShop;
     private TextButtonStyle textButtonStyle;
     private BitmapFont font;
-    private Skin skin;
-    private TextureAtlas buttonAtlas;
     private int choice = 0;
     private Image shop;
     private Image image;
@@ -29,13 +31,11 @@ public class GameDisplay extends ApplicationAdapter {
     private Image iB2;
     private Image iB3;
 
+    public GameDisplay(Game game) {
+        this.game = game;
+        stage = new Stage(new ScreenViewport());
 
 
-
-
-    @Override
-    public void create() {
-        stage = new Stage();
         Table table=new Table();
         table.setSize(stage.getWidth(),stage.getHeight());
         Texture texture = new Texture(Gdx.files.internal("main_background.png"));
@@ -57,6 +57,7 @@ public class GameDisplay extends ApplicationAdapter {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 choice = 1;
+                game.setScreen(new FightMenuDisplay(game));
             }
         });
         buttonMapMode = new TextButton("Adventure Mode", textButtonStyle);
@@ -64,6 +65,7 @@ public class GameDisplay extends ApplicationAdapter {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 choice = 2;
+
             }
         });
 
@@ -80,6 +82,7 @@ public class GameDisplay extends ApplicationAdapter {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 choice = 4;
+                game.setScreen(new CollectionDisplay(game));
             }
         });
 
@@ -119,26 +122,43 @@ public class GameDisplay extends ApplicationAdapter {
     }
 
     @Override
-    public void dispose() {
-        font.dispose();
-        buttonFightMode.clear();
-        buttonMapMode.clear();
-        buttonConnectedMode.clear();
-        stage.clear();
-        stage.dispose();
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
     }
+
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.act();
+        stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
     @Override
     public void pause() {
+
     }
 
     @Override
-    public void render() {
-        super.render();
-
-
-            stage.draw();
+    public void resume() {
 
     }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+    }
+
 
     public int getChoice(){
         return choice;

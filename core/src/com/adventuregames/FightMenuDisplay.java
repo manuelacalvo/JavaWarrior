@@ -1,8 +1,11 @@
 package com.adventuregames;
 
 
-import com.badlogic.gdx.ApplicationAdapter;
+
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -14,9 +17,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
-public class FightMenuDisplay extends ApplicationAdapter {
+public class FightMenuDisplay implements Screen {
     private Stage stage;
+    private Game game;
     private TextButton buttonPotion;
     private TextButton buttonRest;
     private TextButton buttonQuit;
@@ -33,13 +39,10 @@ public class FightMenuDisplay extends ApplicationAdapter {
     private  Image iB4;
 
 
+    public FightMenuDisplay(Game game) {
+        this.game = game;
+        stage = new Stage(new ScreenViewport());
 
-
-
-
-    @Override
-    public void create() {
-        stage = new Stage();
         Table table=new Table();
         table.setSize(stage.getWidth(),stage.getHeight());
         Gdx.input.setInputProcessor(stage);
@@ -125,14 +128,14 @@ public class FightMenuDisplay extends ApplicationAdapter {
 
     @Override
     public void dispose() {
-        font.dispose();
+        /*font.dispose();
         skin.dispose();
         buttonAtlas.dispose();
         buttonPotion.clear();
         buttonRest.clear();
         buttonQuit.clear();
         buttonFight.clear();
-        stage.clear();
+        stage.clear();*/
         stage.dispose();
     }
     @Override
@@ -140,12 +143,31 @@ public class FightMenuDisplay extends ApplicationAdapter {
     }
 
     @Override
-    public void render() {
-        super.render();
-
-
+    public void render(float delta) {
+        Gdx.gl.glClearColor(1, 1, 1, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        stage.act();
         stage.draw();
+    }
 
+    @Override
+    public void resize(int width, int height) {
+
+    }
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
     }
 
     public int getChoice(){

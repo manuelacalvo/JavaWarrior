@@ -21,7 +21,7 @@ public class FightController {
         this.fighter = null;
         this.nbFights = 0;
         this.restOnce = false;
-        this.fightMenuDisplay = new FightMenuDisplay();
+        //this.fightMenuDisplay = new FightMenuDisplay();
     }
 
     public Collection getColl() {
@@ -112,9 +112,6 @@ public class FightController {
     public void gameLoop()
     {
 
-        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-        config.forceExit = false;
-        LwjglApplication game = new LwjglApplication(fightMenuDisplay, config);
 
 
         for(int i=1; i< coll.getFighterVector().size(); i++)
