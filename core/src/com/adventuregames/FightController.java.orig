@@ -1,0 +1,187 @@
+package com.adventuregames;
+
+import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.fighterlvl.warrior.Fighter;
+import com.shopmanagement.Collection;
+
+
+public class FightController {
+    private Collection coll;
+    private Fighter fighter;
+    private boolean quitFight;
+    private int nbFights;
+    private boolean restOnce;
+    private FightMenuDisplay fightMenuDisplay;
+
+
+    public FightController(Collection coll) {
+        this.coll = coll;
+        this.quitFight = false;
+        this.fighter = null;
+        this.nbFights = 0;
+        this.restOnce = false;
+        this.fightMenuDisplay = new FightMenuDisplay();
+    }
+
+    public Collection getColl() {
+        return coll;
+    }
+
+    public boolean isRestOnce() {
+        return restOnce;
+    }
+
+    public boolean getQuitFight()
+    {
+        return quitFight;
+    }
+
+    public Fighter getFighter() {
+        return fighter;
+    }
+
+
+    public void setFighter(Fighter fighter) {
+        this.fighter = fighter;
+    }
+
+    public int getNbFights() {
+        return nbFights;
+    }
+
+    public void setNbFights(int nbFights) {
+        this.nbFights = nbFights;
+    }
+
+    public void setColl(Collection coll) {
+        this.coll = coll;
+    }
+
+    public void setQuitFight(boolean quitFight)
+    {
+        this.quitFight = quitFight;
+    }
+
+    public void setRestOnce(boolean restOnce) {
+        this.restOnce = restOnce;
+    }
+
+
+
+<<<<<<< HEAD:core/src/com/adventuregames/GameModel.java
+    /**
+     * Ask the user what he wants to do between two fights
+     * @param enemy the enemy the user is fighting - can hit him if he choses to rest
+     * @param action FIXME this variable does nothing
+     * @return choice : a number corresponding to user's choice
+     */
+    public int choiceMenuFight(Fighter enemy, int action)
+=======
+    public int choiceMenuFight(Fighter enemy)
+>>>>>>> 47608ab7b5406d03fffa2e98a604a7ce5220e048:core/src/com/adventuregames/FightController.java
+    {
+
+        int choice = 0;
+        fightMenuDisplay.setChoice(0);
+
+
+
+
+<<<<<<< HEAD:core/src/com/adventuregames/GameModel.java
+        //TODO : check the user answer and ask him as long as he does not provide a correct ([1-4]) answer. Also we could create a special Class for Command Line menus
+=======
+        while(choice == 0) {
+            choice = fightMenuDisplay.getChoice();
+>>>>>>> 47608ab7b5406d03fffa2e98a604a7ce5220e048:core/src/com/adventuregames/FightController.java
+
+            switch (choice) {
+                case 1:
+                    fighter.takeItem();
+                    break;
+
+                case 2:
+                    if (!isRestOnce()) {
+                        fighter.takeARest(enemy);
+                        setRestOnce(true);
+                    } else System.out.println("You already take a rest you can't do it again before the next fight");
+
+<<<<<<< HEAD:core/src/com/adventuregames/GameModel.java
+            case 2 :
+                if( isRestOnce() != true)
+                {
+                    fighter.takeARest(enemy);
+                    setRestOnce(true);
+                } else System.out.println("You already take a rest you can't do it again before the next fight");
+                // TODO : The user should be prompted again for his choice, here the function will return the incorrect value (2)
+=======
+                    break;
+>>>>>>> 47608ab7b5406d03fffa2e98a604a7ce5220e048:core/src/com/adventuregames/FightController.java
+
+                case 3:
+                    quitFight = true;
+                    System.out.println(" You choose to quit the game. You've got " + fighter.getHitPoints() + " life points and you've made " + nbFights + " fights");
+                    break;
+
+
+                case 4:
+
+
+            }
+        }
+        return choice;
+    }
+
+<<<<<<< HEAD:core/src/com/adventuregames/GameModel.java
+    /**
+     * The Game Loop
+     * Iterates through all the fighters in Collection
+     */
+=======
+
+>>>>>>> 47608ab7b5406d03fffa2e98a604a7ce5220e048:core/src/com/adventuregames/FightController.java
+    public void gameLoop()
+    {
+
+        LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
+        config.forceExit = false;
+        LwjglApplication game = new LwjglApplication(fightMenuDisplay, config);
+
+
+        for(int i=1; i< coll.getFighterVector().size(); i++)
+        {
+            if(!quitFight && fighter.isAlive()) {
+                nbFights ++;
+                int choice = 0;
+                coll.getFighterVector().get(0).fightTurn(coll.getFighterVector().get(i));
+                restOnce = false;
+
+                while(choice!= 4 && fighter.isAlive() && choice !=5 && !quitFight)
+                {
+
+                    choice = choiceMenuFight(coll.getFighterVector().get(i));
+
+                }
+
+
+            }
+
+
+        }
+        if(!fighter.isAlive())
+        {
+            System.out.println(" You are dead. You've got \" + fighter.getHitPoints() + \" life points and you've made \" + nbFights + \" fights\");");
+        }
+    }
+
+    public void shopOpen()
+    {
+        coll.loadFighters();
+        this.setFighter(this.coll.getFighterVector().get(0));
+    }
+
+    public void deskConstitution()
+    {
+
+    }
+}
