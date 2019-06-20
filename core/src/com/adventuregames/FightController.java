@@ -68,7 +68,7 @@ public class FightController {
     }
 
 
-
+    /// @Manuela
     public int choiceMenuFight(Fighter enemy)
     {
 

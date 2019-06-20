@@ -49,14 +49,17 @@ public class CollectionDisplay  implements Screen {
         Texture f1 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Orc.jpg"));
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(f1));
         fighter1 = new ImageButton(drawable);
+        fighter1.setSize(30,40);
 
         Texture f2 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Nest of snakes.jpg"));
         Drawable drawable2 = new TextureRegionDrawable(new TextureRegion(f2));
         fighter2 = new ImageButton(drawable2);
+        fighter2.setSize(30,40);
 
         Texture f3 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Troll.jpg"));
         Drawable drawable3 = new TextureRegionDrawable(new TextureRegion(f3));
         fighter3 = new ImageButton(drawable3);
+        fighter3.setSize(30,40);
 
         Texture f4 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Berserker.jpg"));
         Drawable drawable4 = new TextureRegionDrawable(new TextureRegion(f4));

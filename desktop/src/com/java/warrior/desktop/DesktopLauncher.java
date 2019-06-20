@@ -21,16 +21,5 @@ public class DesktopLauncher {
 		new LwjglApplication(new MyGame(), config);
 
 
-
-
-
-
-
-
-
-
-
-
-
 	}
 }
