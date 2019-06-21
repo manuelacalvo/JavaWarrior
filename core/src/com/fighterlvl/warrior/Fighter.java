@@ -295,62 +295,67 @@ public class Fighter {
 
     }
 
-    public void usePotion()
+    public String usePotion()
     {
-        this.getTreasures().get(0).setNumber(this.getTreasures().get(0).getNumber() - 1);
-        int random =  (int)(Math.random() * (10-1)) + 1;
-        int hitPoint;
-        if(random < 4) // 30%
-        {
-            hitPoint = this.randomNumberGenerator(5, 10);
-            this.setHitPoints(-hitPoint);
-            System.out.println("You earn " + hitPoint + " points");
-        }
-        else if(random < 8) //40%
-        {
-            hitPoint = this.randomNumberGenerator(11, 20);
-            this.setHitPoints(-hitPoint);
-            System.out.println("You earn " + hitPoint + " points");
-        }
-        else if(random < 10) //20%
-        {
-            hitPoint = this.randomNumberGenerator(21, 30);
-            this.setHitPoints(-hitPoint);
-            System.out.println("You earn " + hitPoint + " points");
-        }
-        else if(random < 11) //10%
-        {
-            hitPoint = this.randomNumberGenerator(1, 20);
-            this.setHitPoints(hitPoint);
-            System.out.println("You loose " + hitPoint + " points");
-        }
+        String str = " ";
+        if(this.getTreasures().get(0).getNumber()> 0) {
+            this.getTreasures().get(0).setNumber(this.getTreasures().get(0).getNumber() - 1);
+            int random = (int) (Math.random() * (10 - 1)) + 1;
+            int hitPoint;
+            if (random < 4) // 30%
+            {
+                hitPoint = this.randomNumberGenerator(5, 10);
+                this.setHitPoints(-hitPoint);
+                str = "You earn " + hitPoint + " points";
+            } else if (random < 8) //40%
+            {
+                hitPoint = this.randomNumberGenerator(11, 20);
+                this.setHitPoints(-hitPoint);
+                str = "You earn " + hitPoint + " points";
+            } else if (random < 10) //20%
+            {
+                hitPoint = this.randomNumberGenerator(21, 30);
+                this.setHitPoints(-hitPoint);
+                str = "You earn " + hitPoint + " points";
+            } else if (random < 11) //10%
+            {
+                hitPoint = this.randomNumberGenerator(1, 20);
+                this.setHitPoints(hitPoint);
+                str = "You loose " + hitPoint + " points";
+            }
 
-        System.out.println("Hit points" + this.hitPoints);
+            str += "\n" + "Hit points" + this.hitPoints;
+        }
+        else str = "You don't have any potions ";
+
+        return str;
 
     }
 
-    public void useScroll()
+    public String useScroll()
     {
-        this.getTreasures().get(1).setNumber(this.getTreasures().get(1).getNumber() - 1);
-        int random = randomNumberGenerator(1,3);
+        String str = " ";
 
-        if(random == 1)
-        {
-            System.out.println("You double your points ");
-            this.setHitPoints(-(this.getHitPoints()*2));
+        if(this.getTreasures().get(1).getNumber() > 0) {
+            this.getTreasures().get(1).setNumber(this.getTreasures().get(1).getNumber() - 1);
+            int random = randomNumberGenerator(1, 3);
 
+            if (random == 1) {
+                str = "You double your points ";
+                this.setHitPoints(-(this.getHitPoints() * 2));
+
+            } else if (random == 2) {
+                str = "The scroll do nothing sorry";
+            } else if (random == 3) {
+                str = "The scroll kill you... Too bad!!";
+                this.setHitPoints(this.getHitPoints());
+
+
+            }
         }
-        else if(random == 2)
-        {
-            System.out.println("The scroll do nothing sorry");
-        }
-        else if(random == 3)
-        {
-            System.out.println("The scroll kill you... Too bad!!");
-            this.setHitPoints(this.getHitPoints());
+        else str = "You don't have scrolls";
 
-
-        }
+        return  str;
     }
 
     public void takeItem()

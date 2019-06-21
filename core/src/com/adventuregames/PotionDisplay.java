@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.fighterlvl.warrior.Fighter;
 
 
 public class PotionDisplay implements Screen{
@@ -24,8 +25,6 @@ public class PotionDisplay implements Screen{
     private String str;
     private ImageTextButton buttonPotion;
     private ImageTextButton buttonScroll;
-    private ImageTextButton buttonQuit;
-    private ImageTextButton buttonFight;
     private ImageTextButton.ImageTextButtonStyle textButtonStyle;
     private ImageTextButton.ImageTextButtonStyle textButtonStyle2;
     private Skin skin;
@@ -36,11 +35,9 @@ public class PotionDisplay implements Screen{
 
 
 
-    public PotionDisplay(Game aGame) {
+    public PotionDisplay(Game aGame, Fighter fighter) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
-        VerticalGroup verticalGroup=new VerticalGroup();
-        verticalGroup.setSize(stage.getWidth(),stage.getHeight());
         Gdx.input.setInputProcessor(stage);
         batch = new SpriteBatch();
         Texture texture = new Texture(Gdx.files.internal("core/assets/graphics/Background/bg.png"));
@@ -66,10 +63,12 @@ public class PotionDisplay implements Screen{
 
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                game.setScreen(new PotionDisplay(game));
+                str = fighter.usePotion();
             }
         });
-        buttonPotion.getImage().setSize(50,50);
+        buttonPotion.setPosition(50, 300);
+        buttonPotion.setSize(70,70);
+
 
         textButtonStyle2 = new ImageTextButton.ImageTextButtonStyle();
         textButtonStyle2.font = font;
@@ -77,25 +76,22 @@ public class PotionDisplay implements Screen{
         textButtonStyle2.down = skin.getDrawable("scroll");
 
         buttonScroll = new ImageTextButton("Scroll", textButtonStyle2);
-        buttonScroll.setPosition(50, 30);
-        buttonScroll.getImageCell().size(50,50);
+        buttonScroll.setPosition(50, 200);
+        buttonScroll.setSize(70,70);
         buttonScroll.addListener(new ChangeListener() {
 
 
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                //game.setScreen(new PotionDisplay(game));
+                str = fighter.useScroll();
             }
         });
-        buttonScroll.getImage().setSize(50,50);
 
-
-        verticalGroup.addActor(buttonPotion);
-        verticalGroup.addActor(buttonScroll);
 
 
         stage.addActor(image);
-        stage.addActor(verticalGroup);
+        stage.addActor(buttonPotion);
+        stage.addActor(buttonScroll);
     }
 
 
@@ -116,7 +112,7 @@ public class PotionDisplay implements Screen{
         stage.act();
         stage.draw();
         batch.begin();
-        font.draw(batch, str, 100, 100);
+        font.draw(batch, str, 300, 380);
         batch.end();
 
 

@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.fighterlvl.warrior.Fighter;
 
 public class FightMenuDisplay implements Screen {
     private Stage stage;
@@ -30,7 +31,7 @@ public class FightMenuDisplay implements Screen {
 
 
 
-    public FightMenuDisplay(Game aGame) {
+    public FightMenuDisplay(Game aGame, Fighter fighter) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table=new Table();
@@ -53,7 +54,7 @@ public class FightMenuDisplay implements Screen {
 
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                game.setScreen(new PotionDisplay(game));
+                game.setScreen(new PotionDisplay(game, fighter));
             }
         });
 

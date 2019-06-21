@@ -18,7 +18,7 @@ public class DesktopLauncher {
 		fightController.shopOpen();
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		new LwjglApplication(new MyGame(), config);
+		new LwjglApplication(new MyGame(player), config);
 
 
 	}
