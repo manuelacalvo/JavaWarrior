@@ -1,5 +1,4 @@
-package com.adventuregames;
-
+package com.Display;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -13,33 +12,35 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
-import com.shopmanagement.CollectionDisplay;
 
-public class GameDisplay implements Screen {
+public class FightMenuDisplay implements Screen {
     private Stage stage;
     private Game game;
+    private ImageTextButton buttonPotion;
+    private ImageTextButton buttonRest;
+    private ImageTextButton buttonQuit;
+    private ImageTextButton buttonFight;
+    private ImageTextButton.ImageTextButtonStyle textButtonStyle;
+    private BitmapFont font;
     private Skin skin;
     private TextureAtlas buttonAtlas;
-    private ImageTextButton buttonFightMode;
-    private ImageTextButton buttonMapMode;
-    private ImageTextButton buttonConnectedMode;
-    private ImageTextButton buttonShop;
-    private ImageTextButton.ImageTextButtonStyle textButtonStyle;
-    private ImageTextButton.ImageTextButtonStyle textButtonStyleShop;
-    private BitmapFont font;
     private int choice = 0;
     private Image image;
 
 
-    public GameDisplay(Game aGame, Player player) {
+
+
+    public FightMenuDisplay(Game aGame, Player player) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table=new Table();
         table.setSize(stage.getWidth(),stage.getHeight());
+        Gdx.input.setInputProcessor(stage);
         Texture texture = new Texture(Gdx.files.internal("core/assets/graphics/pictures/main_background.png"));
         image = new Image(texture);
-
+        image.setSize(stage.getWidth(), stage.getHeight());
         font = new BitmapFont();
         skin = new Skin();
         buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
@@ -48,63 +49,63 @@ public class GameDisplay implements Screen {
         textButtonStyle.font = font;
         textButtonStyle.up = skin.getDrawable("partyCancelSel");
         textButtonStyle.down = skin.getDrawable("partyCancelSel");
+        buttonPotion = new ImageTextButton("Potion/Scroll", textButtonStyle);
+        buttonPotion.addListener(new ChangeListener() {
 
-        textButtonStyleShop = new ImageTextButton.ImageTextButtonStyle();
-        textButtonStyleShop.font = font;
-        textButtonStyleShop.up = skin.getDrawable("item725");
-        textButtonStyleShop.down = skin.getDrawable("item725");
 
-        buttonFightMode = new ImageTextButton("Fight Mode", textButtonStyle);
-        buttonFightMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                choice = 1;
-                ///François c'est ici qu'il faut renvoyer à ton écran
-                game.setScreen(new FightMenuDisplay(game, player.getFighter()));
-            }
-        });
-        buttonMapMode = new ImageTextButton("Adventure Mode", textButtonStyle);
-        buttonMapMode.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                choice = 2;
+                game.setScreen(new PotionDisplay(game, player));
             }
         });
 
-        buttonConnectedMode = new ImageTextButton("Connected Mode", textButtonStyle);
-        buttonConnectedMode.addListener(new ChangeListener() {
+
+
+        buttonRest = new ImageTextButton("Rest", textButtonStyle);
+        buttonRest.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                game.setScreen(new RestDisplay(game, player));
+
+
+            }
+        });
+        buttonQuit = new ImageTextButton("Quit",textButtonStyle);
+        buttonQuit.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 choice = 3;
+
+
             }
         });
-
-        buttonShop = new ImageTextButton("Shop", textButtonStyleShop);
-        buttonShop.addListener(new ChangeListener() {
+        buttonFight = new ImageTextButton("Next Fight",textButtonStyle);
+        buttonFight.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 choice = 4;
-                game.setScreen(new CollectionDisplay(game));
+
+
             }
         });
 
-        buttonShop.setPosition(10, 10);
 
-
-        table.add(buttonFightMode);
-        table.add(buttonMapMode);
-        table.add(buttonConnectedMode);
-
+        table.add(buttonPotion);
+        table.add(buttonRest);
+        table.add(buttonQuit);
+        table.add(buttonFight);
 
         stage.addActor(image);
         stage.addActor(table);
-        stage.addActor(buttonShop);
-
     }
 
+
     @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
+    public void dispose() {
+        stage.dispose();
+    }
+    @Override
+    public void pause() {
     }
 
     @Override
@@ -119,12 +120,6 @@ public class GameDisplay implements Screen {
     public void resize(int width, int height) {
 
     }
-
-    @Override
-    public void pause() {
-
-    }
-
     @Override
     public void resume() {
 
@@ -135,14 +130,17 @@ public class GameDisplay implements Screen {
 
     }
 
-    @Override
-    public void dispose() {
-        stage.dispose();
-    }
 
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
+    }
 
     public int getChoice(){
         return choice;
     }
 
+    public void setChoice(int choice) {
+        this.choice = choice;
+    }
 }

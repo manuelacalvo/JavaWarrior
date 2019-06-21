@@ -1,4 +1,4 @@
-package com.shopmanagement;
+package com.Display;
 
 
 import com.badlogic.gdx.Game;
@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.fighterlvl.warrior.Player;
 
 
 public class CollectionDisplay  implements Screen {
@@ -33,7 +34,7 @@ public class CollectionDisplay  implements Screen {
 
 
 
-    public CollectionDisplay(Game aGame) {
+    public CollectionDisplay(Game aGame, Player player) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
 

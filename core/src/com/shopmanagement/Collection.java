@@ -1,7 +1,6 @@
 package com.shopmanagement;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.Display.CollectionDisplay;
 import com.fighterlvl.warrior.*;
 
 import java.io.File;

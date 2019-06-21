@@ -16,6 +16,7 @@ public class Fighter {
     private int hitPoints;
     private int generator;
     private int price;
+    private boolean restOnce;
 
 
 
@@ -63,6 +64,14 @@ public class Fighter {
 
     public ArrayList<Treasure> getTreasures() {
         return treasures;
+    }
+
+    public boolean isRestOnce() {
+        return restOnce;
+    }
+
+    public void setRestOnce(boolean restOnce) {
+        this.restOnce = restOnce;
     }
 
     public void setName(String name)
@@ -151,6 +160,8 @@ public class Fighter {
      */
 
     public void fight(Fighter enemy){
+
+        this.setRestOnce(false);
         System.out.println("Turn of " + this.name + "life : " + this.getHitPoints());
         //Different attacks based on weapon's attacks per turn
         if(this.isAlive() && enemy.isAlive()) {
@@ -274,25 +285,27 @@ public class Fighter {
         getEnnemyTreasure(enemy);
     }
 
-    public void takeARest(Fighter enemy)
+    public String takeARest(Fighter enemy)
     {
-        int attack = randomNumberGenerator(0, 1);
+        String str = " ";
 
-            if(attack == 0)
-            {
+        if(!this.isRestOnce()) {
+            int attack = randomNumberGenerator(0, 1);
+
+            if (attack == 0) {
                 int random = randomNumberGenerator(11, 20);
                 this.setHitPoints(-random);
-                System.out.println("You choose to rest and you regain " + random + "points");
+                str = "You choose to rest and you regain " + random + "points";
 
-            }else
-            {
-                System.out.println("You choose to rest but your enemy attacked you, you don't regain any points... ");
+            } else {
+                str = "You choose to rest but your enemy attacked you, you don't regain any points... ";
                 enemy.fight(this);
-                System.out.println("You have " + hitPoints + " life points");
-
+                str += "\n" + "You have " + hitPoints + " life points";
+                this.setRestOnce(true);
             }
+        }
 
-
+        return str;
     }
 
     public String usePotion()

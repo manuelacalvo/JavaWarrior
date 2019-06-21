@@ -1,5 +1,6 @@
 package com.adventuregames;
 
+import com.Display.GameDisplay;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.fighterlvl.warrior.Player;

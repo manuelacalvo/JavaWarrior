@@ -1,7 +1,6 @@
 package com.adventuregames;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.Display.FightMenuDisplay;
 import com.fighterlvl.warrior.Fighter;
 import com.shopmanagement.Collection;
 
