@@ -3,6 +3,7 @@ package com.adventuregames;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -12,11 +13,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.fighterlvl.warrior.Fighter;
 
 public class FightDisplay implements Screen {
 
     private Game game;
     private Stage stage;
+    private Fighter[] enemies;
 
 
     public FightDisplay(Game theGame){
@@ -24,15 +27,24 @@ public class FightDisplay implements Screen {
         this.game=theGame;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-
+        // TABLE
         Table tableUI=new Table();
         tableUI.setFillParent(true);
+        //ASSET MANAGER
+        AssetManager assetManager = new AssetManager();
+        String path_background = "core/assets/graphics/pictures/main_background.png";
+        String path_SkinUI = "core/assets/graphics/ui/pixthulhu-ui/pixthulhu-ui.json";
+        assetManager.load(path_background,Texture.class);
+        assetManager.load(path_SkinUI,Skin.class);
+        assetManager.finishLoading();
 
-        Texture backgroundTexture = new Texture(Gdx.files.internal("core/assets/graphics/pictures/main_background.png"));
+        // BACKGROUND
+        Texture backgroundTexture = assetManager.get(path_background,Texture.class);
+
         Image backgroundImage = new Image(backgroundTexture);
         backgroundImage.setFillParent(true);
-
-        Skin UISkin = new Skin(Gdx.files.internal("core/assets/graphics/ui/pixthulhu-ui/pixthulhu-ui.json"));
+        //SKIN
+        Skin UISkin = assetManager.get(path_SkinUI,Skin.class);
 
         Button superButt = new TextButton("Text Button", UISkin,"default");
         superButt.setSize(400,100);
@@ -60,6 +72,16 @@ public class FightDisplay implements Screen {
         stage.addActor(backgroundImage);
         stage.addActor(tableUI);
 
+
+    }
+
+    /**
+     *
+     */
+    private void loadEnemy(/*Fighter enemy*/){
+
+        Texture enemyTexture = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Berserker.jpg"));
+        Image enemy1Image = new Image(enemyTexture);
 
     }
 
