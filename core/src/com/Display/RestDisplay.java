@@ -30,6 +30,7 @@ public class RestDisplay implements Screen {
 
 
 
+
     public RestDisplay(Game aGame, Player player) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
@@ -40,6 +41,11 @@ public class RestDisplay implements Screen {
         image.setSize(stage.getWidth(), stage.getHeight());
         font = new BitmapFont();
         str = player.getFighter().takeARest(player.getEnnemi());
+        if(str.charAt(0) == ' ')
+        {
+            //game.setScreen(new GameDisplay(game, player));
+        }
+
 
         Skin skin = new Skin();
         textButtonStyle3 = new ImageTextButton.ImageTextButtonStyle();
@@ -55,7 +61,9 @@ public class RestDisplay implements Screen {
 
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str = player.getFighter().useScroll();
+
+                //game.setScreen(new GameDisplay(game, player));
+
             }
         });
 

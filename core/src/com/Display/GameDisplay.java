@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Player;
+import com.shopmanagement.Collection;
 
 public class GameDisplay implements Screen {
     private Stage stage;
@@ -31,7 +32,7 @@ public class GameDisplay implements Screen {
     private Image image;
 
 
-    public GameDisplay(Game aGame, Player player) {
+    public GameDisplay(Game aGame, Player player, Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table=new Table();
@@ -59,7 +60,7 @@ public class GameDisplay implements Screen {
             public void changed (ChangeEvent event, Actor actor) {
                 choice = 1;
                 ///François c'est ici qu'il faut renvoyer à ton écran
-                game.setScreen(new FightMenuDisplay(game, player));
+               game.setScreen(new FightMenuDisplay(game, player));
             }
         });
         buttonMapMode = new ImageTextButton("Adventure Mode", textButtonStyle);
@@ -83,7 +84,7 @@ public class GameDisplay implements Screen {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 choice = 4;
-                game.setScreen(new CollectionDisplay(game, player));
+                game.setScreen(new CollectionDisplay(game, player, coll));
             }
         });
 

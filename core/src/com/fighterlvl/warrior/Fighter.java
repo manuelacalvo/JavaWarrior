@@ -287,7 +287,7 @@ public class Fighter {
 
     public String takeARest(Fighter enemy)
     {
-        String str = " ";
+        String str = "";
 
         if(!this.isRestOnce()) {
             int attack = randomNumberGenerator(0, 1);
@@ -298,7 +298,7 @@ public class Fighter {
                 str = "You choose to rest and you regain " + random + "points";
 
             } else {
-                str = "You choose to rest but your enemy attacked you, you don't regain any points... ";
+                str = " You choose to rest but your enemy attacked you, you don't regain any points... ";
                 enemy.fight(this);
                 str += "\n" + "You have " + hitPoints + " life points";
                 this.setRestOnce(true);

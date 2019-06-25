@@ -26,7 +26,6 @@ public class Collection {
         weaponVector = new Vector<Weapon>();
         armorVector = new Vector<Armor>();
         treasureVector= new Vector<Treasure>();
-        //this.collectionDisplay = new CollectionDisplay();
     }
 
     public Player getPlayer() {
@@ -159,54 +158,20 @@ public class Collection {
     }
 
 
-    public void openShop()
+
+    public String buyFighter(Fighter f)
     {
-        int choice = 0;
+        String str = "";
 
-
-        while(choice == 0) {
-
-            choice = collectionDisplay.getChoice();
-
-            switch (choice) {
-                case 1:
-
-                    buyFighter(fighterVector.get(1));
-
-                    break;
-
-                case 2:
-
-                    buyFighter(fighterVector.get(2));
-                    break;
-
-                case 3:
-
-                    buyFighter(fighterVector.get(3));
-                    break;
-
-                case 4 :
-
-                    buyFighter(fighterVector.get(4));
-                    break;
-
-                case 5 :
-
-                    buyFighter(fighterVector.get(5));
-                    break;
-
-            }
-        }
-
-    }
-    public void buyFighter(Fighter f)
-    {
         if(getPlayer().getMoney()> f.getPrice())
         {
-            System.out.println("You buy a new fighter");
+            str = "You buy a new fighter";
             getPlayer().setMoney(-f.getPrice());
             getPlayer().setCollectionFighter(f);
         }
+        str = "You can't buy it you don't have enough money";
+
+        return  str;
     }
 
     public void buyArmor(Armor armor)

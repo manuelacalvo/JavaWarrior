@@ -103,7 +103,7 @@ public class PotionDisplay implements Screen{
 
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str = player.getFighter().useScroll();
+                game.setScreen(new FightMenuDisplay(game, player));
             }
         });
 

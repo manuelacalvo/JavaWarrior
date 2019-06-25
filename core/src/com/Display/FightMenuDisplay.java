@@ -74,8 +74,7 @@ public class FightMenuDisplay implements Screen {
         buttonQuit.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                choice = 3;
-
+                game.setScreen(new GameDisplay(game, player, null));
 
             }
         });
@@ -83,7 +82,7 @@ public class FightMenuDisplay implements Screen {
         buttonFight.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                choice = 4;
+              //  game.setScreen(new GameDisplay(game, player));
 
 
             }
