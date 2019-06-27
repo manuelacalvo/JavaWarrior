@@ -18,7 +18,7 @@ import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
 
 
-public class CollectionDisplay  implements Screen {
+public class CollectionFighterDisplay implements Screen {
 
     private Stage stage;
     private Game game;
@@ -39,25 +39,46 @@ public class CollectionDisplay  implements Screen {
     private Skin skin;
     private TextureAtlas buttonAtlas;
     private Image gold;
-    private  Image silver;
+    private Image gold1;
+    private Image gold2;
+    private Image gold3;
+    private Image gold4;
+    private Image gold5;
+    private Image gold6;
+    private Image gold7;
+    private Image gold8;
     private String strGold;
-    private String strSilver;
     private String str;
-    private TextArea price1;
-    private Table price1Gold;
+    private TextArea price1Gold;
+    private TextArea price2Gold;
+    private TextArea price3Gold;
+    private TextArea price4Gold;
+    private TextArea price5Gold;
+    private TextArea price6Gold;
+    private TextArea price7Gold;
+    private TextArea price8Gold;
+    private Table price1Table;
+    private Table price2Table;
+    private Table price3Table;
+    private Table price4Table;
+    private Table price5Table;
+    private Table price6Table;
+    private Table price7Table;
+    private Table price8Table;
+    private Player player;
 
 
 
 
 
 
-    public CollectionDisplay(Game aGame, Player player, Collection coll) {
+    public CollectionFighterDisplay(Game aGame, Player player, Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         batch = new SpriteBatch();
         Table table=new Table();
         Table table2 =new Table();
-
+        this.player = player;
 
         Gdx.input.setInputProcessor(stage);
 
@@ -65,8 +86,7 @@ public class CollectionDisplay  implements Screen {
         shop = new Image(textureShop);
         shop.setSize(stage.getWidth(), stage.getHeight());
 
-        strGold = "20";
-        strSilver  = "50";
+
         str = "Welcome to the shop";
 
         font = new BitmapFont();
@@ -85,7 +105,7 @@ public class CollectionDisplay  implements Screen {
 
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                game.setScreen(new GameDisplay(game, player, coll));
+                game.setScreen(new CollectionWeaponDisplay(game, player, coll));
             }
         });
 
@@ -103,51 +123,69 @@ public class CollectionDisplay  implements Screen {
         fighter1 = new ImageButton(drawable);
         fighter1.setSize(30,40);
         Skin skin2 = new Skin(Gdx.files.internal("uiskin.json"));
-        price1 = new TextArea("5", skin2); //Integer.toString(coll.getFighterVector().get(1).getPrice())
-        price1.setPosition(300, 200);
+        price1Gold = new TextArea(Integer.toString(coll.getFighterVector().get(1).getPrice()), skin2);//
+
+
+
 
 
         Texture f2 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Nest of snakes.jpg"));
         Drawable drawable2 = new TextureRegionDrawable(new TextureRegion(f2));
         fighter2 = new ImageButton(drawable2);
         fighter2.setSize(30,40);
+        price2Gold = new TextArea(Integer.toString(coll.getFighterVector().get(2).getPrice()), skin2);//
+
 
         Texture f3 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Troll.jpg"));
         Drawable drawable3 = new TextureRegionDrawable(new TextureRegion(f3));
         fighter3 = new ImageButton(drawable3);
         fighter3.setSize(30,40);
+        price3Gold = new TextArea(Integer.toString(coll.getFighterVector().get(3).getPrice()), skin2);//
+
 
         Texture f4 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Berserker.jpg"));
         Drawable drawable4 = new TextureRegionDrawable(new TextureRegion(f4));
         fighter4 = new ImageButton(drawable4);
+        price4Gold = new TextArea(Integer.toString(coll.getFighterVector().get(4).getPrice()), skin2);//
+
 
         Texture f5 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Ninja.jpg"));
         Drawable drawable5 = new TextureRegionDrawable(new TextureRegion(f5));
         fighter5 = new ImageButton(drawable5);
+        price5Gold = new TextArea(Integer.toString(coll.getFighterVector().get(5).getPrice()), skin2);//
+
 
         Texture f6 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Dragon.jpg"));
         Drawable drawable6 = new TextureRegionDrawable(new TextureRegion(f6));
         fighter6 = new ImageButton(drawable6);
+        price6Gold = new TextArea(Integer.toString(coll.getFighterVector().get(6).getPrice()), skin2);//
+
 
         Texture f7 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Doppleganger.jpg"));
         Drawable drawable7 = new TextureRegionDrawable(new TextureRegion(f7));
         fighter7 = new ImageButton(drawable7);
+        price7Gold = new TextArea(Integer.toString(coll.getFighterVector().get(7).getPrice()), skin2);//
+
 
         Texture f8 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Wizard.jpg"));
         Drawable drawable8 = new TextureRegionDrawable(new TextureRegion(f8));
         fighter8 = new ImageButton(drawable8);
+        price8Gold = new TextArea(Integer.toString(coll.getFighterVector().get(8).getPrice()), skin2);//
+
 
         Texture textureGold  = new Texture(Gdx.files.internal("core/assets/graphics/items/gold.PNG"));
         Drawable drawableGold = new TextureRegionDrawable(new TextureRegion(textureGold));
         gold = new Image(drawableGold);
-        gold.setPosition(350,30);
-        gold.setSize(50, 50);
-
-        Texture textureSilver  = new Texture(Gdx.files.internal("core/assets/graphics/items/silver.PNG"));
-        Drawable drawableSilver = new TextureRegionDrawable(new TextureRegion(textureSilver));
-        silver = new Image(drawableSilver);
-        silver.setPosition(350,30);
-        silver.setSize(50, 50);
+        gold.setPosition(240, 10);
+        gold.setSize(50,50);
+        gold1 = new Image(drawableGold);
+        gold2= new Image(drawableGold);
+        gold3 = new Image(drawableGold);
+        gold4 = new Image(drawableGold);
+        gold5 = new Image(drawableGold);
+        gold6 = new Image(drawableGold);
+        gold7 = new Image(drawableGold);
+        gold8 = new Image(drawableGold);
 
 
 
@@ -215,18 +253,61 @@ public class CollectionDisplay  implements Screen {
         table2.add(fighter8).size(100, 100);
         table2.setPosition(315, 225);
 
-        price1Gold = new Table();
-        //price1Gold.add(gold);
-        price1Gold.add(price1);
-        price1Gold.setPosition(200,100);
+        price1Table = new Table();
+        price1Table.add(gold1).size(30, 30);
+        price1Table.add(price1Gold).size(30,30);
+        price1Table.setPosition(170,350);
+
+        price2Table = new Table();
+        price2Table.add(gold2).size(30, 30);
+        price2Table.add(price2Gold).size(30,30);
+        price2Table.setPosition(270,350);
+
+        price3Table = new Table();
+        price3Table.add(gold3).size(30, 30);
+        price3Table.add(price3Gold).size(30,30);
+        price3Table.setPosition(380,350);
+
+        price4Table = new Table();
+        price4Table.add(gold4).size(30, 30);
+        price4Table.add(price4Gold).size(30,30);
+        price4Table.setPosition(480,350);
+
+        price5Table = new Table();
+        price5Table.add(gold5).size(30, 30);
+        price5Table.add(price5Gold).size(30,30);
+        price5Table.setPosition(170,170);
+
+        price6Table = new Table();
+        price6Table.add(gold6).size(30, 30);
+        price6Table.add(price6Gold).size(30,30);
+        price6Table.setPosition(270,170);
+
+        price7Table = new Table();
+        price7Table.add(gold7).size(30, 30);
+        price7Table.add(price7Gold).size(30,30);
+        price7Table.setPosition(365,170);
+
+        price8Table = new Table();
+        price8Table.add(gold8).size(30, 30);
+        price8Table.add(price8Gold).size(30,30);
+        price8Table.setPosition(475,170);
+
+
 
         stage.addActor(shop);
         stage.addActor(buttonContinue);
         stage.addActor(table);
         stage.addActor(table2);
-        stage.addActor(price1Gold);
-        stage.addActor(silver);
-
+        stage.addActor(gold);
+        stage.addActor(price1Table);
+        stage.addActor(price2Table);
+        stage.addActor(price3Table);
+        stage.addActor(price4Table);
+        stage.addActor(price5Table);
+        stage.addActor(price6Table);
+        stage.addActor(price7Table);
+        stage.addActor(price8Table);
 
 
     }
@@ -254,14 +335,12 @@ public class CollectionDisplay  implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        strGold = Integer.toString(player.getMoney());
         stage.act();
         stage.draw();
         batch.begin();
-        font.draw(batch, strGold, gold.getX() + 60, gold.getY() + 20);
-        font.draw(batch, strSilver, silver.getX() + 60, silver.getY() + 20);
-        font.draw(batch, str, price1Gold.getX() +50, price1Gold.getY() - 10 );
-        //font.draw(batch, price1, 155, 375 );
+        font.draw(batch, strGold, 300, 40);
+        font.draw(batch, str, 250, 80 );
         batch.end();
     }
 
@@ -278,12 +357,6 @@ public class CollectionDisplay  implements Screen {
     public void hide() {
 
     }
-     public int getChoice(){
-        return choice;
-    }
 
-    public void setChoice(int choice) {
-        this.choice = choice;
-    }
 }
 

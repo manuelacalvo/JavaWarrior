@@ -1,6 +1,6 @@
 package com.shopmanagement;
 
-import com.Display.CollectionDisplay;
+import com.Display.CollectionFighterDisplay;
 import com.fighterlvl.warrior.*;
 
 import java.io.File;
@@ -16,7 +16,7 @@ public class Collection {
     private Vector<Weapon> weaponVector;
     private Vector<Armor> armorVector ;
     private Vector<Treasure> treasureVector ;
-    private CollectionDisplay collectionDisplay;
+    private CollectionFighterDisplay collectionDisplay;
 
 
     public Collection( Player player)
@@ -107,15 +107,19 @@ public class Collection {
             int potionNumber = Integer.parseInt(read_f.next());
             int scrollNumber = Integer.parseInt(read_f.next());
             int goldNumber = Integer.parseInt(read_f.next());
-            int silverNumber = Integer.parseInt(read_f.next());
-
 
 
             Weapon weapon = new Weapon(weaponName,attacksPerTurn,minDamage,maxDamage, takeableWeapon, priceWeapon);
-            setWeaponVector(weapon);
+            if(weapon.getTakeable()) {
+                setWeaponVector(weapon);
+                System.out.println(weapon.getName());
+            }
             Armor armor1 = new Armor(nameArmor1, 1, takeable1,protection1, priceArmor1);
-            setArmorVector(armor1);
-
+            if(armor1.getTakeable())
+            {
+                setArmorVector(armor1);
+                System.out.println(armor1.getName());
+            }
 
 
             Treasure potion = new Treasure("potion", 1, potionNumber, 15);
@@ -128,9 +132,6 @@ public class Collection {
             Treasure gold = new Treasure("gold", 3, goldNumber, 0);
             treasures.add(gold);
 
-            Treasure silver = new Treasure("silver", 4, silverNumber, 0);
-            treasures.add(silver);
-
 
             Fighter f = new Fighter(fighterName, weapon, armor1, treasures, hitPoints, 0, priceFigter);
 
@@ -139,7 +140,12 @@ public class Collection {
             {
                 Armor armor2= new Armor(nameArmor2, 2, takeable2, protection2, priceArmor2);
                 f.setArmor2(armor2);
-                setArmorVector(armor2);
+                if(armor2.getTakeable())
+                {
+                    setArmorVector(armor2);
+                    System.out.println(armor2.getName());
+                }
+
 
             }
 
@@ -166,10 +172,10 @@ public class Collection {
         if(getPlayer().getMoney()> f.getPrice())
         {
             str = "You buy a new fighter";
-            getPlayer().setMoney(-f.getPrice());
+            getPlayer().reducePrice(f.getPrice());
             getPlayer().setCollectionFighter(f);
         }
-        str = "You can't buy it you don't have enough money";
+        else str = "You can't buy it you don't have enough money";
 
         return  str;
     }

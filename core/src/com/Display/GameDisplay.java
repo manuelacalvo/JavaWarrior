@@ -84,7 +84,7 @@ public class GameDisplay implements Screen {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 choice = 4;
-                game.setScreen(new CollectionDisplay(game, player, coll));
+                game.setScreen(new CollectionFighterDisplay(game, player, coll));
             }
         });
 

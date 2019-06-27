@@ -1,6 +1,5 @@
 package com.fighterlvl.warrior;
 
-import com.shopmanagement.Collection;
 
 import java.util.ArrayList;
 
@@ -22,7 +21,7 @@ public class Player {
         this.collectionArmor = new ArrayList<Armor>();
         this.collectionTreasure = new ArrayList<Treasure>();
         this.collectionWeapon = new ArrayList<Weapon>();
-        this.money = 0;
+        this.money = 6;
         this.ennemi = null;
     }
 
@@ -95,25 +94,17 @@ public class Player {
     }
 
     public void setMoney(int money) {
-        this.money += money;
+        this.money = money;
+    }
+
+    public void reducePrice(int price)
+    {
+        this.money -= price;
     }
 
     public void setEnnemi(Fighter ennemi) {
         this.ennemi = ennemi;
     }
 
-    public void calculateMoney(ArrayList<Treasure> collectionTreasure)
-    {
-        for(int i= 0; i<collectionTreasure.size(); i++)
-        {
-            if(collectionTreasure.get(i).getName() == "gold")
-            {
-                setMoney(10);
-            }
-            if(collectionTreasure.get(i).getName() == "silver")
-            {
-                setMoney(1);
-            }
-        }
-    }
+
 }

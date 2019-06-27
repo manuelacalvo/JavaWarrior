@@ -111,6 +111,8 @@ public class Fighter {
         this.price = price;
     }
 
+
+
     @Override
     public String toString() {
         return "Fighter{" + "weapon=" + weapon + ", armor 1 =" + armor1 + ", armor 2 =" + armor2 + ", treasures=" + treasures + ", hitPoints=" + hitPoints + '}';
