@@ -1,6 +1,8 @@
 package com.Display;
 
 
+import com.adventuregames.MyGame;
+import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -18,7 +20,7 @@ import com.shopmanagement.Collection;
 
 public class GameDisplay implements Screen {
     private Stage stage;
-    private Game game;
+    private MyGame game;
     private Skin skin;
     private TextureAtlas buttonAtlas;
     private ImageTextButton buttonFightMode;
@@ -32,7 +34,7 @@ public class GameDisplay implements Screen {
     private Image image;
 
 
-    public GameDisplay(Game aGame, final Player player, final Collection coll) {
+    public GameDisplay(MyGame aGame, final Player player, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table=new Table();
@@ -56,14 +58,16 @@ public class GameDisplay implements Screen {
         textButtonStyleShop.down = skin.getDrawable("item725");
 
         buttonFightMode = new ImageTextButton("Fight Mode", textButtonStyle);
-        buttonFightMode.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                choice = 1;
-                ///François c'est ici qu'il faut renvoyer à ton écran
-               game.setScreen(new FightMenuDisplay(game, player));
-            }
-        });
+        buttonFightMode.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed (ChangeEvent event, Actor actor) {
+                        choice = 1;
+                        ///François c'est ici qu'il faut renvoyer à ton écran
+                       game.setScreen(new FightScreen(game));
+                    }
+                }
+        );
         buttonMapMode = new ImageTextButton("Adventure Mode", textButtonStyle);
         buttonMapMode.addListener(new ChangeListener() {
             @Override
