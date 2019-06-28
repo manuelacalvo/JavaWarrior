@@ -112,7 +112,7 @@ public class Collection {
             Weapon weapon = new Weapon(weaponName,attacksPerTurn,minDamage,maxDamage, takeableWeapon, priceWeapon);
             if(weapon.getTakeable()) {
                 setWeaponVector(weapon);
-                System.out.println(weapon.getName());
+               // System.out.println(weapon.getName());
             }
             Armor armor1 = new Armor(nameArmor1, 1, takeable1,protection1, priceArmor1);
             if(armor1.getTakeable())
@@ -144,6 +144,7 @@ public class Collection {
                 {
                     setArmorVector(armor2);
                     System.out.println(armor2.getName());
+
                 }
 
 
@@ -169,9 +170,9 @@ public class Collection {
     {
         String str = "";
 
-        if(getPlayer().getMoney()> f.getPrice())
+        if(getPlayer().getMoney()>= f.getPrice())
         {
-            str = "You buy a new fighter";
+            str = "You buy a " + f.getName();
             getPlayer().reducePrice(f.getPrice());
             getPlayer().setCollectionFighter(f);
         }
@@ -180,33 +181,45 @@ public class Collection {
         return  str;
     }
 
-    public void buyArmor(Armor armor)
+    public String buyArmor(Armor armor)
     {
-        if(getPlayer().getMoney()> armor.getPrice())
+        String str = "";
+        if(getPlayer().getMoney()>= armor.getPrice())
         {
-            System.out.println("You buy a new armor");
-            getPlayer().setMoney(-armor.getPrice());
+            str = "You buy a " + armor.getName();
+            getPlayer().reducePrice(armor.getPrice());
             getPlayer().setCollectionArmor(armor);
         }
+        else str = "You can't buy it you don't have enough money";
+
+        return  str;
     }
 
-    public void buyWeapon(Weapon weapon)
+    public String buyWeapon(Weapon weapon)
     {
-        if(getPlayer().getMoney()> weapon.getPrice())
+        String str = "";
+        if(getPlayer().getMoney()>= weapon.getPrice())
         {
-            System.out.println("You buy a new weapon");
-            getPlayer().setMoney(-weapon.getPrice());
+           str = "You buy a " + weapon.getName();
+            getPlayer().reducePrice(weapon.getPrice());
             getPlayer().setCollectionWeapon(weapon);
         }
+        else str = "You can't buy it you don't have enough money";
+
+        return str;
     }
 
-    public void buyTreasure(Treasure treasure)
+    public String buyTreasure(Treasure treasure)
     {
-        if(getPlayer().getMoney()> treasure.getPrice())
+        String str = "";
+        if(getPlayer().getMoney()>= treasure.getPrice())
         {
-            System.out.println("You buy a new treasure");
-            getPlayer().setMoney(-treasure.getPrice());
+            str = "You buy a " + treasure.getName();
+            getPlayer().reducePrice(treasure.getPrice());
             getPlayer().setCollectionTreasure(treasure);
         }
+        else str = "You can't buy it you don't have enough money";
+
+        return str;
     }
 }

@@ -72,6 +72,7 @@ public class CollectionFighterDisplay implements Screen {
 
 
 
+
     public CollectionFighterDisplay(Game aGame, Player player, Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
@@ -79,7 +80,7 @@ public class CollectionFighterDisplay implements Screen {
         Table table=new Table();
         Table table2 =new Table();
         this.player = player;
-
+        Skin skin2 = new Skin(Gdx.files.internal("uiskin.json"));
         Gdx.input.setInputProcessor(stage);
 
         Texture textureShop = new Texture("core/assets/graphics/pictures/shop.jpg");
@@ -109,6 +110,8 @@ public class CollectionFighterDisplay implements Screen {
             }
         });
 
+
+
         font = new BitmapFont();
         skin = new Skin();
         buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
@@ -122,7 +125,6 @@ public class CollectionFighterDisplay implements Screen {
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(f1));
         fighter1 = new ImageButton(drawable);
         fighter1.setSize(30,40);
-        Skin skin2 = new Skin(Gdx.files.internal("uiskin.json"));
         price1Gold = new TextArea(Integer.toString(coll.getFighterVector().get(1).getPrice()), skin2);//
 
 

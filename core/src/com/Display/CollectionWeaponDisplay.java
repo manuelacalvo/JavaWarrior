@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
+import javafx.scene.control.Tab;
 
 public class CollectionWeaponDisplay implements Screen {
 
@@ -22,16 +23,20 @@ public class CollectionWeaponDisplay implements Screen {
     private Game game;
     private Image shop;
     private ImageButton sword1;
-    private ImageButton leather_armor;
     private ImageButton dagger;
-    private ImageButton chain_mail;
     private ImageButton sword2;
-    private ImageButton shield;
     private ImageButton superSword;
+    private ImageButton sword3;
+    private ImageButton leatherArmor;
+    private ImageButton chainMail;
+    private ImageButton shield;
     private ImageButton chainMail2;
+    private ImageButton leatherArmor2;
+    private ImageButton heavyShield;
+    private ImageButton potion;
+    private ImageButton scroll;
     private ImageTextButton buttonContinue;
     private ImageTextButton.ImageTextButtonStyle textButtonStyle;
-    private int choice;
     private BitmapFont font;
     private Batch batch;
     private Skin skin;
@@ -48,6 +53,8 @@ public class CollectionWeaponDisplay implements Screen {
     private Image gold9;
     private Image gold10;
     private Image gold11;
+    private Image gold12;
+    private Image gold13;
     private String strGold;
     private String str;
     private TextArea price1Gold;
@@ -61,6 +68,8 @@ public class CollectionWeaponDisplay implements Screen {
     private TextArea price9Gold;
     private TextArea price10Gold;
     private TextArea price11Gold;
+    private TextArea price12Gold;
+    private TextArea price13Gold;
     private Table price1Table;
     private Table price2Table;
     private Table price3Table;
@@ -72,6 +81,8 @@ public class CollectionWeaponDisplay implements Screen {
     private Table price9Table;
     private Table price10Table;
     private Table price11Table;
+    private Table price12Table;
+    private Table price13Table;
     private Player player;
 
 
@@ -81,6 +92,7 @@ public class CollectionWeaponDisplay implements Screen {
         batch = new SpriteBatch();
         Table table=new Table();
         Table table2 =new Table();
+        Table table3 = new Table();
         this.player = player;
 
         Gdx.input.setInputProcessor(stage);
@@ -127,58 +139,83 @@ public class CollectionWeaponDisplay implements Screen {
         sword1.setSize(30,40);
         Skin skin2 = new Skin(Gdx.files.internal("uiskin.json"));
         price1Gold = new TextArea(Integer.toString(coll.getWeaponVector().get(0).getPrice()), skin2);//
-        //price1Gold.setDisabled(true);
 
-
-
-
-        Texture f2 = new Texture(Gdx.files.internal("core/assets/graphics/items/leather_armor.jpg"));
+        Texture f2 = new Texture(Gdx.files.internal("core/assets/graphics/items/dagger.jpg"));
         Drawable drawable2 = new TextureRegionDrawable(new TextureRegion(f2));
-        leather_armor = new ImageButton(drawable2);
-        leather_armor.setSize(30,40);
+        dagger = new ImageButton(drawable2);
+        dagger.setSize(30,40);
         price2Gold = new TextArea(Integer.toString(coll.getWeaponVector().get(1).getPrice()), skin2);//
 
-
-        Texture f3 = new Texture(Gdx.files.internal("core/assets/graphics/items/dagger.jpg"));
+        Texture f3 = new Texture(Gdx.files.internal("core/assets/graphics/items/sword.jpg"));
         Drawable drawable3 = new TextureRegionDrawable(new TextureRegion(f3));
-        dagger = new ImageButton(drawable3);
-        dagger.setSize(30,40);
+        sword2 = new ImageButton(drawable3);
+        sword2.setSize(30,40);
         price3Gold = new TextArea(Integer.toString(coll.getWeaponVector().get(2).getPrice()), skin2);//
 
-
-        Texture f4 = new Texture(Gdx.files.internal("core/assets/graphics/items/chain_mail.jpg"));
+        Texture f4 = new Texture(Gdx.files.internal("core/assets/graphics/items/sword.jpg"));
         Drawable drawable4 = new TextureRegionDrawable(new TextureRegion(f4));
-        chain_mail = new ImageButton(drawable4);
-        chain_mail.setSize(30,40);
-        price4Gold = new TextArea(Integer.toString(coll.getWeaponVector().get(3).getPrice()), skin2);//
-
+        superSword = new ImageButton(drawable4);
+        superSword.setSize(30,40);
+        price4Gold = new TextArea(Integer.toString(coll.getWeaponVector().get(3).getPrice()), skin2);
 
         Texture f5 = new Texture(Gdx.files.internal("core/assets/graphics/items/sword.jpg"));
         Drawable drawable5 = new TextureRegionDrawable(new TextureRegion(f5));
-        sword2 = new ImageButton(drawable5);
-        sword2.setSize(30,40);
-        price5Gold = new TextArea(Integer.toString(coll.getWeaponVector().get(4).getPrice()), skin2);//
+        sword3 = new ImageButton(drawable5);
+        sword3.setSize(30,40);
+        price5Gold = new TextArea(Integer.toString(coll.getWeaponVector().get(4).getPrice()), skin2);
 
 
-        Texture f6 = new Texture(Gdx.files.internal("core/assets/graphics/items/shield.jpg"));
+        Texture f6 = new Texture(Gdx.files.internal("core/assets/graphics/items/leather_armor.jpg"));
         Drawable drawable6 = new TextureRegionDrawable(new TextureRegion(f6));
-        shield = new ImageButton(drawable6);
-        shield.setSize(30,40);
-        price6Gold = new TextArea(Integer.toString(coll.getWeaponVector().get(5).getPrice()), skin2);//
+        leatherArmor = new ImageButton(drawable6);
+        leatherArmor.setSize(30,40);
+        price6Gold = new TextArea(Integer.toString(coll.getArmorVector().get(0).getPrice()), skin2);
 
 
-        Texture f7 = new Texture(Gdx.files.internal("core/assets/graphics/items/sword.jpg"));
+
+        Texture f7 = new Texture(Gdx.files.internal("core/assets/graphics/items/chain_mail.jpg"));
         Drawable drawable7 = new TextureRegionDrawable(new TextureRegion(f7));
-        superSword = new ImageButton(drawable7);
-        superSword.setSize(30,40);
-        price7Gold = new TextArea(Integer.toString(coll.getWeaponVector().get(6).getPrice()), skin2);
+        chainMail = new ImageButton(drawable7);
+        chainMail.setSize(30,40);
+        price7Gold = new TextArea(Integer.toString(coll.getArmorVector().get(1).getPrice()), skin2);//
 
 
-        Texture f8 = new Texture(Gdx.files.internal("core/assets/graphics/items/chain_mail.jpg"));
+        Texture f8 = new Texture(Gdx.files.internal("core/assets/graphics/items/shield.jpg"));
         Drawable drawable8 = new TextureRegionDrawable(new TextureRegion(f8));
-        chainMail2 = new ImageButton(drawable8);
+        shield = new ImageButton(drawable8);
+        shield.setSize(30,40);
+        price8Gold = new TextArea(Integer.toString(coll.getArmorVector().get(2).getPrice()), skin2);//
+
+
+        Texture f9 = new Texture(Gdx.files.internal("core/assets/graphics/items/chain_mail.jpg"));
+        Drawable drawable9 = new TextureRegionDrawable(new TextureRegion(f9));
+        chainMail2 = new ImageButton(drawable9);
         chainMail2.setSize(30,40);
-        price8Gold = new TextArea(Integer.toString(coll.getWeaponVector().get(7).getPrice()), skin2);
+        price9Gold = new TextArea(Integer.toString(coll.getArmorVector().get(3).getPrice()), skin2);
+
+        Texture f10 = new Texture(Gdx.files.internal("core/assets/graphics/items/leather_armor.jpg"));
+        Drawable drawable10 = new TextureRegionDrawable(new TextureRegion(f10));
+        leatherArmor2 = new ImageButton(drawable10);
+        leatherArmor2.setSize(30,40);
+        price10Gold = new TextArea(Integer.toString(coll.getArmorVector().get(4).getPrice()), skin2);
+
+        Texture f11 = new Texture(Gdx.files.internal("core/assets/graphics/items/heavy_shield.jpg"));
+        Drawable drawable11 = new TextureRegionDrawable(new TextureRegion(f11));
+        heavyShield = new ImageButton(drawable11);
+        heavyShield.setSize(30,40);
+        price11Gold = new TextArea(Integer.toString(coll.getArmorVector().get(5).getPrice()), skin2);
+
+        Texture f12 = new Texture(Gdx.files.internal("core/assets/graphics/items/potion.png"));
+        Drawable drawable12 = new TextureRegionDrawable(new TextureRegion(f12));
+        potion= new ImageButton(drawable12);
+        potion.setSize(30,40);
+        price12Gold = new TextArea(Integer.toString(coll.getTreasureVector().get(0).getPrice()), skin2);
+
+        Texture f13 = new Texture(Gdx.files.internal("core/assets/graphics/items/scroll.jpg"));
+        Drawable drawable13 = new TextureRegionDrawable(new TextureRegion(f13));
+        scroll = new ImageButton(drawable13);
+        scroll.setSize(30,40);
+        price13Gold = new TextArea(Integer.toString(coll.getTreasureVector().get(1).getPrice()), skin2);
 
 
         Texture textureGold  = new Texture(Gdx.files.internal("core/assets/graphics/items/gold.PNG"));
@@ -194,119 +231,186 @@ public class CollectionWeaponDisplay implements Screen {
         gold6 = new Image(drawableGold);
         gold7 = new Image(drawableGold);
         gold8 = new Image(drawableGold);
+        gold9 = new Image(drawableGold);
+        gold10 = new Image(drawableGold);
+        gold11 = new Image(drawableGold);
+        gold12 = new Image(drawableGold);
+        gold13 = new Image(drawableGold);
+
 
 
 
         sword1.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str = coll.buyFighter(coll.getFighterVector().get(1));
-            }
-        });
-        leather_armor.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                str = coll.buyFighter(coll.getFighterVector().get(2));
+                str = coll.buyWeapon(coll.getWeaponVector().get(0));
             }
         });
         dagger.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str = coll.buyFighter(coll.getFighterVector().get(3));
-            }
-        });
-        chain_mail.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                str =  coll.buyFighter(coll.getFighterVector().get(4));
+                str = coll.buyWeapon(coll.getWeaponVector().get(1));
             }
         });
         sword2.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str =  coll.buyFighter(coll.getFighterVector().get(5));
-            }
-        });
-        shield.addListener(new ChangeListener() {
-            @Override
-            public void changed (ChangeEvent event, Actor actor) {
-                str = coll.buyFighter(coll.getFighterVector().get(6));
+                str = coll.buyWeapon(coll.getWeaponVector().get(2));
             }
         });
         superSword.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str = coll.buyFighter(coll.getFighterVector().get(7));
+                str =  coll.buyWeapon(coll.getWeaponVector().get(3));
+            }
+        });
+        sword3.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                str =  coll.buyWeapon(coll.getWeaponVector().get(4));
+            }
+        });
+        leatherArmor.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                str = coll.buyArmor(coll.getArmorVector().get(0));
+            }
+        });
+        chainMail.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                str = coll.buyArmor(coll.getArmorVector().get(1));
+            }
+        });
+        shield.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                str =  coll.buyArmor(coll.getArmorVector().get(2));
             }
         });
         chainMail2.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str =  coll.buyFighter(coll.getFighterVector().get(8));
+                str =  coll.buyArmor(coll.getArmorVector().get(3));
+            }
+        });
+        leatherArmor2.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                str =  coll.buyArmor(coll.getArmorVector().get(4));
+            }
+        });
+        heavyShield.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                str =  coll.buyArmor(coll.getArmorVector().get(5));
+            }
+        });
+        potion.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                str =  coll.buyTreasure(coll.getTreasureVector().get(0));
+            }
+        });
+        scroll.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                str =  coll.buyTreasure(coll.getTreasureVector().get(1));
             }
         });
 
 
 
-
         table.add(sword1).size(100, 100);
-        table.add(leather_armor).size(100, 100);
         table.add(dagger).size(100, 100);
-        table.add(chain_mail).size(100, 100);
+        table.add(sword2).size(100, 100);
+        table.add(superSword).size(100, 100);
+        table.add(sword3).size(100, 100);
         table.setPosition(315, 425);
 
-        table2.add(sword2).size(100, 100);
+        table2.add(leatherArmor).size(100, 100);
+        table2.add(chainMail).size(100, 100);
         table2.add(shield).size(100, 100);
-        table2.add(superSword).size(100, 100);
         table2.add(chainMail2).size(100, 100);
-        table2.setPosition(315, 225);
+        table2.add(leatherArmor2).size(100, 100);
+        table2.add(heavyShield).size(100, 100);
+        table2.setPosition(315, 270);
+
+        table3.add(potion).size(100, 100);
+        table3.add(scroll).size(60, 60);
+        table3.setPosition(315, 150);
 
         price1Table = new Table();
         price1Table.add(gold1).size(30, 30);
         price1Table.add(price1Gold).size(30,30);
-        price1Table.setPosition(170,350);
+        price1Table.setPosition(120,350);
 
         price2Table = new Table();
         price2Table.add(gold2).size(30, 30);
         price2Table.add(price2Gold).size(30,30);
-        price2Table.setPosition(270,350);
+        price2Table.setPosition(210,350);
 
         price3Table = new Table();
         price3Table.add(gold3).size(30, 30);
         price3Table.add(price3Gold).size(30,30);
-        price3Table.setPosition(380,350);
+        price3Table.setPosition(310,350);
 
         price4Table = new Table();
         price4Table.add(gold4).size(30, 30);
         price4Table.add(price4Gold).size(30,30);
-        price4Table.setPosition(480,350);
+        price4Table.setPosition(410,350);
 
         price5Table = new Table();
         price5Table.add(gold5).size(30, 30);
         price5Table.add(price5Gold).size(30,30);
-        price5Table.setPosition(170,170);
+        price5Table.setPosition(500,350);
 
         price6Table = new Table();
         price6Table.add(gold6).size(30, 30);
         price6Table.add(price6Gold).size(30,30);
-        price6Table.setPosition(270,170);
+        price6Table.setPosition(80,200);
 
         price7Table = new Table();
         price7Table.add(gold7).size(30, 30);
         price7Table.add(price7Gold).size(30,30);
-        price7Table.setPosition(365,170);
+        price7Table.setPosition(170,200);
 
         price8Table = new Table();
         price8Table.add(gold8).size(30, 30);
         price8Table.add(price8Gold).size(30,30);
-        price8Table.setPosition(475,170);
+        price8Table.setPosition(270,200);
 
+        price9Table = new Table();
+        price9Table.add(gold9).size(30, 30);
+        price9Table.add(price9Gold).size(30,30);
+        price9Table.setPosition(360,200);
+
+        price10Table = new Table();
+        price10Table.add(gold10).size(30, 30);
+        price10Table.add(price10Gold).size(30,30);
+        price10Table.setPosition(470,200);
+
+        price11Table = new Table();
+        price11Table.add(gold11).size(30, 30);
+        price11Table.add(price11Gold).size(30,30);
+        price11Table.setPosition(580,200);
+
+        price12Table = new Table();
+        price12Table.add(gold12).size(30, 30);
+        price12Table.add(price12Gold).size(30,30);
+        price12Table.setPosition(280,110);
+
+        price13Table = new Table();
+        price13Table.add(gold13).size(30, 30);
+        price13Table.add(price13Gold).size(30,30);
+        price13Table.setPosition(370,110);
 
 
         stage.addActor(shop);
         stage.addActor(buttonContinue);
         stage.addActor(table);
         stage.addActor(table2);
+        stage.addActor(table3);
         stage.addActor(gold);
         stage.addActor(price1Table);
         stage.addActor(price2Table);
@@ -316,7 +420,11 @@ public class CollectionWeaponDisplay implements Screen {
         stage.addActor(price6Table);
         stage.addActor(price7Table);
         stage.addActor(price8Table);
-
+        stage.addActor(price9Table);
+        stage.addActor(price10Table);
+        stage.addActor(price11Table);
+        stage.addActor(price12Table);
+        stage.addActor(price13Table);
 
     }
 
