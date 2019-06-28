@@ -110,6 +110,7 @@ public class CollectionFighterDisplay implements Screen {
             }
         });
 
+        
 
 
         font = new BitmapFont();
