@@ -1,5 +1,6 @@
 package com.Display;
 
+import com.adventuregames.MyGame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -20,7 +21,7 @@ import com.fighterlvl.warrior.Player;
 
 public class PotionDisplay implements Screen{
     private Stage stage;
-    private Game game;
+    private MyGame game;
     private BitmapFont font;
     private Batch batch;
     private String str;
@@ -38,7 +39,7 @@ public class PotionDisplay implements Screen{
 
 
 
-    public PotionDisplay(Game aGame, final Player player) {
+    public PotionDisplay(MyGame aGame, final Player player) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);

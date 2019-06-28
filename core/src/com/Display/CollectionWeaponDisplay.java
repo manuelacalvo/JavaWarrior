@@ -1,5 +1,6 @@
 package com.Display;
 
+import com.adventuregames.MyGame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -20,7 +21,7 @@ import javafx.scene.control.Tab;
 public class CollectionWeaponDisplay implements Screen {
 
     private Stage stage;
-    private Game game;
+    private MyGame game;
     private Image shop;
     private ImageButton sword1;
     private ImageButton dagger;
@@ -86,7 +87,7 @@ public class CollectionWeaponDisplay implements Screen {
     private Player player;
 
 
-    public CollectionWeaponDisplay(Game aGame, final Player player, final Collection coll) {
+    public CollectionWeaponDisplay(MyGame aGame, final Player player, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         batch = new SpriteBatch();

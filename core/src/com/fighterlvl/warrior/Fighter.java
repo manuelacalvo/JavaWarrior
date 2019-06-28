@@ -1,12 +1,14 @@
 package com.fighterlvl.warrior;
 
+import com.adventuregames.fight.event.FightEvent;
+import com.adventuregames.fight.event.FightEventPlayer;
+import com.adventuregames.fight.event.FightEventQueuer;
 
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-
-public class Fighter {
+public class Fighter implements FightEventQueuer {
 
     private String name;
     private Weapon weapon;
@@ -14,27 +16,25 @@ public class Fighter {
     private Armor armor2;
     private ArrayList<Treasure> treasures;
     private int hitPoints;
-    private int generator;
     private int price;
     private boolean restOnce;
 
+    private String thumbnailPath;
 
+    private FightEventPlayer eventPlayer;
 
-
-
-
-    public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int generator, int price ) {
+    public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int price ) {
         this.name = name;
         this.weapon = weapon;
         this.armor1 = armor1;
         this.armor2 = null;
         this.treasures = treasures;
         this.hitPoints = hitPoints;
-        this.generator = generator;
         this.price = price;
-        //String path = "fighter_picture/" + this.getName() + ".jpg";
-
-        //this.picture = new ImageIcon(path);
+    }
+    public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int price, String thumbnailPath) {
+        this(name, weapon, armor1, treasures, hitPoints, price);
+        setThumbnailPath(thumbnailPath);
     }
 
     public String getName()
@@ -52,10 +52,6 @@ public class Fighter {
 
     public Armor getArmor2() {
         return armor2;
-    }
-
-    public int getGenerator() {
-        return generator;
     }
 
     public int getHitPoints() {
@@ -91,10 +87,6 @@ public class Fighter {
         this.armor2 = armor2;
     }
 
-    public void setGenerator(int generator) {
-        this.generator = generator;
-    }
-
     public void setHitPoints(int hitPoints) {
         this.hitPoints -= hitPoints;
     }
@@ -111,14 +103,10 @@ public class Fighter {
         this.price = price;
     }
 
-
-
     @Override
     public String toString() {
         return "Fighter{" + "weapon=" + weapon + ", armor 1 =" + armor1 + ", armor 2 =" + armor2 + ", treasures=" + treasures + ", hitPoints=" + hitPoints + '}';
     }
-
-
 
     /**
      * Get a random number between two bounds
@@ -157,14 +145,12 @@ public class Fighter {
     }
 
     /**
-     * Engage a fight between 2 fighters
+     * One turn of a fight between two Fighters
      * @method fight
      */
-
-    public void fight(Fighter enemy){
-
+    private void fight(Fighter enemy){
+        System.out.println(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
         this.setRestOnce(false);
-        System.out.println("Turn of " + this.name + "life : " + this.getHitPoints());
         //Different attacks based on weapon's attacks per turn
         if(this.isAlive() && enemy.isAlive()) {
 
@@ -172,20 +158,26 @@ public class Fighter {
                 System.out.println("Attack " + (i+1));
 
                 int rand = randomNumberGenerator(1, 20);
-                System.out.println("Random : " + rand + " Protection : " + enemy.getArmor1().getProtection());
+                System.out.println("\tRandom : " + rand+
+                        "\t\tEnemy protection : " + enemy.getArmor1().getProtection());
                 if (rand > enemy.getArmor1().getProtection()) {
                     int hitPower = randomNumberGenerator(getWeapon().getMinDamage(), getWeapon().getMaxDamage());
-                    System.out.println("hit : " + hitPower);
                     enemy.takesDamage(hitPower);
-                    System.out.println("Life of " + enemy.getName()+ " is " + enemy.getHitPoints());
-                } else enemy.takesDamage(0);
-
-
+                    System.out.println("\tHit : " + hitPower);
+                    System.out.println("Life of " + enemy.getName()+ " is " + enemy.getHitPoints()+"\r\n");
+                } else {
+                    enemy.takesDamage(0);
+                    System.out.println("This attack failed !");
+                }
             }
+            System.out.println("=====================================================");
         }
-
-
     }
+
+    /**
+     * Engage the fight between 2 Fighters
+     * @param enemy
+     */
     public void fightTurn(Fighter enemy)
     {
         while(this.isAlive() && enemy.isAlive())
@@ -400,4 +392,18 @@ public class Fighter {
         }
     }
 
+    public void setEventPlayer(FightEventPlayer pEventPlayer){
+        this.eventPlayer = pEventPlayer;
+    }
+    @Override
+    public void queueEvent(FightEvent event) {
+        eventPlayer.queueEvent(event);
+    }
+
+    public String getThumbnailPath() {
+        return thumbnailPath;
+    }
+    public void setThumbnailPath(String thumbnailPath) {
+        this.thumbnailPath = thumbnailPath;
+    }
 }

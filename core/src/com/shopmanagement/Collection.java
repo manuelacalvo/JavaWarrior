@@ -133,7 +133,7 @@ public class Collection {
             treasures.add(gold);
 
 
-            Fighter f = new Fighter(fighterName, weapon, armor1, treasures, hitPoints, 0, priceFigter);
+            Fighter f = new Fighter(fighterName, weapon, armor1, treasures, hitPoints, priceFigter);
 
 
             if(nameArmor2 != "null")

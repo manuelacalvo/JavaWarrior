@@ -1,5 +1,6 @@
 package com.Display;
 
+import com.adventuregames.MyGame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -17,7 +18,7 @@ import com.fighterlvl.warrior.Player;
 
 public class FightMenuDisplay implements Screen {
     private Stage stage;
-    private Game game;
+    private MyGame game;
     private ImageTextButton buttonPotion;
     private ImageTextButton buttonRest;
     private ImageTextButton buttonQuit;
@@ -32,7 +33,7 @@ public class FightMenuDisplay implements Screen {
 
 
 
-    public FightMenuDisplay(Game aGame, final Player player) {
+    public FightMenuDisplay(MyGame aGame, final Player player) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table=new Table();
