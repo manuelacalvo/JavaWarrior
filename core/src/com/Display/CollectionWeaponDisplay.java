@@ -75,7 +75,7 @@ public class CollectionWeaponDisplay implements Screen {
     private Player player;
 
 
-    public CollectionWeaponDisplay(Game aGame, Player player, Collection coll) {
+    public CollectionWeaponDisplay(Game aGame, final Player player, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         batch = new SpriteBatch();

@@ -38,7 +38,7 @@ public class PotionDisplay implements Screen{
 
 
 
-    public PotionDisplay(Game aGame, Player player) {
+    public PotionDisplay(Game aGame, final Player player) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
