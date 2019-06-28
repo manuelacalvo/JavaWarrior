@@ -35,10 +35,11 @@ public class FightScreen implements Screen, FightEventPlayer {
     // Double Ended Queue https://docs.oracle.com/javase/8/docs/api/index.html?java/util/ArrayDeque.html
     private Queue<FightEvent> queue = new ArrayDeque<FightEvent>();
 
-    public FightScreen(MyGame pGame, boolean... pDebug){
+    public FightScreen(MyGame pGame){
 
-        this.debug = (pDebug.length>0 && pDebug[0]);
         this.game=pGame;
+        this.debug = game.isDebug();
+
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         // TABLE
