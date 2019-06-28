@@ -1,12 +1,12 @@
 package com.fighterlvl.warrior;
 
-import com.shopmanagement.Collection;
 
 import java.util.ArrayList;
 
 public class Player {
     private String name;
     private Fighter fighter;
+    private Fighter ennemi;
     private ArrayList<Fighter> collectionFighter;
     private ArrayList<Weapon> collectionWeapon;
     private ArrayList<Armor> collectionArmor;
@@ -21,7 +21,8 @@ public class Player {
         this.collectionArmor = new ArrayList<Armor>();
         this.collectionTreasure = new ArrayList<Treasure>();
         this.collectionWeapon = new ArrayList<Weapon>();
-        this.money = 0;
+        this.money = 6;
+        this.ennemi = null;
     }
 
     public Player(String name, Fighter f, ArrayList<Fighter> collectionFighter, ArrayList<Weapon> collectionWeapon, ArrayList<Armor> collectionArmor, ArrayList<Treasure> collectionTreasure, int money)
@@ -33,10 +34,15 @@ public class Player {
         this.collectionTreasure = collectionTreasure;
         this.collectionWeapon = collectionWeapon;
         this.money = money;
+        this.ennemi = f;
     }
 
     public Fighter getFighter() {
         return fighter;
+    }
+
+    public Fighter getEnnemi() {
+        return ennemi;
     }
 
     public String getName() {
@@ -88,21 +94,17 @@ public class Player {
     }
 
     public void setMoney(int money) {
-        this.money += money;
+        this.money = money;
     }
 
-    public void calculateMoney(ArrayList<Treasure> collectionTreasure)
+    public void reducePrice(int price)
     {
-        for(int i= 0; i<collectionTreasure.size(); i++)
-        {
-            if(collectionTreasure.get(i).getName() == "gold")
-            {
-                setMoney(10);
-            }
-            if(collectionTreasure.get(i).getName() == "silver")
-            {
-                setMoney(1);
-            }
-        }
+        this.money -= price;
     }
+
+    public void setEnnemi(Fighter ennemi) {
+        this.ennemi = ennemi;
+    }
+
+
 }

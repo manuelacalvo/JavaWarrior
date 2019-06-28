@@ -1,7 +1,6 @@
 package com.shopmanagement;
 
-import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
-import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
+import com.Display.CollectionFighterDisplay;
 import com.fighterlvl.warrior.*;
 
 import java.io.File;
@@ -17,7 +16,7 @@ public class Collection {
     private Vector<Weapon> weaponVector;
     private Vector<Armor> armorVector ;
     private Vector<Treasure> treasureVector ;
-    private CollectionDisplay collectionDisplay;
+    private CollectionFighterDisplay collectionDisplay;
 
 
     public Collection( Player player)
@@ -27,7 +26,6 @@ public class Collection {
         weaponVector = new Vector<Weapon>();
         armorVector = new Vector<Armor>();
         treasureVector= new Vector<Treasure>();
-        //this.collectionDisplay = new CollectionDisplay();
     }
 
     public Player getPlayer() {
@@ -109,15 +107,19 @@ public class Collection {
             int potionNumber = Integer.parseInt(read_f.next());
             int scrollNumber = Integer.parseInt(read_f.next());
             int goldNumber = Integer.parseInt(read_f.next());
-            int silverNumber = Integer.parseInt(read_f.next());
-
 
 
             Weapon weapon = new Weapon(weaponName,attacksPerTurn,minDamage,maxDamage, takeableWeapon, priceWeapon);
-            setWeaponVector(weapon);
+            if(weapon.getTakeable()) {
+                setWeaponVector(weapon);
+                System.out.println(weapon.getName());
+            }
             Armor armor1 = new Armor(nameArmor1, 1, takeable1,protection1, priceArmor1);
-            setArmorVector(armor1);
-
+            if(armor1.getTakeable())
+            {
+                setArmorVector(armor1);
+                System.out.println(armor1.getName());
+            }
 
 
             Treasure potion = new Treasure("potion", 1, potionNumber, 15);
@@ -130,9 +132,6 @@ public class Collection {
             Treasure gold = new Treasure("gold", 3, goldNumber, 0);
             treasures.add(gold);
 
-            Treasure silver = new Treasure("silver", 4, silverNumber, 0);
-            treasures.add(silver);
-
 
             Fighter f = new Fighter(fighterName, weapon, armor1, treasures, hitPoints, priceFigter);
 
@@ -141,7 +140,12 @@ public class Collection {
             {
                 Armor armor2= new Armor(nameArmor2, 2, takeable2, protection2, priceArmor2);
                 f.setArmor2(armor2);
-                setArmorVector(armor2);
+                if(armor2.getTakeable())
+                {
+                    setArmorVector(armor2);
+                    System.out.println(armor2.getName());
+                }
+
 
             }
 
@@ -160,54 +164,20 @@ public class Collection {
     }
 
 
-    public void openShop()
+
+    public String buyFighter(Fighter f)
     {
-        int choice = 0;
+        String str = "";
 
-
-        while(choice == 0) {
-
-            choice = collectionDisplay.getChoice();
-
-            switch (choice) {
-                case 1:
-
-                    buyFighter(fighterVector.get(1));
-
-                    break;
-
-                case 2:
-
-                    buyFighter(fighterVector.get(2));
-                    break;
-
-                case 3:
-
-                    buyFighter(fighterVector.get(3));
-                    break;
-
-                case 4 :
-
-                    buyFighter(fighterVector.get(4));
-                    break;
-
-                case 5 :
-
-                    buyFighter(fighterVector.get(5));
-                    break;
-
-            }
-        }
-
-    }
-    public void buyFighter(Fighter f)
-    {
         if(getPlayer().getMoney()> f.getPrice())
         {
-            System.out.println("You buy a new fighter");
-            getPlayer().setMoney(-f.getPrice());
+            str = "You buy a new fighter";
+            getPlayer().reducePrice(f.getPrice());
             getPlayer().setCollectionFighter(f);
         }
+        else str = "You can't buy it you don't have enough money";
+
+        return  str;
     }
 
     public void buyArmor(Armor armor)

@@ -1,38 +1,38 @@
 package com.adventuregames;
 
+import com.Display.GameDisplay;
 import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.fighterlvl.warrior.Player;
-//import com.badlogic.gdx.Gdx;
-//import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-
+import com.shopmanagement.Collection;
 
 public class MyGame extends Game {
 
     private Player player;
+    private Collection collection;
     private Class screenType=null;
 
     private AssetManager assetManager;
 
     /**
      * Standard constructor called from DesktopLauncher
-     * @param pPlayer
+     * @param pPlayer Player
      */
-    public MyGame(Player pPlayer){
+    public MyGame(Player pPlayer, Collection pCollection){
         this.player=pPlayer;
+        this.collection=pCollection;
     }
 
     /**
      * Test&Debug constructor
-     * @param pPlayer
-     * @param screenType
+     * @param pPlayer Player
+     * @param screenType type of the screen to debug
      */
-    public MyGame(Player pPlayer, Class screenType){
-        this(pPlayer);
+    public MyGame(Player pPlayer, Collection pCollection, Class screenType){
+        this(pPlayer,pCollection);
         this.screenType=screenType;
     }
 
@@ -49,12 +49,12 @@ public class MyGame extends Game {
         assetManager.load(path_fighterThumbnail, Texture.class);
         assetManager.finishLoading();
 
-        if(screenType==null){ //Standard case
-            this.setScreen(new GameDisplay(this));
-        }else{
+        if (screenType == null) { //Standard case
+            this.setScreen(new GameDisplay(this, player, collection));
+        } else {
             // When debuging a Screen
-            if(screenType == FightScreen.class){
-                this.setScreen(new FightScreen(this,true));
+            if (screenType == FightScreen.class) {
+                this.setScreen(new FightScreen(this, true));
             }
         }
     }

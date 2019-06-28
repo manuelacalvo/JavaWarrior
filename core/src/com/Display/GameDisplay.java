@@ -1,4 +1,4 @@
-package com.adventuregames;
+package com.Display;
 
 
 import com.badlogic.gdx.Game;
@@ -7,61 +7,64 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.shopmanagement.CollectionDisplay;
+import com.fighterlvl.warrior.Player;
+import com.shopmanagement.Collection;
 
 public class GameDisplay implements Screen {
     private Stage stage;
     private Game game;
-    private TextButton buttonFightMode;
-    private TextButton buttonMapMode;
-    private TextButton buttonConnectedMode;
-    private TextButton buttonShop;
-    private TextButtonStyle textButtonStyle;
+    private Skin skin;
+    private TextureAtlas buttonAtlas;
+    private ImageTextButton buttonFightMode;
+    private ImageTextButton buttonMapMode;
+    private ImageTextButton buttonConnectedMode;
+    private ImageTextButton buttonShop;
+    private ImageTextButton.ImageTextButtonStyle textButtonStyle;
+    private ImageTextButton.ImageTextButtonStyle textButtonStyleShop;
     private BitmapFont font;
     private int choice = 0;
-    private Image shop;
     private Image image;
-    private  Image iB1;
-    private Image iB2;
-    private Image iB3;
 
-    public GameDisplay(Game aGame) {
+
+    public GameDisplay(Game aGame, final Player player, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
-
-
         Table table=new Table();
         table.setFillParent(true);
 
         Texture texture = new Texture(Gdx.files.internal("core/assets/graphics/pictures/main_background.png"));
         image = new Image(texture);
-        Texture texture1 = new Texture(Gdx.files.internal("core/assets/graphics/buttons/partyCancelSel.png"));
-        iB1 = new Image(texture1);
-        iB2 = new Image(texture1);
-        iB3 = new Image(texture1);
-        Texture textureShop = new Texture(Gdx.files.internal("core/assets/graphics/items/item725.png"));
-        shop = new Image(textureShop);
 
-
-        Gdx.input.setInputProcessor(stage);
         font = new BitmapFont();
-        textButtonStyle = new TextButtonStyle();
+        skin = new Skin();
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
+        skin.addRegions(buttonAtlas);
+        textButtonStyle = new ImageTextButton.ImageTextButtonStyle();
         textButtonStyle.font = font;
-        buttonFightMode = new TextButton("Fight Mode", textButtonStyle);
+        textButtonStyle.up = skin.getDrawable("partyCancelSel");
+        textButtonStyle.down = skin.getDrawable("partyCancelSel");
+
+        textButtonStyleShop = new ImageTextButton.ImageTextButtonStyle();
+        textButtonStyleShop.font = font;
+        textButtonStyleShop.up = skin.getDrawable("item725");
+        textButtonStyleShop.down = skin.getDrawable("item725");
+
+        buttonFightMode = new ImageTextButton("Fight Mode", textButtonStyle);
         buttonFightMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 choice = 1;
-                game.setScreen(new FightMenuDisplay(game));
+                ///François c'est ici qu'il faut renvoyer à ton écran
+               game.setScreen(new FightMenuDisplay(game, player));
             }
         });
-        buttonMapMode = new TextButton("Adventure Mode", textButtonStyle);
+        buttonMapMode = new ImageTextButton("Adventure Mode", textButtonStyle);
         buttonMapMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
@@ -69,7 +72,7 @@ public class GameDisplay implements Screen {
             }
         });
 
-        buttonConnectedMode = new TextButton("Connected Mode", textButtonStyle);
+        buttonConnectedMode = new ImageTextButton("Connected Mode", textButtonStyle);
         buttonConnectedMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
@@ -77,45 +80,24 @@ public class GameDisplay implements Screen {
             }
         });
 
-        buttonShop = new TextButton("Shop", textButtonStyle);
+        buttonShop = new ImageTextButton("Shop", textButtonStyleShop);
         buttonShop.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 choice = 4;
-                game.setScreen(new CollectionDisplay(game));
+                game.setScreen(new CollectionFighterDisplay(game, player, coll));
             }
         });
 
-
-        buttonFightMode.setPosition(250, 250);
-        iB1.setSize(buttonFightMode.getWidth()+30,buttonFightMode.getHeight()+30);
-
-        buttonMapMode.setPosition(400, 250);
-        iB2.setSize(buttonMapMode.getWidth()+30,buttonMapMode.getHeight()+30);
-
-        buttonConnectedMode.setPosition(550, 250);
-        iB3.setSize(buttonConnectedMode.getWidth()+30,buttonConnectedMode.getHeight()+30);
-
         buttonShop.setPosition(10, 10);
-        shop.setSize(buttonShop.getWidth()+30,buttonShop.getHeight()+30);
 
 
-        table.add(buttonFightMode).width(0).height(50);
-        table.add(buttonMapMode).width(250).height(50);
-        table.add(buttonConnectedMode).width(0).height(50);
-
-
-        iB1.setPosition(buttonFightMode.getX()-105, buttonFightMode.getY()-35);
-        iB2.setPosition(buttonMapMode.getX()-147, buttonMapMode.getY()-35);
-        iB3.setPosition(buttonConnectedMode.getX()-170, buttonConnectedMode.getY()-35);
-
+        table.add(buttonFightMode);
+        table.add(buttonMapMode);
+        table.add(buttonConnectedMode);
 
 
         stage.addActor(image);
-        stage.addActor(iB1);
-        stage.addActor(iB2);
-        stage.addActor(iB3);
-        stage.addActor(shop);
         stage.addActor(table);
         stage.addActor(buttonShop);
 
