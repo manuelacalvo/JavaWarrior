@@ -37,7 +37,8 @@ public class GameDisplay implements Screen {
 
 
         Table table=new Table();
-        table.setSize(stage.getWidth(),stage.getHeight());
+        table.setFillParent(true);
+
         Texture texture = new Texture(Gdx.files.internal("core/assets/graphics/pictures/main_background.png"));
         image = new Image(texture);
         Texture texture1 = new Texture(Gdx.files.internal("core/assets/graphics/buttons/partyCancelSel.png"));

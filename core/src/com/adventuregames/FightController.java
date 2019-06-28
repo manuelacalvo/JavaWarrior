@@ -76,8 +76,6 @@ public class FightController {
         fightMenuDisplay.setChoice(0);
 
 
-
-
         while(choice == 0) {
             choice = fightMenuDisplay.getChoice();
 
@@ -111,9 +109,6 @@ public class FightController {
 
     public void gameLoop()
     {
-
-
-
         for(int i=1; i< coll.getFighterVector().size(); i++)
         {
             if(!quitFight && fighter.isAlive()) {
@@ -131,8 +126,6 @@ public class FightController {
 
 
             }
-
-
         }
         if(!fighter.isAlive())
         {
