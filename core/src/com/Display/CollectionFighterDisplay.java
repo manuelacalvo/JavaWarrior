@@ -67,13 +67,7 @@ public class CollectionFighterDisplay implements Screen {
     private Table price8Table;
     private Player player;
 
-
-
-
-
-
-
-    public CollectionFighterDisplay(Game aGame, Player player, Collection coll) {
+    public CollectionFighterDisplay(Game aGame, final Player player, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         batch = new SpriteBatch();

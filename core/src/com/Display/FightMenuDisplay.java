@@ -32,7 +32,7 @@ public class FightMenuDisplay implements Screen {
 
 
 
-    public FightMenuDisplay(Game aGame, Player player) {
+    public FightMenuDisplay(Game aGame, final Player player) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table=new Table();

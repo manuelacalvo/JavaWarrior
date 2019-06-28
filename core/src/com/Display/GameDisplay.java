@@ -32,7 +32,7 @@ public class GameDisplay implements Screen {
     private Image image;
 
 
-    public GameDisplay(Game aGame, Player player, Collection coll) {
+    public GameDisplay(Game aGame, final Player player, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table=new Table();
