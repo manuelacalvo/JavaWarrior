@@ -1,12 +1,12 @@
 package com.adventuregames.fight;
 
+import com.Display.AbstractScreen;
 import com.adventuregames.MyGame;
 import com.adventuregames.fight.event.FightEvent;
 import com.adventuregames.fight.event.FightEventPlayer;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -14,21 +14,26 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import com.fighterlvl.warrior.Fighter;
+import com.ui.StatusBox;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Queue;
 
-public class FightScreen implements Screen, FightEventPlayer {
+public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
-    private MyGame game;
-    private Stage stage;
+    private Stage uiStage;
+    private Viewport gameViewport;
+
+    private Table statusBoxRoot;
+
     private ArrayList<Fighter> enemies = new ArrayList<Fighter>();
-    private Skin UISkin;
-    private boolean debug;
 
     private Button superButt;
+    private StatusBox playerStatusBox;
+    private StatusBox enemyStatusBox;
 
     /* Event system */
     private FightEvent currentEvent;
@@ -36,59 +41,80 @@ public class FightScreen implements Screen, FightEventPlayer {
     private Queue<FightEvent> queue = new ArrayDeque<FightEvent>();
 
     public FightScreen(MyGame pGame){
+        super(pGame);
+        gameViewport=new ScreenViewport();
 
-        this.game=pGame;
-        this.debug = game.isDebug();
+        initUI();
 
-        stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
+    }
+
+    private void initUI(){
+
+        // ROOT UI STAGE
+        uiStage = new Stage(gameViewport);
+        if(getGame().isDebug()){
+            uiStage.setDebugAll(true);
+            //tableUI.setDebug(true);
+            //tableFighters.setDebug(true);
+        }
+        // Gdx.input.setInputProcessor(uiStage); controller as inputProcessor
+
+        /* STATUS BOXES
+         Name and Health of the fighters */
+        statusBoxRoot = new Table();
+        statusBoxRoot.setFillParent(true);
+        uiStage.addActor(statusBoxRoot);
+
+        playerStatusBox = new StatusBox(getGame().getSkin());
+        playerStatusBox.setNameLabel(getGame().getPlayer().getName());
+
+        enemyStatusBox = new StatusBox(getGame().getSkin());
+        enemyStatusBox.setNameLabel("???");
+
+        statusBoxRoot.add(playerStatusBox);
+        statusBoxRoot.add(enemyStatusBox);
+
+        /* MOVE SELECTION BOX */
+
+
         // TABLE
         Table tableUI=new Table();
         tableUI.setFillParent(true);
         Table tableFighters=new Table();
 
         // BACKGROUND
-        Texture backgroundTexture = game.getAssetManager().get("core/assets/graphics/pictures/main_background.png",Texture.class);
+        Texture backgroundTexture = getGame().getAssetManager().get("core/assets/graphics/pictures/main_background.png",Texture.class);
         Image backgroundImage = new Image(backgroundTexture);
         backgroundImage.setFillParent(true);
-        //SKIN
-        this.UISkin = game.getAssetManager().get("core/assets/graphics/ui/pixthulhu-ui/pixthulhu-ui.json",Skin.class);
 
-        initHUD();
-
-        Label promptLabel = new Label("Vide", UISkin);
+        ///////////////////////
+        Label promptLabel = new Label("Vide", getGame().getSkin());
 
         //PLAYER CHARACTER
-        Image playerImage = new Image(game.getAssetManager().get("core/assets/graphics/fighter_picture/User.jpg", Texture.class));
-        playerImage.setPosition(50,50);
-
+        Image playerImage = new Image(getGame().getAssetManager().get("core/assets/graphics/fighter_picture/User.jpg", Texture.class));
+        Image enemyImage = new Image(getGame().getAssetManager().get("core/assets/graphics/fighter_picture/User.jpg", Texture.class));
+        
         // Prepare Tables
-        if(this.debug){
-            tableUI.setDebug(true);
-            tableFighters.setDebug(true);
-        }
-        tableUI.add(promptLabel).expandX().top().left();
-        tableUI.add(superButt);
+        tableUI.add(tableFighters).expandX();
+        tableUI.row();
+        tableUI.add(promptLabel).expandX().left();
         tableUI.bottom();
-        tableUI.add(tableFighters);
-        tableFighters.add(playerImage);
 
-        // Load all on stage
-        stage.addActor(backgroundImage);
-        //stage.addActor(playerImage);
-        stage.addActor(tableUI);
-        //stage.addActor(tableFighters);
+        tableFighters.add(playerImage).padRight(100);
+        tableFighters.add(enemyImage);
 
-        // HANDLE FIGHT
-        //Fighter f1 = enemies.get(0); //TBC
-        //f1.setEventPlayer(this);
-
+        // Load all on uiStage
+        uiStage.addActor(backgroundImage);
+        //uiStage.addActor(playerImage);
+        uiStage.addActor(tableUI);
+        //uiStage.addActor(tableFighters);
 
     }
 
     /**
      * This function inits HUD elements
      */
+    /*
     private void initHUD(){
         this.superButt = new TextButton("Text Button", this.UISkin,"default");
         superButt.setSize(400,100);
@@ -103,7 +129,7 @@ public class FightScreen implements Screen, FightEventPlayer {
                 return true;
             }
         });
-    }
+    }*/
 
     /**
      *
@@ -115,7 +141,7 @@ public class FightScreen implements Screen, FightEventPlayer {
      */
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage);
+        Gdx.input.setInputProcessor(uiStage);
     }
 
     /**
@@ -128,8 +154,8 @@ public class FightScreen implements Screen, FightEventPlayer {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        stage.act();
-        stage.draw();
+        uiStage.act();
+        uiStage.draw();
     }
 
     /**
@@ -171,6 +197,13 @@ public class FightScreen implements Screen, FightEventPlayer {
      */
     @Override
     public void dispose() {
-        stage.dispose();
+        uiStage.dispose();
+    }
+
+    @Override
+    public void update(float delta) {
+        System.out.println(
+                "update implementation missing"
+        );
     }
 }
