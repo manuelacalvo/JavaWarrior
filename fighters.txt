@@ -1,9 +1,10 @@
-User; 50; 0; Sword; 2; 1; 8; true; 0; Leather armor; 10; true; 3; null; 0; false; 0; 2; 1; 0; 
-Orc; 22; 5; Dagger; 3; 1; 4; true; 2; Chain mail; 12; true; 4; null; 0; false; 0; 1; 0; 1; 
-Nest of snakes; 12; 7; Venom; 1; 4; 20; false; 0; null; 0; false; 0; null; 0; false; 0; 1; 0; 0; 
-Troll; 35; 10; Hands; 4; 1; 8; false; 0; Hide; 14; false; 0; null; 0; false; 0; 2; 0; 1; 
-Berserker; 28; 12; Sword; 4; 1; 4; true; 4; Skin; 3; false; 0; Shield; 2; true; 8; 1; 0; 0; 
-Ninja; 40; 14; Super sword; 4; 2; 8; true; 6; Chain mail; 14; true; 6; null; 0; false; 0; 2; 1; 0; 
-Dragon; 25; 16; Claws; 2; 11; 20; false; 0; Skin; 14; false; 0; null; 0; false; 0; 0; 1; 1; 
-Doppleganger; 50; 18; Sword; 1; 1; 8; true; 8; Leather armor; 10; true; 9; Heavy Shield; 4; true; 10; 2; 1; 0;  
-Wizard; 150; 20; Lightning bolts; 1; 21; 40; false; 0; Magic aura; 15; false; 0; null; 0; false; 0; 0; 0; 3
+Fighter	HitPoints	Price	Picture	Weapon	AttacksPerTurn	minDamage	maxDamage	takable	price	picture	armor1	protection	takable	price	picture	armor2	protection	takable	price	picture	potion	picture	scroll	picture	gold	picture
+User	50	0	null	 Sword	2	1	8	 true	0	core/assets/graphics/items/sword.jpg	 Leather armor	10	 true	3	core/assets/graphics/items/leather_armor.jpg	 null	0	 false	0	null	2	core/assets/graphics/items/potion.png	1	core/assets/graphics/items/scroll.jpg	0	core/assets/graphics/items/gold.PNG
+Orc	22	5	core/assets/graphics/fighter_picture/Orc.jpg	 Dagger	3	1	4	 true	2	core/assets/graphics/items/dagger.jpg	 Chain mail	12	 true	4	core/assets/graphics/items/chain_mail.jpg	 null	0	 false	0	null	1	core/assets/graphics/items/potion.png	0	core/assets/graphics/items/scroll.jpg	1	core/assets/graphics/items/gold.PNG
+Nest of snakes	12	7	core/assets/graphics/fighter_picture/Nest of snakes.jpg	 Venom	1	4	20	 false	0	null	 null	0	 false	0	null	 null	0	 false	0	null	1	core/assets/graphics/items/potion.png	0	core/assets/graphics/items/scroll.jpg	0	core/assets/graphics/items/gold.PNG
+Troll	35	10	core/assets/graphics/fighter_picture/Troll.jpg	 Hands	4	1	8	 false	0	null	 Hide	14	 false	0	null	 null	0	 false	0	null	2	core/assets/graphics/items/potion.png	0	core/assets/graphics/items/scroll.jpg	1	core/assets/graphics/items/gold.PNG
+Berserker	28	12	core/assets/graphics/fighter_picture/Berserker.jpg	 Sword	4	1	4	 true	4	core/assets/graphics/items/sword.jpg	 Skin	3	 false	0	null	 Shield	2	 true	8	core/assets/graphics/items/shield.jpg	1	core/assets/graphics/items/potion.png	0	core/assets/graphics/items/scroll.jpg	0	core/assets/graphics/items/gold.PNG
+Ninja	40	14	core/assets/graphics/fighter_picture/Ninja.jpg	 Super sword	4	2	8	 true	6	core/assets/graphics/items/sword.jpg	 Chain mail	14	 true	6	core/assets/graphics/items/chain_mail.jpg	 null	0	 false	0	null	2	core/assets/graphics/items/potion.png	1	core/assets/graphics/items/scroll.jpg	0	core/assets/graphics/items/gold.PNG
+Dragon	25	16	core/assets/graphics/fighter_picture/Dragon.jpg	 Claws	2	11	20	 false	0	null	 Skin	14	 false	0	null	 null	0	 false	0	null	0	core/assets/graphics/items/potion.png	1	core/assets/graphics/items/scroll.jpg	1	core/assets/graphics/items/gold.PNG
+Doppleganger	50	18	core/assets/graphics/fighter_picture/Doppleganger.jpg	 Sword	1	1	8	 true	8	core/assets/graphics/items/sword.jpg	 Leather armor	10	 true	9	core/assets/graphics/items/leather_armor.jpg	 Heavy Shield	4	 true	10	core/assets/graphics/items/heavy_shield.jpg	2	core/assets/graphics/items/potion.png	1	core/assets/graphics/items/scroll.jpg	0	core/assets/graphics/items/gold.PNG
+Wizard	150	20	core/assets/graphics/fighter_picture/Wizard.jpg	 Lightning bolts	1	21	40	 false	0	null	 Magic aura	15	 false	0	null	 null	0	 false	0	null	0	core/assets/graphics/items/potion.png	0	core/assets/graphics/items/scroll.jpg	3	core/assets/graphics/items/gold.PNG

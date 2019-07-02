@@ -5,9 +5,7 @@ import com.fighterlvl.warrior.*;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Vector;
+import java.util.*;
 import java.util.regex.Pattern;
 
 public class Collection {
@@ -70,7 +68,7 @@ public class Collection {
 
     public void loadFighters() {
 
-        File file = new File("fighters.txt");
+        File file = new File("fighters.csv");
 
         Scanner read_f = null;
         try {
@@ -80,70 +78,79 @@ public class Collection {
             System.out.println("pas de fichier");
 
         }
-        read_f.useDelimiter(Pattern.compile("; "));
+        read_f.useDelimiter(Pattern.compile("\n"));
+        String[] attributeNames;
+        if(read_f.hasNextLine()){
+            attributeNames = read_f.nextLine().split(";");
+        } else {
+            return;
+        }
+
+        List<Map<String, String>> fighters = new ArrayList<>();
 
         while (read_f.hasNextLine()) {
+            String[] attributes = read_f.nextLine().split(";");
+            Map<String, String> tmpFighter = new HashMap<>();
+            if(attributeNames.length < attributes.length){
+                System.err.println("GROSS ERREUR");
+                return;
+            }
+            for(int i = 0; i < attributeNames.length; i++){
+                tmpFighter.put(attributeNames[i], attributes[i]);
+            }
+            fighters.add(tmpFighter);
 
-            ArrayList<Treasure> treasures = new ArrayList<Treasure>();
+        }
 
+        read_f.close();
 
-            String fighterName = read_f.next();
-            int hitPoints = Integer.parseInt(read_f.next());
-            int priceFigter = Integer.parseInt(read_f.next());
-            String weaponName = read_f.next();
-            int attacksPerTurn = Integer.parseInt(read_f.next());
-            int minDamage = Integer.parseInt(read_f.next());
-            int maxDamage = Integer.parseInt(read_f.next());
-            boolean takeableWeapon = Boolean.parseBoolean(read_f.next());
-            int priceWeapon = Integer.parseInt(read_f.next());
-            String nameArmor1 = read_f.next();
-            int protection1 = Integer.parseInt(read_f.next());
-            boolean takeable1 = Boolean.parseBoolean(read_f.next());
-            int priceArmor1 = Integer.parseInt(read_f.next());
-            String nameArmor2 = read_f.next();
-            int protection2 = Integer.parseInt(read_f.next());
-            boolean takeable2 = Boolean.parseBoolean(read_f.next());
-            int priceArmor2 = Integer.parseInt(read_f.next());
-            int potionNumber = Integer.parseInt(read_f.next());
-            int scrollNumber = Integer.parseInt(read_f.next());
-            int goldNumber = Integer.parseInt(read_f.next());
+        generateFighter(fighters);
 
 
-            Weapon weapon = new Weapon(weaponName,attacksPerTurn,minDamage,maxDamage, takeableWeapon, priceWeapon);
+
+    }
+
+    public void generateFighter(List<Map<String, String>> fighters)
+    {
+        ArrayList<Treasure> treasures = new ArrayList<Treasure>();
+        for(int i=0; i<fighters.size(); i++)
+        {
+
+            Weapon weapon = new Weapon(fighters.get(i).get("Weapon"),Integer.parseInt(fighters.get(i).get("AttackPerTurn")),Integer.parseInt(fighters.get(i).get("MinDamage")),Integer.parseInt(fighters.get(i).get("MaxDamage")), Boolean.parseBoolean(fighters.get(i).get("WeaponTackable")), Integer.parseInt(fighters.get(i).get("WeaponPrice")), fighters.get(i).get("WeaponPicture"));
             if(weapon.getTakeable()) {
                 setWeaponVector(weapon);
-               // System.out.println(weapon.getName());
+
             }
-            Armor armor1 = new Armor(nameArmor1, 1, takeable1,protection1, priceArmor1);
+            Armor armor1 = new Armor(fighters.get(i).get("Armor1"), 1, Boolean.parseBoolean(fighters.get(i).get("Armor1Tackable")),Integer.parseInt(fighters.get(i).get("Protection1")), Integer.parseInt(fighters.get(i).get("Armor1Price")), fighters.get(i).get("Armor1Picture"));
             if(armor1.getTakeable())
             {
                 setArmorVector(armor1);
-                System.out.println(armor1.getName());
+
             }
 
 
-            Treasure potion = new Treasure("potion", 1, potionNumber, 15);
+            Treasure potion = new Treasure("potion", 1, Integer.parseInt(fighters.get(i).get("Potion")), 15);
             treasures.add(potion);
 
 
-            Treasure scroll = new Treasure("scroll", 2, scrollNumber, 25);
+            Treasure scroll = new Treasure("scroll", 2, Integer.parseInt(fighters.get(i).get("Scroll")), 25);
             treasures.add(scroll);
 
-            Treasure gold = new Treasure("gold", 3, goldNumber, 0);
+            Treasure gold = new Treasure("gold", 3, Integer.parseInt(fighters.get(i).get("Gold")), 0);
             treasures.add(gold);
 
 
-            Fighter f = new Fighter(fighterName, weapon, armor1, treasures, hitPoints, priceFigter);
+            Fighter f = new Fighter(fighters.get(i).get("Name"), weapon, armor1, treasures, Integer.parseInt(fighters.get(i).get("HitPoints")), Integer.parseInt(fighters.get(i).get("FighterPrice")), fighters.get(i).get("FighterPicture"));
 
 
-            if(nameArmor2 != "null")
+            if(fighters.get(i).get("Armor2") != "null")
             {
-                Armor armor2= new Armor(nameArmor2, 2, takeable2, protection2, priceArmor2);
+                Armor armor2= new Armor(fighters.get(i).get("Armor2"), 2, Boolean.parseBoolean(fighters.get(i).get("Armor2Tackable")), Integer.parseInt(fighters.get(i).get("Protection2")), Integer.parseInt(fighters.get(i).get("Armor2Price")), fighters.get(i).get("Armor2Picture"));
                 f.setArmor2(armor2);
                 if(armor2.getTakeable())
                 {
                     setArmorVector(armor2);
-                    System.out.println(armor2.getName());
+
 
                 }
 
@@ -152,18 +159,13 @@ public class Collection {
 
 
             setFighterVector(f);
-
         }
-        read_f.close();
-
         Treasure potion = new Treasure("potion", 1, 1, 15);
         Treasure scroll = new Treasure("scroll", 2, 1, 25);
 
         setTreasureVector(potion);
         setTreasureVector(scroll);
-
     }
-
 
 
     public String buyFighter(Fighter f)

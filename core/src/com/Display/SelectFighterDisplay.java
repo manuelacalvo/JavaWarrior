@@ -1,6 +1,6 @@
 package com.Display;
 
-
+import com.badlogic.gdx.Screen;
 import com.adventuregames.MyGame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -18,55 +18,28 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
 
-
-public class CollectionFighterDisplay implements Screen {
-
+/*
+public class SelectFighterDisplay implements Screen {
     private Stage stage;
     private MyGame game;
     private Image shop;
-    private ImageButton fighter1;
-    private ImageButton fighter2;
-    private ImageButton fighter3;
-    private ImageButton fighter4;
-    private ImageButton fighter5;
-    private ImageButton fighter6;
-    private ImageButton fighter7;
-    private ImageButton fighter8;
+    private ImageButton fighter;
+    private ImageButton weapon;
+    private ImageButton armor1;
+    private ImageButton armor2;
     private ImageTextButton buttonContinue;
     private ImageTextButton.ImageTextButtonStyle textButtonStyle;
-    private int choice;
     private BitmapFont font;
     private Batch batch;
     private Skin skin;
-    private TextureAtlas buttonAtlas;
-    private Image gold;
-    private Image gold1;
-    private Image gold2;
-    private Image gold3;
-    private Image gold4;
-    private Image gold5;
-    private Image gold6;
-    private Image gold7;
-    private Image gold8;
-    private String strGold;
     private String str;
-    private TextArea price1Gold;
-    private TextArea price2Gold;
-    private TextArea price3Gold;
-    private TextArea price4Gold;
-    private TextArea price5Gold;
-    private TextArea price6Gold;
-    private TextArea price7Gold;
-    private TextArea price8Gold;
-    private Table price1Table;
-    private Table price2Table;
-    private Table price3Table;
-    private Table price4Table;
-    private Table price5Table;
-    private Table price6Table;
-    private Table price7Table;
-    private Table price8Table;
+    private TextureAtlas buttonAtlas;
+    private Table fighterTable;
+    private Table weaponTable;
+    private Table armor1Table;
+    private Table armor2Table;
     private Player player;
+    private int i;
 
     public CollectionFighterDisplay(MyGame aGame, final Player player, final Collection coll) {
         this.game = aGame;
@@ -78,12 +51,12 @@ public class CollectionFighterDisplay implements Screen {
         Skin skin2 = new Skin(Gdx.files.internal("uiskin.json"));
         Gdx.input.setInputProcessor(stage);
 
-        Texture textureShop = new Texture("core/assets/graphics/pictures/shop.jpg");
+        Texture textureShop = new Texture("core/assets/graphics/pictures/inventory.jpg");
         shop = new Image(textureShop);
         shop.setSize(stage.getWidth(), stage.getHeight());
 
 
-        str = "Welcome to the shop";
+        str = "Welcome to your inventory";
 
         font = new BitmapFont();
         skin = new Skin();
@@ -104,23 +77,9 @@ public class CollectionFighterDisplay implements Screen {
                 game.setScreen(new CollectionWeaponDisplay(game, player, coll));
             }
         });
-        TextTooltip tip = new TextTooltip("go to the weapon and armor shop", skin2);
-        tip.setInstant(true);
-        buttonContinue.addListener(tip);
-
-        
 
 
-        font = new BitmapFont();
-        skin = new Skin();
-        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
-        skin.addRegions(buttonAtlas);
-        textButtonStyle = new ImageTextButton.ImageTextButtonStyle();
-        textButtonStyle.font = font;
-        textButtonStyle.up = skin.getDrawable("continue");
-        textButtonStyle.down = skin.getDrawable("continue");
-
-        Texture f1 = new Texture(Gdx.files.internal(coll.getFighterVector().get(1).getRelativePathPicture()));
+        Texture f1 = new Texture(Gdx.files.internal());
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(f1));
         fighter1 = new ImageButton(drawable);
         fighter1.setSize(30,40);
@@ -130,48 +89,48 @@ public class CollectionFighterDisplay implements Screen {
 
 
 
-        Texture f2 = new Texture(Gdx.files.internal(coll.getFighterVector().get(2).getRelativePathPicture()));
+        Texture f2 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Nest of snakes.jpg"));
         Drawable drawable2 = new TextureRegionDrawable(new TextureRegion(f2));
         fighter2 = new ImageButton(drawable2);
         fighter2.setSize(30,40);
-        price2Gold = new TextArea(Integer.toString(coll.getFighterVector().get(2).getPrice()), skin2);
+        price2Gold = new TextArea(Integer.toString(coll.getFighterVector().get(2).getPrice()), skin2);//
 
 
-        Texture f3 = new Texture(Gdx.files.internal(coll.getFighterVector().get(3).getRelativePathPicture()));
+        Texture f3 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Troll.jpg"));
         Drawable drawable3 = new TextureRegionDrawable(new TextureRegion(f3));
         fighter3 = new ImageButton(drawable3);
         fighter3.setSize(30,40);
-        price3Gold = new TextArea(Integer.toString(coll.getFighterVector().get(3).getPrice()), skin2);
+        price3Gold = new TextArea(Integer.toString(coll.getFighterVector().get(3).getPrice()), skin2);//
 
 
-        Texture f4 = new Texture(Gdx.files.internal(coll.getFighterVector().get(4).getRelativePathPicture()));
+        Texture f4 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Berserker.jpg"));
         Drawable drawable4 = new TextureRegionDrawable(new TextureRegion(f4));
         fighter4 = new ImageButton(drawable4);
-        price4Gold = new TextArea(Integer.toString(coll.getFighterVector().get(4).getPrice()), skin2);
+        price4Gold = new TextArea(Integer.toString(coll.getFighterVector().get(4).getPrice()), skin2);//
 
 
-        Texture f5 = new Texture(Gdx.files.internal(coll.getFighterVector().get(5).getRelativePathPicture()));
+        Texture f5 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Ninja.jpg"));
         Drawable drawable5 = new TextureRegionDrawable(new TextureRegion(f5));
         fighter5 = new ImageButton(drawable5);
-        price5Gold = new TextArea(Integer.toString(coll.getFighterVector().get(5).getPrice()), skin2);
+        price5Gold = new TextArea(Integer.toString(coll.getFighterVector().get(5).getPrice()), skin2);//
 
 
-        Texture f6 = new Texture(Gdx.files.internal(coll.getFighterVector().get(6).getRelativePathPicture()));
+        Texture f6 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Dragon.jpg"));
         Drawable drawable6 = new TextureRegionDrawable(new TextureRegion(f6));
         fighter6 = new ImageButton(drawable6);
-        price6Gold = new TextArea(Integer.toString(coll.getFighterVector().get(6).getPrice()), skin2);
+        price6Gold = new TextArea(Integer.toString(coll.getFighterVector().get(6).getPrice()), skin2);//
 
 
-        Texture f7 = new Texture(Gdx.files.internal(coll.getFighterVector().get(7).getRelativePathPicture()));
+        Texture f7 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Doppleganger.jpg"));
         Drawable drawable7 = new TextureRegionDrawable(new TextureRegion(f7));
         fighter7 = new ImageButton(drawable7);
-        price7Gold = new TextArea(Integer.toString(coll.getFighterVector().get(7).getPrice()), skin2);
+        price7Gold = new TextArea(Integer.toString(coll.getFighterVector().get(7).getPrice()), skin2);//
 
 
-        Texture f8 = new Texture(Gdx.files.internal(coll.getFighterVector().get(8).getRelativePathPicture()));
+        Texture f8 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Wizard.jpg"));
         Drawable drawable8 = new TextureRegionDrawable(new TextureRegion(f8));
         fighter8 = new ImageButton(drawable8);
-        price8Gold = new TextArea(Integer.toString(coll.getFighterVector().get(8).getPrice()), skin2);
+        price8Gold = new TextArea(Integer.toString(coll.getFighterVector().get(8).getPrice()), skin2);//
 
 
         Texture textureGold  = new Texture(Gdx.files.internal("core/assets/graphics/items/gold.PNG"));
@@ -224,7 +183,7 @@ public class CollectionFighterDisplay implements Screen {
         fighter4.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-               str =  coll.buyFighter(coll.getFighterVector().get(4));
+                str =  coll.buyFighter(coll.getFighterVector().get(4));
             }
         });
         TextTooltip tipf4 = new TextTooltip(coll.getFighterVector().get(4).toString(), skin2);
@@ -234,7 +193,7 @@ public class CollectionFighterDisplay implements Screen {
         fighter5.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-               str =  coll.buyFighter(coll.getFighterVector().get(5));
+                str =  coll.buyFighter(coll.getFighterVector().get(5));
             }
         });
         TextTooltip tipf5 = new TextTooltip(coll.getFighterVector().get(5).toString(), skin2);
@@ -244,7 +203,7 @@ public class CollectionFighterDisplay implements Screen {
         fighter6.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-               str = coll.buyFighter(coll.getFighterVector().get(6));
+                str = coll.buyFighter(coll.getFighterVector().get(6));
             }
         });
         TextTooltip tipf6 = new TextTooltip(coll.getFighterVector().get(6).toString(), skin2);
@@ -264,7 +223,7 @@ public class CollectionFighterDisplay implements Screen {
         fighter8.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-               str =  coll.buyFighter(coll.getFighterVector().get(8));
+                str =  coll.buyFighter(coll.getFighterVector().get(8));
             }
         });
         TextTooltip tipf8 = new TextTooltip(coll.getFighterVector().get(8).toString(), skin2);
@@ -391,5 +350,5 @@ public class CollectionFighterDisplay implements Screen {
 
     }
 
-}
 
+}*/

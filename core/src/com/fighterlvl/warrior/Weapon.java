@@ -10,15 +10,17 @@ public class Weapon {
   private int maxDamage;
   private  boolean takeable;
   private int price;
+  private String relativePathPicture;
 
 
-  public Weapon(String name, int attacksPerTurn, int minDamage, int maxDmamage, boolean takeable, int price){
+  public Weapon(String name, int attacksPerTurn, int minDamage, int maxDmamage, boolean takeable, int price, String relativePathPicture){
     this.name = name;
     this.takeable = takeable;
     this.attacksPerTurn = attacksPerTurn;
     this.minDamage = minDamage;
     this.maxDamage = maxDmamage;
     this.price = price;
+    this.relativePathPicture = relativePathPicture;
   }
 
 
@@ -72,10 +74,17 @@ public class Weapon {
     this.price = price;
   }
 
+  public String getRelativePathPicture() {
+    return relativePathPicture;
+  }
+
+  public void setRelativePathPicture(String relativePathPicture) {
+    this.relativePathPicture = relativePathPicture;
+  }
+
   @Override
   public String toString() {
-    String def = " this is a weapon";
-    return def;
+    return  "Name : " + this.getName() + '\n' + "Attacks per turn : " + this.getAttacksPerTurn() + '\n' + "Min Damage : " + this.getMinDamage() + '\n' + "Max damage : " + this.getMaxDamage();
   }
 
   public double average()

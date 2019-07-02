@@ -8,15 +8,17 @@ public class Armor {
   private boolean takeable;
   private int protection;
   private int price;
+  private String relativePathPicture;
 
 
 
-  public Armor(String name, int type, boolean takeable, int protection, int price){
+  public Armor(String name, int type, boolean takeable, int protection, int price, String relativePathPicture){
     this.protection = protection;
     this.name = name;
     this.type = type;
     this.takeable = takeable;
     this.price = price;
+    this.relativePathPicture = relativePathPicture;
 
   }
 
@@ -55,6 +57,7 @@ public class Armor {
       return takeable;
   }
 
+
   public int getPrice() {
     return price;
   }
@@ -63,21 +66,18 @@ public class Armor {
     this.price = price;
   }
 
+  public String getRelativePathPicture() {
+    return relativePathPicture;
+  }
+
+  public void setRelativePathPicture(String relativePathPicture) {
+    this.relativePathPicture = relativePathPicture;
+  }
+
   @Override
   public String toString()
   {
-    String def = " ";
-
-    if(type == 1)
-    {
-      def = "You changed your armor to the one called " + type + "'\n'";
-
-    }
-    if(type == 2)
-    {
-      def = "You changed your shield to the one called " + type +  " \n";
-    }
-    return  def;
+    return  "Name : " + this.getName() + '\n' + "Protection : " + this.getProtection();
   }
 
     public boolean isBetter(Armor enemyArmor)

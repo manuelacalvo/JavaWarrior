@@ -11,8 +11,7 @@ public class Treasure {
   private int price;
 
 
-
-  public Treasure(String name, int type, int number, int price){
+  public Treasure(String name, int type, int number, int price) {
 
     this.name = name;
     this.number = number;
@@ -63,35 +62,7 @@ public class Treasure {
   }
 
   @Override
-  public String toString()
-  {
-    String def = " ";
-
-    if(this.type == 1)
-    {
-      if (actionPoint > 0){
-        def = "You used the potion and won " + actionPoint + " life points.";
-      } else if (actionPoint == 0) {
-        def = "You used the potion and nothing happened" + '\n' + "You shouldn't have shaken it that much.";
-      } else {
-        def = "You used the potion and lose " + actionPoint + " life points" + '\n' + "That is certainly because you didn't put it to the fridge yesterday.";
-      }
-
-    }
-    if(this.type == 2)
-    {
-      if (actionPoint > 0){
-        def = "You used the scroll and double your strengths.";
-      } else if (actionPoint == 0) {
-        def = "You used the scroll and nothing happened" + '\n' + "Haaaaa that's just a piece of paper without any magic.";
-      } else {
-        def = "You used the scroll and died" + '\n' + "Mama told you to not accept stuff from everybody.";
-      }
-    }
-    if(this.type == 3 || this.type == 4)
-    {
-      def = "You won "+ number + " " + name +".";
-    }
-    return def;
+  public String toString() {
+    return "Name : " + this.getName();
   }
 }

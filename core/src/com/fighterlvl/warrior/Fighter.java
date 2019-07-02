@@ -18,12 +18,13 @@ public class Fighter implements FightEventQueuer {
     private int hitPoints;
     private int price;
     private boolean restOnce;
+    private String relativePathPicture;
 
     private String thumbnailPath;
 
     private FightEventPlayer eventPlayer;
 
-    public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int price ) {
+    public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int price, String relativePathPicture ) {
         this.name = name;
         this.weapon = weapon;
         this.armor1 = armor1;
@@ -31,10 +32,7 @@ public class Fighter implements FightEventQueuer {
         this.treasures = treasures;
         this.hitPoints = hitPoints;
         this.price = price;
-    }
-    public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int price, String thumbnailPath) {
-        this(name, weapon, armor1, treasures, hitPoints, price);
-        setThumbnailPath(thumbnailPath);
+        this.relativePathPicture = relativePathPicture;
     }
 
     public String getName()
@@ -103,9 +101,17 @@ public class Fighter implements FightEventQueuer {
         this.price = price;
     }
 
+    public String getRelativePathPicture() {
+        return relativePathPicture;
+    }
+
+    public void setRelativePathPicture(String relativePathPicture) {
+        this.relativePathPicture = relativePathPicture;
+    }
+
     @Override
     public String toString() {
-        return "Fighter{" + "weapon=" + weapon + ", armor 1 =" + armor1 + ", armor 2 =" + armor2 + ", treasures=" + treasures + ", hitPoints=" + hitPoints + '}';
+        return "Name :"+ this.getName() + '\n' + "HitPoints : " + this.getHitPoints();
     }
 
     /**
