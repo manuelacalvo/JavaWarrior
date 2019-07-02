@@ -27,8 +27,8 @@ public class StatusBox extends Table {
         uiContainer.add(lifeLabel).spaceTop(0f).expand().fill();
     }
 
-    public void setlifeLabel(String pName){
-        lifeLabel.setText(pName);
+    public void setLifeLabel(String pLife){
+        lifeLabel.setText("Life: "+ pLife);
     }
     public void setNameLabel(String pName){
         nameLabel.setText(pName);

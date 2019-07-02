@@ -9,13 +9,12 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.fighterlvl.warrior.Fighter;
+import com.fighterlvl.warrior.Treasure;
 import com.ui.StatusBox;
 
 import java.util.ArrayDeque;
@@ -29,9 +28,8 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
     private Table statusBoxRoot;
 
-    private ArrayList<Fighter> enemies = new ArrayList<Fighter>();
+    private Fighter enemy;
 
-    private Button superButt;
     private StatusBox playerStatusBox;
     private StatusBox enemyStatusBox;
 
@@ -40,12 +38,31 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
     // Double Ended Queue https://docs.oracle.com/javase/8/docs/api/index.html?java/util/ArrayDeque.html
     private Queue<FightEvent> queue = new ArrayDeque<FightEvent>();
 
+    /**
+     * Default Test Constructor - in prod Enemy must be provided
+     * @param pGame - Game instance
+     */
     public FightScreen(MyGame pGame){
+        this(pGame,
+                new Fighter("MrOrc",
+                pGame.getCollection().getWeaponVector().firstElement(),
+                pGame.getCollection().getArmorVector().firstElement(),
+                new ArrayList<Treasure>(),
+                30,0,"core/assets/graphics/fighter_picture/Orc.jpg"));
+    }
+
+    /**
+     * Fighter Screen Constructor
+     * @param pGame - Game instance
+     * @param pEnemy The enemy involved
+     */
+    public FightScreen(MyGame pGame, Fighter pEnemy){
         super(pGame);
+        this.enemy = pEnemy;
+        getGame().getAssetManager().load(enemy.getThumbnailPath(),Texture.class);
+        getGame().getAssetManager().finishLoading();
         gameViewport=new ScreenViewport();
-
         initUI();
-
     }
 
     private void initUI(){
@@ -54,7 +71,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
         uiStage = new Stage(gameViewport);
         if(getGame().isDebug()){
             uiStage.setDebugAll(true);
-            //tableUI.setDebug(true);
+            //tableMain.setDebug(true);
             //tableFighters.setDebug(true);
         }
         // Gdx.input.setInputProcessor(uiStage); controller as inputProcessor
@@ -62,24 +79,23 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
         /* STATUS BOXES
          Name and Health of the fighters */
         statusBoxRoot = new Table();
-        statusBoxRoot.setFillParent(true);
-        uiStage.addActor(statusBoxRoot);
+        //statusBoxRoot.setFillParent(true);
 
         playerStatusBox = new StatusBox(getGame().getSkin());
         playerStatusBox.setNameLabel(getGame().getPlayer().getName());
+        playerStatusBox.setLifeLabel(String.valueOf(getGame().getPlayer().getFighter().getArmor1().getProtection()));
 
         enemyStatusBox = new StatusBox(getGame().getSkin());
-        enemyStatusBox.setNameLabel("???");
+        enemyStatusBox.setNameLabel(this.enemy.getName());
+        enemyStatusBox.setLifeLabel(String.valueOf(enemy.getArmor1().getProtection()));
 
         statusBoxRoot.add(playerStatusBox);
         statusBoxRoot.add(enemyStatusBox);
 
-        /* MOVE SELECTION BOX */
-
 
         // TABLE
-        Table tableUI=new Table();
-        tableUI.setFillParent(true);
+        Table tableMain=new Table();
+        tableMain.setFillParent(true);
         Table tableFighters=new Table();
 
         // BACKGROUND
@@ -91,45 +107,27 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
         Label promptLabel = new Label("Vide", getGame().getSkin());
 
         //PLAYER CHARACTER
-        Image playerImage = new Image(getGame().getAssetManager().get("core/assets/graphics/fighter_picture/User.jpg", Texture.class));
-        Image enemyImage = new Image(getGame().getAssetManager().get("core/assets/graphics/fighter_picture/User.jpg", Texture.class));
+        Image playerImage = new Image(getGame().getAssetManager().get(getGame().getPlayer().getFighter().getThumbnailPath(), Texture.class));
+        Image enemyImage = new Image(getGame().getAssetManager().get(enemy.getThumbnailPath(), Texture.class));
         
         // Prepare Tables
-        tableUI.add(tableFighters).expandX();
-        tableUI.row();
-        tableUI.add(promptLabel).expandX().left();
-        tableUI.bottom();
+        tableMain.add(tableFighters).expandX();
+        tableMain.row();
+        tableMain.add(promptLabel).expandX().left();
+        tableMain.bottom();
 
-        tableFighters.add(playerImage).padRight(100);
+        tableFighters.add(playerImage);//.padRight(100);
+        tableFighters.add(statusBoxRoot);
         tableFighters.add(enemyImage);
 
         // Load all on uiStage
         uiStage.addActor(backgroundImage);
+        //uiStage.addActor(statusBoxRoot);
         //uiStage.addActor(playerImage);
-        uiStage.addActor(tableUI);
+        uiStage.addActor(tableMain);
         //uiStage.addActor(tableFighters);
 
     }
-
-    /**
-     * This function inits HUD elements
-     */
-    /*
-    private void initHUD(){
-        this.superButt = new TextButton("Text Button", this.UISkin,"default");
-        superButt.setSize(400,100);
-        superButt.addListener(new InputListener(){
-            @Override
-            public void touchUp(InputEvent event, float x, float y, int pointer, int button){
-                System.out.println("Press a button");
-            }
-            @Override
-            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button){
-                System.out.println("Pressed text button");
-                return true;
-            }
-        });
-    }*/
 
     /**
      *

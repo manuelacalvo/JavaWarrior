@@ -103,5 +103,9 @@ public class MyGame extends Game {
     public Skin getSkin(){
         return this.skin;
     }
+
+    public Collection getCollection(){
+        return this.collection;
+    }
 }
 
