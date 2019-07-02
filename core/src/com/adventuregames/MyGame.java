@@ -75,6 +75,7 @@ public class MyGame extends Game {
         assetManager = new AssetManager();
         assetManager.load(path_background, Texture.class);
         assetManager.load(path_SkinUI, TextureAtlas.class);
+        assetManager.load("core/assets/graphics/ui/battle/battlepack.atlas", TextureAtlas.class);
         assetManager.load(path_fighterThumbnail, Texture.class);
         assetManager.load(path_pokefont, BitmapFont.class);
         assetManager.finishLoading();
