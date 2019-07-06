@@ -29,7 +29,6 @@ public class GameDisplay implements Screen {
     private ImageTextButton.ImageTextButtonStyle textButtonStyle;
     private ImageTextButton.ImageTextButtonStyle textButtonStyleShop;
     private BitmapFont font;
-    private int choice = 0;
     private Image image;
 
 
@@ -61,8 +60,6 @@ public class GameDisplay implements Screen {
                 new ChangeListener() {
                     @Override
                     public void changed (ChangeEvent event, Actor actor) {
-                        choice = 1;
-                        ///François c'est ici qu'il faut renvoyer à ton écran
                        game.setScreen(new FightScreen(game));
                     }
                 }
@@ -71,7 +68,7 @@ public class GameDisplay implements Screen {
         buttonMapMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                choice = 2;
+
             }
         });
 
@@ -79,7 +76,9 @@ public class GameDisplay implements Screen {
         buttonConnectedMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                choice = 3;
+
+
+
             }
         });
 
@@ -87,7 +86,7 @@ public class GameDisplay implements Screen {
         buttonShop.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                choice = 4;
+
                 game.setScreen(new CollectionFighterDisplay(game, player, coll));
             }
         });
@@ -145,8 +144,6 @@ public class GameDisplay implements Screen {
     }
 
 
-    public int getChoice(){
-        return choice;
-    }
+
 
 }

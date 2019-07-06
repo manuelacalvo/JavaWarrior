@@ -165,6 +165,10 @@ public class Collection {
 
         setTreasureVector(potion);
         setTreasureVector(scroll);
+
+        player.setCollectionFighter(getFighterVector().get(0));
+        player.setCollectionWeapon(getWeaponVector().get(0));
+        player.setCollectionArmor(getArmorVector().get(0));
     }
 
 

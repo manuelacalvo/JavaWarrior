@@ -2,9 +2,7 @@ package com.Display;
 
 import com.badlogic.gdx.Screen;
 import com.adventuregames.MyGame;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
@@ -18,45 +16,42 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
 
-/*
+
 public class SelectFighterDisplay implements Screen {
     private Stage stage;
     private MyGame game;
     private Image shop;
-    private ImageButton fighter;
-    private ImageButton weapon;
-    private ImageButton armor1;
-    private ImageButton armor2;
+    private Image fighter;
+    private Image weapon;
+    private Image armor1;
+    private Image armor2;
+    private ImageButton arrowf1, arrowf2,arroww1,arroww2,arrowa11,arrowa12,arrowa21,arrowa22;
+    private ImageButton validate;
     private ImageTextButton buttonContinue;
     private ImageTextButton.ImageTextButtonStyle textButtonStyle;
     private BitmapFont font;
-    private Batch batch;
     private Skin skin;
     private String str;
     private TextureAtlas buttonAtlas;
-    private Table fighterTable;
-    private Table weaponTable;
-    private Table armor1Table;
-    private Table armor2Table;
+    private Table fighterTable,weaponTable,armor1Table, armor2Table;
+    private Table table;
     private Player player;
-    private int i;
+    private int i, j, k, l;
+    private Texture f1, f2, f3, f4;
+    private Drawable drawable, drawable2, drawable3, drawable4, drawable5, drawable6, drawable7;
 
-    public CollectionFighterDisplay(MyGame aGame, final Player player, final Collection coll) {
+    public SelectFighterDisplay(MyGame aGame, final Player player, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
-        batch = new SpriteBatch();
-        Table table=new Table();
-        Table table2 =new Table();
         this.player = player;
-        Skin skin2 = new Skin(Gdx.files.internal("uiskin.json"));
         Gdx.input.setInputProcessor(stage);
 
-        Texture textureShop = new Texture("core/assets/graphics/pictures/inventory.jpg");
+        Texture textureShop = new Texture(Gdx.files.internal("core/assets/graphics/Background/bg.png"));
         shop = new Image(textureShop);
         shop.setSize(stage.getWidth(), stage.getHeight());
+        i=0;
 
-
-        str = "Welcome to your inventory";
+        str = "Design your fighter";
 
         font = new BitmapFont();
         skin = new Skin();
@@ -74,232 +69,184 @@ public class SelectFighterDisplay implements Screen {
 
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                game.setScreen(new CollectionWeaponDisplay(game, player, coll));
+                game.setScreen(new GameDisplay(game, player, coll));
             }
         });
 
 
-        Texture f1 = new Texture(Gdx.files.internal());
-        Drawable drawable = new TextureRegionDrawable(new TextureRegion(f1));
-        fighter1 = new ImageButton(drawable);
-        fighter1.setSize(30,40);
-        price1Gold = new TextArea(Integer.toString(coll.getFighterVector().get(1).getPrice()), skin2);//
+
+        f1 = new Texture(player.getCollectionFighter().get(i).getRelativePathPicture());
+        drawable = new TextureRegionDrawable(new TextureRegion(f1));
+        fighter = new Image(drawable);
+        fighter.setSize(30,40);
 
 
+        f2 = new Texture(player.getCollectionWeapon().get(j).getRelativePathPicture());
+        drawable2 = new TextureRegionDrawable(new TextureRegion(f2));
+        weapon = new Image(drawable2);
+        weapon.setSize(30,40);
 
 
-
-        Texture f2 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Nest of snakes.jpg"));
-        Drawable drawable2 = new TextureRegionDrawable(new TextureRegion(f2));
-        fighter2 = new ImageButton(drawable2);
-        fighter2.setSize(30,40);
-        price2Gold = new TextArea(Integer.toString(coll.getFighterVector().get(2).getPrice()), skin2);//
+        f3 = new Texture(player.getCollectionArmor().get(k).getRelativePathPicture());
+        drawable3 = new TextureRegionDrawable(new TextureRegion(f3));
+        armor1 = new Image(drawable3);
+        armor1.setSize(30,40);
 
 
-        Texture f3 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Troll.jpg"));
-        Drawable drawable3 = new TextureRegionDrawable(new TextureRegion(f3));
-        fighter3 = new ImageButton(drawable3);
-        fighter3.setSize(30,40);
-        price3Gold = new TextArea(Integer.toString(coll.getFighterVector().get(3).getPrice()), skin2);//
+        f4 = new Texture(player.getCollectionArmor().get(l).getRelativePathPicture());
+        drawable4 = new TextureRegionDrawable(new TextureRegion(f4));
+        armor2 = new Image(drawable4);
+        armor2.setSize(30,40);
 
 
-        Texture f4 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Berserker.jpg"));
-        Drawable drawable4 = new TextureRegionDrawable(new TextureRegion(f4));
-        fighter4 = new ImageButton(drawable4);
-        price4Gold = new TextArea(Integer.toString(coll.getFighterVector().get(4).getPrice()), skin2);//
+        Texture f5 = new Texture(Gdx.files.internal("core/assets/graphics/buttons/arrow.jpg"));
+        drawable5 = new TextureRegionDrawable(new TextureRegion(f5));
+        arrowf1 = new ImageButton(drawable5);
+        arroww1 = new ImageButton(drawable5);
+        arrowa11 = new ImageButton(drawable5);
+        arrowa21 = new ImageButton(drawable5);
 
 
-        Texture f5 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Ninja.jpg"));
-        Drawable drawable5 = new TextureRegionDrawable(new TextureRegion(f5));
-        fighter5 = new ImageButton(drawable5);
-        price5Gold = new TextArea(Integer.toString(coll.getFighterVector().get(5).getPrice()), skin2);//
+        Texture f7 = new Texture(Gdx.files.internal("core/assets/graphics/buttons/arrowNext.jpg"));
+        drawable7 = new TextureRegionDrawable(new TextureRegion(f7));
+        arrowf2 = new ImageButton(drawable7);
+        arroww2 = new ImageButton(drawable7);
+        arrowa12 = new ImageButton(drawable7);
+        arrowa22 = new ImageButton(drawable7);
+
+        Texture f6 = new Texture(Gdx.files.internal("core/assets/graphics/buttons/start.PNG"));
+        drawable6 = new TextureRegionDrawable(new TextureRegion(f6));
+        validate = new ImageButton(drawable6);
 
 
-        Texture f6 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Dragon.jpg"));
-        Drawable drawable6 = new TextureRegionDrawable(new TextureRegion(f6));
-        fighter6 = new ImageButton(drawable6);
-        price6Gold = new TextArea(Integer.toString(coll.getFighterVector().get(6).getPrice()), skin2);//
-
-
-        Texture f7 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Doppleganger.jpg"));
-        Drawable drawable7 = new TextureRegionDrawable(new TextureRegion(f7));
-        fighter7 = new ImageButton(drawable7);
-        price7Gold = new TextArea(Integer.toString(coll.getFighterVector().get(7).getPrice()), skin2);//
-
-
-        Texture f8 = new Texture(Gdx.files.internal("core/assets/graphics/fighter_picture/Wizard.jpg"));
-        Drawable drawable8 = new TextureRegionDrawable(new TextureRegion(f8));
-        fighter8 = new ImageButton(drawable8);
-        price8Gold = new TextArea(Integer.toString(coll.getFighterVector().get(8).getPrice()), skin2);//
-
-
-        Texture textureGold  = new Texture(Gdx.files.internal("core/assets/graphics/items/gold.PNG"));
-        Drawable drawableGold = new TextureRegionDrawable(new TextureRegion(textureGold));
-        gold = new Image(drawableGold);
-        gold.setPosition(240, 10);
-        gold.setSize(50,50);
-        gold1 = new Image(drawableGold);
-        gold2= new Image(drawableGold);
-        gold3 = new Image(drawableGold);
-        gold4 = new Image(drawableGold);
-        gold5 = new Image(drawableGold);
-        gold6 = new Image(drawableGold);
-        gold7 = new Image(drawableGold);
-        gold8 = new Image(drawableGold);
-
-
-
-        fighter1.addListener(new ChangeListener() {
+        arrowf1.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str = coll.buyFighter(coll.getFighterVector().get(1));
+                if(i>0)
+                {
+                    i--;
+                }
             }
         });
-        TextTooltip tipf1 = new TextTooltip(coll.getFighterVector().get(1).toString(), skin2);
-        tipf1.setInstant(true);
-        fighter1.addListener(tipf1);
 
-
-        fighter2.addListener(new ChangeListener() {
+        arrowf2.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str = coll.buyFighter(coll.getFighterVector().get(2));
+                if(i<player.getCollectionFighter().size()-1)
+                {
+                    i++;
+                }
+
             }
         });
-        TextTooltip tipf2 = new TextTooltip(coll.getFighterVector().get(2).toString(), skin2);
-        tipf2.setInstant(true);
-        fighter2.addListener(tipf2);
 
-        fighter3.addListener(new ChangeListener() {
+        arroww1.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str = coll.buyFighter(coll.getFighterVector().get(3));
+                if(j>0)
+                {
+                    j--;
+                }
             }
         });
-        TextTooltip tipf3 = new TextTooltip(coll.getFighterVector().get(3).toString(), skin2);
-        tipf3.setInstant(true);
-        fighter3.addListener(tipf3);
 
-        fighter4.addListener(new ChangeListener() {
+        arroww2.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str =  coll.buyFighter(coll.getFighterVector().get(4));
+                if(j<player.getCollectionWeapon().size()-1)
+                {
+                    j++;
+                }
             }
         });
-        TextTooltip tipf4 = new TextTooltip(coll.getFighterVector().get(4).toString(), skin2);
-        tipf4.setInstant(true);
-        fighter4.addListener(tipf4);
 
-        fighter5.addListener(new ChangeListener() {
+        arrowa11.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str =  coll.buyFighter(coll.getFighterVector().get(5));
+                if(k>0)
+                {
+                    k--;
+                }
             }
         });
-        TextTooltip tipf5 = new TextTooltip(coll.getFighterVector().get(5).toString(), skin2);
-        tipf5.setInstant(true);
-        fighter5.addListener(tipf5);
 
-        fighter6.addListener(new ChangeListener() {
+        arrowa12.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str = coll.buyFighter(coll.getFighterVector().get(6));
+                if(k<player.getCollectionArmor().size()-1)
+                {
+                    k++;
+                }
             }
         });
-        TextTooltip tipf6 = new TextTooltip(coll.getFighterVector().get(6).toString(), skin2);
-        tipf6.setInstant(true);
-        fighter6.addListener(tipf6);
 
-        fighter7.addListener(new ChangeListener() {
+        arrowa21.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str = coll.buyFighter(coll.getFighterVector().get(7));
+
+                if(l>0)
+                {
+                    l--;
+                }
+
             }
         });
-        TextTooltip tipf7 = new TextTooltip(coll.getFighterVector().get(7).toString(), skin2);
-        tipf7.setInstant(true);
-        fighter7.addListener(tipf7);
 
-        fighter8.addListener(new ChangeListener() {
+        arrowa22.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str =  coll.buyFighter(coll.getFighterVector().get(8));
+                if(l<player.getCollectionArmor().size()-1)
+                {
+                    l++;
+                }
             }
         });
-        TextTooltip tipf8 = new TextTooltip(coll.getFighterVector().get(8).toString(), skin2);
-        tipf8.setInstant(true);
-        fighter8.addListener(tipf8);
+
+        validate.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                player.selectFighter(player.getCollectionFighter().get(i), player.getCollectionWeapon().get(j), player.getCollectionArmor().get(k), player.getCollectionArmor().get(l));
+            }
+        });
+
+        fighterTable= new Table();
+        fighterTable.add(arrowf1).size(100, 100);
+        fighterTable.add(fighter).size(100, 100);
+        fighterTable.add(arrowf2).size(100, 100);
 
 
+        weaponTable= new Table();
+        weaponTable.add(arroww1).size(100, 100);
+        weaponTable.add(weapon).size(100, 100);
+        weaponTable.add(arroww2).size(100, 100);
 
 
-        table.add(fighter1).size(100, 100);
-        table.add(fighter2).size(100, 100);
-        table.add(fighter3).size(100, 100);
-        table.add(fighter4).size(100, 100);
-        table.setPosition(315, 425);
-
-        table2.add(fighter5).size(100, 100);
-        table2.add(fighter6).size(100, 100);
-        table2.add(fighter7).size(100, 100);
-        table2.add(fighter8).size(100, 100);
-        table2.setPosition(315, 225);
-
-        price1Table = new Table();
-        price1Table.add(gold1).size(30, 30);
-        price1Table.add(price1Gold).size(30,30);
-        price1Table.setPosition(170,350);
-
-        price2Table = new Table();
-        price2Table.add(gold2).size(30, 30);
-        price2Table.add(price2Gold).size(30,30);
-        price2Table.setPosition(270,350);
-
-        price3Table = new Table();
-        price3Table.add(gold3).size(30, 30);
-        price3Table.add(price3Gold).size(30,30);
-        price3Table.setPosition(380,350);
-
-        price4Table = new Table();
-        price4Table.add(gold4).size(30, 30);
-        price4Table.add(price4Gold).size(30,30);
-        price4Table.setPosition(480,350);
-
-        price5Table = new Table();
-        price5Table.add(gold5).size(30, 30);
-        price5Table.add(price5Gold).size(30,30);
-        price5Table.setPosition(170,170);
-
-        price6Table = new Table();
-        price6Table.add(gold6).size(30, 30);
-        price6Table.add(price6Gold).size(30,30);
-        price6Table.setPosition(270,170);
-
-        price7Table = new Table();
-        price7Table.add(gold7).size(30, 30);
-        price7Table.add(price7Gold).size(30,30);
-        price7Table.setPosition(365,170);
-
-        price8Table = new Table();
-        price8Table.add(gold8).size(30, 30);
-        price8Table.add(price8Gold).size(30,30);
-        price8Table.setPosition(475,170);
+        armor1Table= new Table();
+        armor1Table.add(arrowa11).size(100, 100);
+        armor1Table.add(armor1).size(100, 100);
+        armor1Table.add(arrowa12).size(100, 100);
 
 
+        armor2Table= new Table();
+        armor2Table.add(arrowa21).size(100, 100);
+        armor2Table.add(armor2).size(100, 100);
+        armor2Table.add(arrowa22).size(100, 100);
+
+
+        table = new Table();
+        table.add(fighterTable);
+        table.row();
+        table.add(weaponTable);
+        table.row();
+        table.add(armor1Table);
+        table.row();
+        table.add(armor2Table);
+        table.setPosition(325,250);
 
         stage.addActor(shop);
         stage.addActor(buttonContinue);
+        stage.addActor(validate);
         stage.addActor(table);
-        stage.addActor(table2);
-        stage.addActor(gold);
-        stage.addActor(price1Table);
-        stage.addActor(price2Table);
-        stage.addActor(price3Table);
-        stage.addActor(price4Table);
-        stage.addActor(price5Table);
-        stage.addActor(price6Table);
-        stage.addActor(price7Table);
-        stage.addActor(price8Table);
 
 
     }
@@ -327,13 +274,25 @@ public class SelectFighterDisplay implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        strGold = Integer.toString(player.getMoney());
         stage.act();
         stage.draw();
-        batch.begin();
-        font.draw(batch, strGold, 300, 40);
-        font.draw(batch, str, 250, 80 );
-        batch.end();
+        f1 = new Texture(player.getCollectionFighter().get(i).getRelativePathPicture());
+        drawable = new TextureRegionDrawable(new TextureRegion(f1));
+        fighter.setDrawable(drawable);
+
+        f2 = new Texture(player.getCollectionWeapon().get(j).getRelativePathPicture());
+        drawable2 = new TextureRegionDrawable(new TextureRegion(f2));
+        weapon.setDrawable(drawable2);
+
+        f3 = new Texture(player.getCollectionArmor().get(k).getRelativePathPicture());
+        drawable3 = new TextureRegionDrawable(new TextureRegion(f3));
+        armor1.setDrawable(drawable3);
+
+        f4 = new Texture(player.getCollectionArmor().get(l).getRelativePathPicture());
+        drawable4 = new TextureRegionDrawable(new TextureRegion(f4));
+        armor2.setDrawable(drawable4);
+
+
     }
 
     @Override
@@ -351,4 +310,4 @@ public class SelectFighterDisplay implements Screen {
     }
 
 
-}*/
+}

@@ -106,5 +106,12 @@ public class Player {
         this.ennemi = ennemi;
     }
 
+    public void selectFighter(Fighter fighter, Weapon weapon, Armor armor1, Armor armor2)
+    {
+        setFighter(fighter);
+        getFighter().setWeapon(weapon);
+        getFighter().setArmor1(armor1);
+        getFighter().setArmor2(armor2);
+    }
 
 }

@@ -121,7 +121,7 @@ public class CollectionWeaponDisplay implements Screen {
 
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                game.setScreen(new GameDisplay(game, player, coll));
+                game.setScreen(new SelectFighterDisplay(game, player, coll));
             }
         });
 
