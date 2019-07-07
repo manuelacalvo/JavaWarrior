@@ -4,11 +4,12 @@ import com.adventuregames.fight.event.FightEvent;
 import com.adventuregames.fight.event.FightEventPlayer;
 import com.adventuregames.fight.event.FightEventQueuer;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
-public class Fighter implements FightEventQueuer {
+public class Fighter implements FightEventQueuer, Serializable {
 
     private String name;
     private Weapon weapon;
@@ -154,7 +155,7 @@ public class Fighter implements FightEventQueuer {
      * One turn of a fight between two Fighters
      * @method fight
      */
-    private void fight(Fighter enemy){
+    public void fight(Fighter enemy){
         System.out.println(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
         this.setRestOnce(false);
         //Different attacks based on weapon's attacks per turn

@@ -14,8 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.connection.Client;
+import com.connection.Server;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
+import com.shopmanagement.CollectionDisplay.CollectionFighterDisplay;
 
 public class GameDisplay implements Screen {
     private Stage stage;
@@ -76,9 +79,12 @@ public class GameDisplay implements Screen {
         buttonConnectedMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
+                System.out.println("Connected...");
+                Server server = new Server(game, player);
+                server.go();
 
-
-
+                    /* Client client = new Client(game, player);
+                            client.go();*/
             }
         });
 

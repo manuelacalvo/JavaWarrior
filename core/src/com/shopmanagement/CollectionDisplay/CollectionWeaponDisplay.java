@@ -1,5 +1,6 @@
-package com.Display;
+package com.shopmanagement.CollectionDisplay;
 
+import com.Display.SelectFighterDisplay;
 import com.adventuregames.MyGame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

@@ -1,6 +1,6 @@
 package com.shopmanagement;
 
-import com.Display.CollectionFighterDisplay;
+import com.shopmanagement.CollectionDisplay.CollectionFighterDisplay;
 import com.fighterlvl.warrior.*;
 
 import java.io.File;

@@ -1,8 +1,7 @@
-package com.Display;
+package com.shopmanagement.CollectionDisplay;
 
 
 import com.adventuregames.MyGame;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
