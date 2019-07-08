@@ -18,27 +18,28 @@ public class MyGame extends Game {
     private Collection collection;
     private Class screenType=null;
 
-    private boolean debug;
+    private boolean debug = false;
 
     private AssetManager assetManager;
     private Skin skin;
 
     /**
      * Standard constructor called from DesktopLauncher
-     * @param pPlayer Player
+     * @param oCollection : Game Objects
      */
-    public MyGame(Player pPlayer, Collection pCollection){
-        this.player=pPlayer;
-        this.collection=pCollection;
+    public MyGame(Collection oCollection){
+        this.player=oCollection.getPlayer();
+        this.collection=oCollection;
     }
 
     /**
      * Test&Debug constructor
-     * @param pPlayer Player
+     * @param oCollection : Game Objects
      * @param screenType type of the screen to debug
      */
-    public MyGame(Player pPlayer, Collection pCollection, Class screenType){
-        this(pPlayer,pCollection);
+    public MyGame(Collection oCollection, Class screenType){
+        this(oCollection);
+        this.debug=true;
         this.screenType=screenType;
     }
 
@@ -53,11 +54,10 @@ public class MyGame extends Game {
 
         skin = SkinGenerator.generateSkin(assetManager);
 
-        if (screenType == null) { //Standard case
+        if (!debug) { //Standard case
             this.setScreen(new GameDisplay(this, player, collection));
         } else {
             // DEBUG
-            this.debug=true;
             if (screenType == FightScreen.class) {
                 this.setScreen(new FightScreen(this));
             }

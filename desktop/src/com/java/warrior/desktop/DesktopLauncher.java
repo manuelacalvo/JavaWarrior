@@ -19,6 +19,6 @@ public class DesktopLauncher {
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-		new LwjglApplication(new MyGame(player, coll), config);
+		new LwjglApplication(new MyGame(coll), config);
 	}
 }
