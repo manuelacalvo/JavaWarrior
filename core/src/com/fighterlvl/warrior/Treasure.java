@@ -1,8 +1,9 @@
 package com.fighterlvl.warrior;
 
 
+import java.io.Serializable;
 
-public class Treasure {
+public class Treasure implements Serializable {
 
   private String name;
   private int type;

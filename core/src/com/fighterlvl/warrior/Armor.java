@@ -1,9 +1,11 @@
 package com.fighterlvl.warrior;
 
 
-public class Armor {
+import java.io.Serializable;
 
-  private   String name;
+public class Armor implements Serializable {
+
+  private String name;
   private int type;
   private boolean takeable;
   private int protection;

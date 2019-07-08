@@ -30,38 +30,53 @@ public class Server {
             BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
             BufferedReader bufIn = new BufferedReader(new InputStreamReader(System.in));
             PrintStream printStream = new PrintStream(outgoing.getOutputStream());
-            System.out.println("test");
 
             ObjectOutputStream objectOutputStream = new ObjectOutputStream(outgoing.getOutputStream());
+            ObjectInputStream objectInputStream = new ObjectInputStream(outgoing.getInputStream());
 
-
+            objectOutputStream.writeObject(player.getFighter());
+            objectOutputStream.flush();
 
             while (true) {
-                objectOutputStream.writeObject(player.getFighter());
-                System.out.println("obj sented");
-               // objectOutputStream.flush();
-                /*
-                while(!end) {
-                    System.out.println("test2");
+
+
                     String received = bufferedReader.readLine();
                     System.out.println(received);
-                    if (received.trim().equalsIgnoreCase("turn player two : ")) {
-                        ObjectInputStream objectInputStream = new ObjectInputStream(outgoing.getInputStream());
+
+
+                    if(received.trim().equalsIgnoreCase("turn of player two:") && end == false) {
+                        printStream.println("object needed");
                         Object obj = objectInputStream.readObject();
+                        player.setFighter((Fighter) obj);
+                        obj = objectInputStream.readObject();
+                        ennemy = (Fighter) obj;
                         printStream.println("player two is playing...");
-                        //ennemy = (Fighter) obj;
-                        if(!ennemy.isAlive())
-                        {
-                            end = true;
-                        }
                         player.getFighter().fight(ennemy);
-                        // String serverMessage = bufIn.readLine().trim();
-                        //printStream.println(serverMessage);
-                        printStream.println("turn player one ");
-                       // objectOutputStream.writeObject(player.getFighter());
+                        printStream.println("turn of player one: ");
+
+
+
+                }
+                    if(received.trim().equalsIgnoreCase("object needed")) {
+                    objectOutputStream.writeObject(ennemy);
+                    objectOutputStream.flush();
+                    objectOutputStream.writeObject(player.getFighter());
+                }
+
+                   if(!player.getFighter().isAlive())
+                    {
+                        System.out.println("you are dead");
+                        end = true;
                     }
-                }*/
-                objectOutputStream.close();
+                   if(ennemy != null)
+                   {
+                    if(!ennemy.isAlive())
+                    {
+                        end = true;
+                        System.out.println("you win");
+                    }
+                   }
+
             }
         } catch (Exception e) {
             System.out.println("Server Side Problem");

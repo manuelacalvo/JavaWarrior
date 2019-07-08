@@ -1,14 +1,15 @@
 package com.fighterlvl.warrior;
 
 
+import java.io.Serializable;
 
-public class Weapon {
+public class Weapon implements Serializable {
 
   private String name;
   private int attacksPerTurn;
   private int minDamage;
   private int maxDamage;
-  private  boolean takeable;
+  private boolean takeable;
   private int price;
   private String relativePathPicture;
 

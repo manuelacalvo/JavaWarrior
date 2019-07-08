@@ -39,37 +39,54 @@ public class Client
 
             ObjectInputStream objectInputStream = new ObjectInputStream(incoming.getInputStream());
 
+            Object object= objectInputStream.readObject();
+            ennemy = (Fighter) object ;
+            printStream.println("player one is playing...");
+            player.getFighter().fight(ennemy);
+            printStream.println("turn of player two:");
+            String advice = reader.readLine();
+            System.out.println(advice);
+            if(advice.trim().equalsIgnoreCase("object needed")) {
+                objectOutputStream.writeObject(ennemy);
+                objectOutputStream.flush();
+                objectOutputStream.writeObject(player.getFighter());
+                objectOutputStream.flush();
+            }
+
             while(true)
             {
-                Object object= objectInputStream.readObject();
-                System.out.println("betwween");
-                ennemy = (Fighter) object ;
-                printStream.println("player one is playing...");
-                    /*player.getFighter().fight(ennemy);
+                advice = reader.readLine();
+                System.out.println(advice);
+
+                if (advice.equalsIgnoreCase("turn of player one: ") && end == false) {
+                    printStream.println("object needed");
+                    player.setFighter((Fighter)objectInputStream.readObject());
+                    ennemy = (Fighter)objectInputStream.readObject();
+                    printStream.println("player one is playing...");
+                    player.getFighter().fight(ennemy);
                     printStream.println("turn of player two: ");
+
+
+
+                }
+                if(advice.trim().equalsIgnoreCase("object needed")) {
+                    objectOutputStream.writeObject(ennemy);
+                    objectOutputStream.flush();
                     objectOutputStream.writeObject(player.getFighter());
-                    while(!end) {
-                        String advice = reader.readLine();
-                        System.out.println(advice);
+                    objectOutputStream.flush();
+                }
+                if(!player.getFighter().isAlive())
+                {
+                    end = true;
+                    System.out.println("you are dead");
+                }
+                if(ennemy!= null) {
+                    if (!ennemy.isAlive()) {
+                        end = true;
+                        System.out.println("you win");
+                    }
+                }
 
-                        if (advice.equalsIgnoreCase("turn of player one: ")) {
-                            ennemy = (Fighter)objectInputStream.readObject();
-
-                            if(!ennemy.isAlive())
-                            {
-                                end =true;
-                            }
- printStream.println("player one is playing...");
-                            player.getFighter().fight(ennemy);
-                            printStream.println("turn of player two: ");
-                            objectOutputStream.writeObject(player.getFighter());
-                            //String userMessage = bufIn.readLine().trim();
-                            //printStream.println(userMessage);
-
-                            //advice = reader.readLine().trim();
-                           // System.out.println(advice);
-                        }
-                    }*/
             }
 
         }
