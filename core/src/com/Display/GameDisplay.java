@@ -71,7 +71,7 @@ public class GameDisplay implements Screen {
         buttonMapMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-
+                    player.getFighter().fightTurn(coll.getFighterVector().get(1));
             }
         });
 

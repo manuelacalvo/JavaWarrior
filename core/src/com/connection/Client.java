@@ -58,7 +58,7 @@ public class Client
                 advice = reader.readLine();
                 System.out.println(advice);
 
-                if (advice.equalsIgnoreCase("turn of player one: ") && end == false) {
+                if (advice.equalsIgnoreCase("turn of player one: ") && !end) {
                     printStream.println("object needed");
                     player.setFighter((Fighter)objectInputStream.readObject());
                     ennemy = (Fighter)objectInputStream.readObject();
@@ -95,5 +95,8 @@ public class Client
             System.out.println("Client Side Error");
         }
 
+
     }
+
+
 }

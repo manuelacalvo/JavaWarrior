@@ -132,11 +132,7 @@ public class FightController {
         }
     }
 
-    public void shopOpen()
-    {
-        coll.loadFighters();
-        this.setFighter(this.coll.getFighterVector().get(0));
-    }
+
 
 
 }

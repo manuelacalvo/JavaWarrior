@@ -15,6 +15,8 @@ public class Collection {
     private Vector<Armor> armorVector ;
     private Vector<Treasure> treasureVector ;
     private CollectionFighterDisplay collectionDisplay;
+    private ArrayList<Attack> fighterAttack;
+    private ArrayList<Attack> weaponAttack;
 
 
     public Collection( Player player)
@@ -24,6 +26,8 @@ public class Collection {
         weaponVector = new Vector<Weapon>();
         armorVector = new Vector<Armor>();
         treasureVector= new Vector<Treasure>();
+        fighterAttack = new ArrayList<>();
+        weaponAttack = new ArrayList<>();
     }
 
     public Player getPlayer() {
@@ -44,6 +48,38 @@ public class Collection {
 
     public Vector<Treasure> getTreasureVector() {
         return treasureVector;
+    }
+
+    public ArrayList<Attack> getFighterAttack() {
+        return fighterAttack;
+    }
+
+    public ArrayList<Attack> getWeaponAttack() {
+        return weaponAttack;
+    }
+
+    public void setTreasureVector(Vector<Treasure> treasureVector) {
+        this.treasureVector = treasureVector;
+    }
+
+    public void setWeaponVector(Vector<Weapon> weaponVector) {
+        this.weaponVector = weaponVector;
+    }
+
+    public void setFighterVector(Vector<Fighter> fighterVector) {
+        this.fighterVector = fighterVector;
+    }
+
+    public void setArmorVector(Vector<Armor> armorVector) {
+        this.armorVector = armorVector;
+    }
+
+    public void setFighterAttack(Attack fighterAttack) {
+        this.fighterAttack.add( fighterAttack);
+    }
+
+    public void setWeaponAttack(Attack weaponAttack) {
+        this.weaponAttack.add(weaponAttack);
     }
 
     public void setPlayer(Player player) {
@@ -228,4 +264,173 @@ public class Collection {
 
         return str;
     }
+
+    public void readFightersAttacks()
+    {
+        File file = new File("fightersAttack.txt");
+
+        Scanner read_f = null;
+        try {
+            read_f = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("pas de fichier");
+
+        }
+        read_f.useDelimiter(Pattern.compile("\n"));
+        String[] attributeNames;
+        if(read_f.hasNextLine()){
+            attributeNames = read_f.nextLine().split(";");
+        } else {
+            return;
+        }
+
+        List<Map<String, String>> weaponsAttack = new ArrayList<>();
+
+        while (read_f.hasNextLine()) {
+            String[] attributes = read_f.nextLine().split(";");
+            Map<String, String> tmpWeaponAttack = new HashMap<>();
+            if(attributeNames.length < attributes.length){
+                System.err.println("GROSS ERREUR");
+                return;
+            }
+            for(int i = 0; i < attributeNames.length; i++){
+                tmpWeaponAttack.put(attributeNames[i], attributes[i]);
+            }
+            weaponsAttack.add(tmpWeaponAttack);
+
+        }
+
+        read_f.close();
+
+        generateFighterAttack(weaponsAttack);
+
+
+
+
+    }
+
+    public void readWeaponsAttacks()
+    {
+
+        File file = new File("weapon_attack.txt");
+
+        Scanner read_f = null;
+        try {
+            read_f = new Scanner(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            System.out.println("pas de fichier");
+
+        }
+        read_f.useDelimiter(Pattern.compile("\n"));
+        String[] attributeNames;
+        if(read_f.hasNextLine()){
+            attributeNames = read_f.nextLine().split(";");
+        } else {
+            return;
+        }
+
+        List<Map<String, String>> weaponsAttack = new ArrayList<>();
+
+        while (read_f.hasNextLine()) {
+            String[] attributes = read_f.nextLine().split(";");
+            Map<String, String> tmpWeaponAttack = new HashMap<>();
+            if(attributeNames.length < attributes.length){
+                System.err.println("GROSS ERREUR");
+                return;
+            }
+            for(int i = 0; i < attributeNames.length; i++){
+                tmpWeaponAttack.put(attributeNames[i], attributes[i]);
+            }
+            weaponsAttack.add(tmpWeaponAttack);
+
+        }
+
+        read_f.close();
+
+        generateWeaponAttack(weaponsAttack);
+
+
+
+    }
+
+    public void generateFighterAttack(List<Map<String, String>> fightersAttacks)
+    {
+
+        for(int i=0; i<fightersAttacks.size(); i++)
+        {
+
+            Attack fighterAttack = new Attack(fightersAttacks.get(i).get("Name"), 0 ,Integer.parseInt(fightersAttacks.get(i).get("MinDamage")),Integer.parseInt(fightersAttacks.get(i).get("MaxDamage")), fightersAttacks.get(i).get("RelationWith"));
+            setFighterAttack(fighterAttack);
+
+        }
+
+
+
+    }
+
+    public void generateWeaponAttack(List<Map<String, String>> weaponsAttacks)
+    {
+
+        for(int i=0; i<weaponsAttacks.size(); i++)
+        {
+
+            Attack weaponAttack = new Attack(weaponsAttacks.get(i).get("Name"), 0 ,Integer.parseInt(weaponsAttacks.get(i).get("MinDamage")),Integer.parseInt(weaponsAttacks.get(i).get("MaxDamage")), weaponsAttacks.get(i).get("RelationWith"));
+            setWeaponAttack(weaponAttack);
+
+        }
+
+    }
+
+    public void loadAttacks()
+    {
+        for(int i=0; i<this.getFighterVector().size(); i++)
+        {
+            for(int j=0; j<this.fighterAttack.size(); j++) {
+                if (fighterAttack.get(j).getRelationWith() == getFighterVector().get(i).getName())
+                {
+                    getFighterVector().get(i).setAttacks(fighterAttack.get(j));
+                }
+            }
+            for(int j=0; j<this.weaponAttack.size(); j++) {
+                if (weaponAttack.get(j).getRelationWith() == getFighterVector().get(i).getWeapon().getName()) {
+
+                    getFighterVector().get(i).setAttacks(weaponAttack.get(j));
+                }
+            }
+        }
+
+
+
+
+
+    }
+    public void shopOpen()
+    {
+        this.loadFighters();
+
+        this.readFightersAttacks();
+        this.readWeaponsAttacks();
+
+        System.out.println(getFighterAttack().size());
+        for(int i=0; i<getFighterAttack().size(); i++)
+        {
+            System.out.println(getFighterAttack().get(i).getName());
+        }
+        for(int i=0; i<getWeaponAttack().size(); i++)
+        {
+            System.out.println(getWeaponAttack().get(i).getName());
+        }
+        this.loadAttacks();
+        player.setFighter(this.getFighterVector().get(0));
+
+        for(int i=0; i<getFighterVector().size();i++)
+        {
+            for(int j=0; j<getFighterVector().get(i).getAttacks().size(); j++) {
+                System.out.println(getFighterVector().get(i).getName() + " : " + getFighterVector().get(i).getAttacks().get(j).getName());
+            }
+        }
+    }
+
 }

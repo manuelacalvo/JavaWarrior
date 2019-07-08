@@ -14,8 +14,7 @@ public class DesktopLauncher {
 
 		Player player = new Player("Manuela");
 		Collection coll = new Collection(player);
-		FightController fightController = new FightController(coll);
-		fightController.shopOpen();
+		coll.shopOpen();
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
