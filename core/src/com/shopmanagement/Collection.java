@@ -6,7 +6,6 @@ import com.fighterlvl.warrior.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -16,7 +15,6 @@ public class Collection {
     private Vector<Weapon> weaponVector;
     private Vector<Armor> armorVector ;
     private Vector<Treasure> treasureVector ;
-    private CollectionFighterDisplay collectionDisplay;
     private ArrayList<Attack> fighterAttack;
     private ArrayList<Attack> weaponAttack;
 

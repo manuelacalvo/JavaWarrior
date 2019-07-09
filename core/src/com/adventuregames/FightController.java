@@ -1,6 +1,5 @@
 package com.adventuregames;
 
-import com.Display.FightMenuDisplay;
 import com.fighterlvl.warrior.Fighter;
 import com.shopmanagement.Collection;
 
@@ -9,16 +8,13 @@ public class FightController {
     private Collection coll;
     private Fighter fighter;
     private boolean quitFight;
-    private int nbFights;
     private boolean restOnce;
-    private FightMenuDisplay fightMenuDisplay;
 
 
     public FightController(Collection coll) {
         this.coll = coll;
         this.quitFight = false;
         this.fighter = null;
-        this.nbFights = 0;
         this.restOnce = false;
 
     }
@@ -92,7 +88,6 @@ public class FightController {
         for(int i=1; i< coll.getFighterVector().size(); i++)
         {
             if(!quitFight && fighter.isAlive()) {
-                nbFights ++;
                 int choice = 0;
                 coll.getFighterVector().get(0).fightTurn(coll.getFighterVector().get(i));
                 restOnce = false;

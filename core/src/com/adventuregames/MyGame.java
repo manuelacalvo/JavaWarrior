@@ -1,18 +1,12 @@
 package com.adventuregames;
 
-import com.Display.GameDisplay;
 import com.Display.PlayerDisplay;
 import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
-import com.fighterlvl.warrior.Treasure;
 import com.shopmanagement.Collection;
 
-import java.util.ArrayList;
 
 public class MyGame extends Game {
 

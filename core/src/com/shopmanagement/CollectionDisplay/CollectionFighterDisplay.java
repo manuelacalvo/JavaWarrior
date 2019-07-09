@@ -33,7 +33,6 @@ public class CollectionFighterDisplay implements Screen {
     private ImageButton fighter8;
     private ImageTextButton buttonContinue;
     private ImageTextButton.ImageTextButtonStyle textButtonStyle;
-    private int choice;
     private BitmapFont font;
     private Batch batch;
     private Skin skin;

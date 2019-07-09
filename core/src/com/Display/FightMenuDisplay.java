@@ -1,7 +1,6 @@
 package com.Display;
 
 import com.adventuregames.MyGame;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
 
 public class FightMenuDisplay implements Screen {
@@ -136,11 +134,5 @@ public class FightMenuDisplay implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
-    public int getChoice(){
-        return choice;
-    }
 
-    public void setChoice(int choice) {
-        this.choice = choice;
-    }
 }

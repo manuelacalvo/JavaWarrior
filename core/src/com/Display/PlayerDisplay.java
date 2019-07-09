@@ -2,7 +2,6 @@ package com.Display;
 
 
 import com.adventuregames.MyGame;
-import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,10 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.connection.Server;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
-import com.shopmanagement.CollectionDisplay.CollectionFighterDisplay;
+
 
 import java.io.*;
 
@@ -69,8 +67,9 @@ public class PlayerDisplay implements Screen {
                 }
         );
 
-        table.add(Enter);
+
         table.add(userName);
+        table.add(Enter);
         stage.addActor(image);
         stage.addActor(table);
 
@@ -126,7 +125,6 @@ public class PlayerDisplay implements Screen {
         try {
             File file = new File(name.hashCode() + ".txt");
             if(file.createNewFile()){
-                System.out.println(" You are a new User, your acount is created with success");
                 obj = new Player(name);
             }else {
 
@@ -137,8 +135,6 @@ public class PlayerDisplay implements Screen {
 
                 obj = ois.readObject();
                 ois.close();
-
-                System.out.println("Your account is load you can play");
             }
 
         }

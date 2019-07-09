@@ -28,9 +28,6 @@ public class RestDisplay implements Screen {
     private ImageTextButton.ImageTextButtonStyle textButtonStyle3;
 
 
-
-
-
     public RestDisplay(Game aGame, Player player) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
@@ -41,8 +38,7 @@ public class RestDisplay implements Screen {
         image.setSize(stage.getWidth(), stage.getHeight());
         font = new BitmapFont();
         str = player.getFighter().takeARest(player.getEnnemi());
-        if(str.charAt(0) == ' ')
-        {
+        if (str.charAt(0) == ' ') {
             //game.setScreen(new GameDisplay(game, player));
         }
 
@@ -55,12 +51,12 @@ public class RestDisplay implements Screen {
 
         buttonContinue = new ImageTextButton(" ", textButtonStyle3);
         buttonContinue.setPosition(545, 10);
-        buttonContinue.setSize(100,70);
+        buttonContinue.setSize(100, 70);
         buttonContinue.addListener(new ChangeListener() {
 
 
             @Override
-            public void changed (ChangeEvent event, Actor actor) {
+            public void changed(ChangeEvent event, Actor actor) {
 
                 //game.setScreen(new GameDisplay(game, player));
 
@@ -75,12 +71,11 @@ public class RestDisplay implements Screen {
     }
 
 
-
-
     @Override
     public void dispose() {
         stage.dispose();
     }
+
     @Override
     public void pause() {
     }
@@ -103,6 +98,7 @@ public class RestDisplay implements Screen {
     public void resize(int width, int height) {
 
     }
+
     @Override
     public void resume() {
 
@@ -119,11 +115,4 @@ public class RestDisplay implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
-    public int getChoice(){
-        return choice;
-    }
-
-    public void setChoice(int choice) {
-        this.choice = choice;
-    }
 }

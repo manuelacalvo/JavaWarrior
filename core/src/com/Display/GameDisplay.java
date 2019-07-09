@@ -1,7 +1,7 @@
 package com.Display;
 
 
-import com.adventuregames.FightController;
+
 import com.adventuregames.MyGame;
 import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Gdx;
@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.connection.Client;
 import com.connection.Server;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
@@ -63,7 +62,7 @@ public class GameDisplay implements Screen {
         textButtonStyleShop.up = skin.getDrawable("item725");
         textButtonStyleShop.down = skin.getDrawable("item725");
 
-        buttonFightMode = new ImageTextButton("Fight Mode", textButtonStyle);
+        buttonFightMode = new ImageTextButton("Fight", textButtonStyle);
         buttonFightMode.addListener(
                 new ChangeListener() {
                     @Override
@@ -72,7 +71,7 @@ public class GameDisplay implements Screen {
                     }
                 }
         );
-        buttonMapMode = new ImageTextButton("Adventure Mode", textButtonStyle);
+        buttonMapMode = new ImageTextButton("Adventure", textButtonStyle);
         buttonMapMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
@@ -80,7 +79,7 @@ public class GameDisplay implements Screen {
             }
         });
 
-        buttonConnectedMode = new ImageTextButton("Connected Mode", textButtonStyle);
+        buttonConnectedMode = new ImageTextButton("MultiPlayer", textButtonStyle);
         buttonConnectedMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
@@ -101,7 +100,7 @@ public class GameDisplay implements Screen {
                 System.exit(0);
             }
         });
-        quit.setPosition(100,10);
+        quit.setPosition(800,10);
 
         buttonShop = new ImageTextButton("Shop", textButtonStyleShop);
         buttonShop.addListener(new ChangeListener() {

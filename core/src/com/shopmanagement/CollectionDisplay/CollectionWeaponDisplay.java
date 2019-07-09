@@ -2,7 +2,6 @@ package com.shopmanagement.CollectionDisplay;
 
 import com.Display.SelectFighterDisplay;
 import com.adventuregames.MyGame;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -17,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
-import javafx.scene.control.Tab;
 
 public class CollectionWeaponDisplay implements Screen {
 

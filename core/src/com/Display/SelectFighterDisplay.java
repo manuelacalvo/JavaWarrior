@@ -26,7 +26,6 @@ public class SelectFighterDisplay implements Screen {
     private Image armor1;
     private Image armor2;
     private ImageButton arrowf1, arrowf2,arroww1,arroww2,arrowa11,arrowa12,arrowa21,arrowa22;
-    private ImageButton validate;
     private ImageTextButton buttonContinue;
     private ImageTextButton.ImageTextButtonStyle textButtonStyle;
     private BitmapFont font;
@@ -40,10 +39,10 @@ public class SelectFighterDisplay implements Screen {
     private Texture f1, f2, f3, f4;
     private Drawable drawable, drawable2, drawable3, drawable4, drawable5, drawable6, drawable7;
 
-    public SelectFighterDisplay(MyGame aGame, final Player player, final Collection coll) {
+    public SelectFighterDisplay(MyGame aGame, final Player aplayer, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
-        this.player = player;
+        this.player = aplayer;
         Gdx.input.setInputProcessor(stage);
 
         Texture textureShop = new Texture(Gdx.files.internal("core/assets/graphics/Background/bg.png"));
@@ -69,6 +68,7 @@ public class SelectFighterDisplay implements Screen {
 
             @Override
             public void changed (ChangeEvent event, Actor actor) {
+                player.selectFighter(player.getCollectionFighter().get(i), player.getCollectionWeapon().get(j), player.getCollectionArmor().get(k), player.getCollectionArmor().get(l));
                 game.setScreen(new GameDisplay(game, player, coll));
             }
         });
@@ -113,11 +113,6 @@ public class SelectFighterDisplay implements Screen {
         arroww2 = new ImageButton(drawable7);
         arrowa12 = new ImageButton(drawable7);
         arrowa22 = new ImageButton(drawable7);
-
-        Texture f6 = new Texture(Gdx.files.internal("core/assets/graphics/buttons/start.PNG"));
-        drawable6 = new TextureRegionDrawable(new TextureRegion(f6));
-        validate = new ImageButton(drawable6);
-
 
         arrowf1.addListener(new ChangeListener() {
             @Override
@@ -202,12 +197,6 @@ public class SelectFighterDisplay implements Screen {
             }
         });
 
-        validate.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                player.selectFighter(player.getCollectionFighter().get(i), player.getCollectionWeapon().get(j), player.getCollectionArmor().get(k), player.getCollectionArmor().get(l));
-            }
-        });
 
         fighterTable= new Table();
         fighterTable.add(arrowf1).size(100, 100);
@@ -245,7 +234,6 @@ public class SelectFighterDisplay implements Screen {
 
         stage.addActor(shop);
         stage.addActor(buttonContinue);
-        stage.addActor(validate);
         stage.addActor(table);
 
 
