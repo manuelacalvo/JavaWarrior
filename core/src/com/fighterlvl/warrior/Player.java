@@ -1,9 +1,10 @@
 package com.fighterlvl.warrior;
 
 
+import java.io.*;
 import java.util.ArrayList;
 
-public class Player {
+public class Player implements Serializable {
     private String name;
     private Fighter fighter;
     private Fighter ennemi;
@@ -12,6 +13,7 @@ public class Player {
     private ArrayList<Armor> collectionArmor;
     private ArrayList<Treasure> collectionTreasure;
     private int money;
+    private int nbFights;
 
     public Player(String name)
     {
@@ -21,8 +23,9 @@ public class Player {
         this.collectionArmor = new ArrayList<Armor>();
         this.collectionTreasure = new ArrayList<Treasure>();
         this.collectionWeapon = new ArrayList<Weapon>();
-        this.money = 6;
+        this.money = 12;
         this.ennemi = null;
+        this.nbFights = 0;
     }
 
     public Player(String name, Fighter f, ArrayList<Fighter> collectionFighter, ArrayList<Weapon> collectionWeapon, ArrayList<Armor> collectionArmor, ArrayList<Treasure> collectionTreasure, int money)
@@ -35,6 +38,28 @@ public class Player {
         this.collectionWeapon = collectionWeapon;
         this.money = money;
         this.ennemi = f;
+        this.nbFights = 0;
+    }
+
+    public Player(Player player)
+    {
+        this.name = player.getName();
+        this.fighter = player.getFighter();
+        this.collectionFighter =player.getCollectionFighter();
+        this.collectionArmor = player.getCollectionArmor();
+        this.collectionTreasure = player.getCollectionTreasure();
+        this.collectionWeapon = player.getCollectionWeapon();
+        this.money = player.getMoney();
+        this.ennemi = null;
+        this.nbFights = 0;
+    }
+
+    public void setNbFights(int nbFights) {
+        this.nbFights = nbFights;
+    }
+
+    public int getNbFights() {
+        return nbFights;
     }
 
     public Fighter getFighter() {
@@ -113,5 +138,28 @@ public class Player {
         getFighter().setArmor1(armor1);
         getFighter().setArmor2(armor2);
     }
+
+
+    public void save()
+    {
+
+        try {
+            FileOutputStream fos;
+            fos = new FileOutputStream(getName().hashCode() + ".txt");
+
+            ObjectOutputStream oos;
+            oos = new ObjectOutputStream(fos);
+
+            oos.writeObject(this);
+
+            oos.close();
+        }catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+    }
+
+
 
 }

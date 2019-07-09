@@ -20,7 +20,7 @@ public class FightController {
         this.fighter = null;
         this.nbFights = 0;
         this.restOnce = false;
-        //this.fightMenuDisplay = new FightMenuDisplay();
+
     }
 
     public Collection getColl() {
@@ -45,29 +45,10 @@ public class FightController {
         this.fighter = fighter;
     }
 
-    public int getNbFights() {
-        return nbFights;
-    }
-
-    public void setNbFights(int nbFights) {
-        this.nbFights = nbFights;
-    }
-
-    public void setColl(Collection coll) {
-        this.coll = coll;
-    }
-
-    public void setQuitFight(boolean quitFight)
-    {
-        this.quitFight = quitFight;
-    }
-
-    public void setRestOnce(boolean restOnce) {
-        this.restOnce = restOnce;
-    }
 
 
-    /// @Manuela
+
+   /* /// @Manuela
     public int choiceMenuFight(Fighter enemy)
     {
 
@@ -104,7 +85,7 @@ public class FightController {
         }
         return choice;
     }
-
+*/
 
     public void gameLoop()
     {
@@ -116,12 +97,12 @@ public class FightController {
                 coll.getFighterVector().get(0).fightTurn(coll.getFighterVector().get(i));
                 restOnce = false;
 
-                while(choice!= 4 && fighter.isAlive() && choice !=5 && !quitFight)
+                /*while(choice!= 4 && fighter.isAlive() && choice !=5 && !quitFight)
                 {
 
                     choice = choiceMenuFight(coll.getFighterVector().get(i));
 
-                }
+                }*/
 
 
             }
@@ -131,6 +112,8 @@ public class FightController {
             System.out.println(" You are dead. You've got \" + fighter.getHitPoints() + \" life points and you've made \" + nbFights + \" fights\");");
         }
     }
+
+
 
 
 

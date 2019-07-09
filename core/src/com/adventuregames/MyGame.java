@@ -1,6 +1,7 @@
 package com.adventuregames;
 
 import com.Display.GameDisplay;
+import com.Display.PlayerDisplay;
 import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
@@ -25,35 +26,31 @@ public class MyGame extends Game {
 
     /**
      * Standard constructor called from DesktopLauncher
-     * @param pPlayer Player
+
      */
-    public MyGame(Player pPlayer, Collection pCollection){
-        this.player=pPlayer;
-        this.collection=pCollection;
+    public MyGame(){
+
     }
 
     /**
-     * Test&Debug constructor
-     * @param pPlayer Player
+     * Test&Debug constructo
      * @param screenType type of the screen to debug
      */
-    public MyGame(Player pPlayer, Collection pCollection, Class screenType){
-        this(pPlayer,pCollection);
+    public MyGame(Class screenType){
+        this();
         this.screenType=screenType;
     }
 
     public void create () {
 
-        // INIT DEFAULT FIGHTER WITH PICTURE
-        player.setFighter(collection.getFighterVector().firstElement());
-        player.getFighter().setThumbnailPath("core/assets/graphics/fighter_picture/User.jpg");
+
 
         // INIT ASSET MANAGER
         initAssetManager();
 
 
         if (screenType == null) { //Standard case
-            this.setScreen(new GameDisplay(this, player, collection));
+            this.setScreen(new PlayerDisplay(this, collection));
         } else {
             // DEBUG
             this.debug=true;
@@ -64,15 +61,15 @@ public class MyGame extends Game {
     }
 
     private void initAssetManager(){
-        String path_background = "core/assets/graphics/pictures/main_background.png";
+       /* String path_background = "core/assets/graphics/pictures/main_background.png";
         String path_SkinUI = "core/assets/graphics/ui/pixthulhu-ui/pixthulhu-ui.json";
-        String path_fighterThumbnail = this.getPlayer().getFighter().getThumbnailPath();
+        //String path_fighterThumbnail = this.getPlayer().getFighter().getThumbnailPath();
 
         assetManager = new AssetManager();
         assetManager.load(path_background, Texture.class);
         assetManager.load(path_SkinUI, Skin.class);
         assetManager.load(path_fighterThumbnail, Texture.class);
-        assetManager.finishLoading();
+        assetManager.finishLoading();*/
     }
 
     public void render () {

@@ -14,6 +14,14 @@ public class Attack implements Serializable {
 
 
 
+    public Attack()
+    {
+        this.name = "Basic Attack";
+        this.minDamage = 1;
+        this.maxDamage = 20;
+        this.random = 0;
+        this.relationWith = " ";
+    }
 
     public  Attack(String name, int random, int minDamage, int maxDamage, String relationWith)
     {
@@ -25,6 +33,10 @@ public class Attack implements Serializable {
 
     }
 
+    public String toString()
+    {
+        return getName() + " : min Damage " + getMinDamage() + ", max Damage" + getMaxDamage();
+    }
     public String getName() {
         return name;
     }

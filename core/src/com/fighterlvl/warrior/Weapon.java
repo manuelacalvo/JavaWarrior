@@ -12,6 +12,7 @@ public class Weapon implements Serializable {
   private boolean takeable;
   private int price;
   private String relativePathPicture;
+  private Attack attack;
 
 
   public Weapon(String name, int attacksPerTurn, int minDamage, int maxDmamage, boolean takeable, int price, String relativePathPicture){
@@ -22,9 +23,17 @@ public class Weapon implements Serializable {
     this.maxDamage = maxDmamage;
     this.price = price;
     this.relativePathPicture = relativePathPicture;
+
   }
 
 
+  public Attack getAttack() {
+    return attack;
+  }
+
+  public void setAttack(Attack attack) {
+    this.attack = attack;
+  }
 
   public void setName(String name) {
     this.name = name;

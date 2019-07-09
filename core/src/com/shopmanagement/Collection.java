@@ -4,7 +4,9 @@ import com.shopmanagement.CollectionDisplay.CollectionFighterDisplay;
 import com.fighterlvl.warrior.*;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -157,6 +159,8 @@ public class Collection {
                 setWeaponVector(weapon);
 
             }
+            this.readWeaponsAttacks();
+            this.loadWeaponAttacks();
             Armor armor1 = new Armor(fighters.get(i).get("Armor1"), 1, Boolean.parseBoolean(fighters.get(i).get("Armor1Tackable")),Integer.parseInt(fighters.get(i).get("Protection1")), Integer.parseInt(fighters.get(i).get("Armor1Price")), fighters.get(i).get("Armor1Picture"));
             if(armor1.getTakeable())
             {
@@ -196,6 +200,10 @@ public class Collection {
 
             setFighterVector(f);
         }
+
+        this.readFightersAttacks();
+        this.loadFighterAttack();
+
         Treasure potion = new Treasure("potion", 1, 1, 15);
         Treasure scroll = new Treasure("scroll", 2, 1, 25);
 
@@ -205,6 +213,8 @@ public class Collection {
         player.setCollectionFighter(getFighterVector().get(0));
         player.setCollectionWeapon(getWeaponVector().get(0));
         player.setCollectionArmor(getArmorVector().get(0));
+
+
     }
 
 
@@ -271,7 +281,7 @@ public class Collection {
 
         Scanner read_f = null;
         try {
-            read_f = new Scanner(file);
+            read_f = new Scanner(new FileInputStream(file));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
             System.out.println("pas de fichier");
@@ -280,10 +290,12 @@ public class Collection {
         read_f.useDelimiter(Pattern.compile("\n"));
         String[] attributeNames;
         if(read_f.hasNextLine()){
-            attributeNames = read_f.nextLine().split(";");
+            String ligne = read_f.nextLine();
+            attributeNames = ligne.split(";");
         } else {
             return;
         }
+
 
         List<Map<String, String>> weaponsAttack = new ArrayList<>();
 
@@ -381,22 +393,33 @@ public class Collection {
 
         }
 
+
     }
 
-    public void loadAttacks()
-    {
-        for(int i=0; i<this.getFighterVector().size(); i++)
-        {
-            for(int j=0; j<this.fighterAttack.size(); j++) {
-                if (fighterAttack.get(j).getRelationWith() == getFighterVector().get(i).getName())
-                {
-                    getFighterVector().get(i).setAttacks(fighterAttack.get(j));
+    public void loadWeaponAttacks() {
+        for (int i = 0; i < this.getWeaponVector().size(); i++) {
+
+            for (int j = 0; j < this.weaponAttack.size(); j++) {
+                if (weaponAttack.get(j).getRelationWith().equalsIgnoreCase(getWeaponVector().get(i).getName())) {
+
+                    getWeaponVector().get(i).setAttack(weaponAttack.get(j));
                 }
             }
-            for(int j=0; j<this.weaponAttack.size(); j++) {
-                if (weaponAttack.get(j).getRelationWith() == getFighterVector().get(i).getWeapon().getName()) {
 
-                    getFighterVector().get(i).setAttacks(weaponAttack.get(j));
+
+        }
+    }
+
+
+        public void loadFighterAttack()
+        {
+
+            for(int i=0; i<this.getFighterVector().size(); i++) {
+                for (int j = 0; j < this.fighterAttack.size(); j++) {
+
+                    if (fighterAttack.get(j).getRelationWith().equalsIgnoreCase(getFighterVector().get(i).getName())) {
+                        getFighterVector().get(i).setAttacks(fighterAttack.get(j));
+                    }
                 }
             }
         }
@@ -405,32 +428,14 @@ public class Collection {
 
 
 
-    }
+
     public void shopOpen()
     {
         this.loadFighters();
 
-        this.readFightersAttacks();
-        this.readWeaponsAttacks();
-
-        System.out.println(getFighterAttack().size());
-        for(int i=0; i<getFighterAttack().size(); i++)
-        {
-            System.out.println(getFighterAttack().get(i).getName());
-        }
-        for(int i=0; i<getWeaponAttack().size(); i++)
-        {
-            System.out.println(getWeaponAttack().get(i).getName());
-        }
-        this.loadAttacks();
         player.setFighter(this.getFighterVector().get(0));
 
-        for(int i=0; i<getFighterVector().size();i++)
-        {
-            for(int j=0; j<getFighterVector().get(i).getAttacks().size(); j++) {
-                System.out.println(getFighterVector().get(i).getName() + " : " + getFighterVector().get(i).getAttacks().get(j).getName());
-            }
-        }
+
     }
 
 }

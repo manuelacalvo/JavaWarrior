@@ -12,12 +12,11 @@ import com.shopmanagement.Collection;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 
-		Player player = new Player("Manuela");
-		Collection coll = new Collection(player);
-		coll.shopOpen();
+
+
 
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 
-		new LwjglApplication(new MyGame(player, coll), config);
+		new LwjglApplication(new MyGame(), config);
 	}
 }

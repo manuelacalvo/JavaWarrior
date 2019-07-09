@@ -34,12 +34,16 @@ public class Fighter implements FightEventQueuer, Serializable {
         this.price = price;
         this.relativePathPicture = relativePathPicture;
         this.attacks = new ArrayList<>();
+        this.attacks.add(new Attack());
+        this.attacks.add(weapon.getAttack());
     }
 
     public String getName()
     {
         return  name;
     }
+
+
 
     public Weapon getWeapon() {
         return weapon;
@@ -244,7 +248,26 @@ public class Fighter implements FightEventQueuer, Serializable {
         while(this.isAlive() && enemy.isAlive())
         {
             this.fight(enemy);
-            enemy.fight_attacks(this);
+            enemy.fight(this);
+        }
+        if(!this.isAlive())
+        {
+            System.out.println("You loose");
+        }
+        if(!enemy.isAlive())
+        {
+            System.out.println("You won");
+            getEnnemyRessources(enemy);
+        }
+    }
+
+    public void fightTurnAtack(Fighter enemy)
+    {
+        int i=1;
+        while(this.isAlive() && enemy.isAlive())
+        {
+            this.fight_attacks(enemy);
+            enemy.fight(this);
         }
         if(!this.isAlive())
         {

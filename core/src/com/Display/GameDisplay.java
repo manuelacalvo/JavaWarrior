@@ -1,6 +1,7 @@
 package com.Display;
 
 
+import com.adventuregames.FightController;
 import com.adventuregames.MyGame;
 import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Gdx;
@@ -29,10 +30,13 @@ public class GameDisplay implements Screen {
     private ImageTextButton buttonMapMode;
     private ImageTextButton buttonConnectedMode;
     private ImageTextButton buttonShop;
+    private ImageTextButton quit;
     private ImageTextButton.ImageTextButtonStyle textButtonStyle;
     private ImageTextButton.ImageTextButtonStyle textButtonStyleShop;
     private BitmapFont font;
     private Image image;
+    private Collection coll;
+    private Player player;
 
 
     public GameDisplay(MyGame aGame, final Player player, final Collection coll) {
@@ -40,7 +44,8 @@ public class GameDisplay implements Screen {
         stage = new Stage(new ScreenViewport());
         Table table=new Table();
         table.setFillParent(true);
-
+        this.coll = coll;
+        this.player = player;
         Texture texture = new Texture(Gdx.files.internal("core/assets/graphics/pictures/main_background.png"));
         image = new Image(texture);
 
@@ -71,7 +76,7 @@ public class GameDisplay implements Screen {
         buttonMapMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                    player.getFighter().fightTurn(coll.getFighterVector().get(1));
+                gameLoopAttack();
             }
         });
 
@@ -87,6 +92,16 @@ public class GameDisplay implements Screen {
                             client.go();*/
             }
         });
+
+        quit = new ImageTextButton("Quit", textButtonStyle);
+        quit.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                player.save();
+                System.exit(0);
+            }
+        });
+        quit.setPosition(100,10);
 
         buttonShop = new ImageTextButton("Shop", textButtonStyleShop);
         buttonShop.addListener(new ChangeListener() {
@@ -108,7 +123,26 @@ public class GameDisplay implements Screen {
         stage.addActor(image);
         stage.addActor(table);
         stage.addActor(buttonShop);
+        stage.addActor(quit);
 
+    }
+
+    public void gameLoopAttack()
+    {
+        for(int i=1; i< coll.getFighterVector().size(); i++)
+        {
+            if(player.getFighter().isAlive()) {
+                player.setNbFights(player.getNbFights()+1);
+                coll.getFighterVector().get(0).fightTurnAtack(coll.getFighterVector().get(i));
+
+
+
+            }
+        }
+        if(!player.getFighter().isAlive())
+        {
+            System.out.println(" You are dead. You've got " + player.getFighter().getHitPoints() + " life points and you've made " + player.getNbFights() + " fights");
+        }
     }
 
     @Override
