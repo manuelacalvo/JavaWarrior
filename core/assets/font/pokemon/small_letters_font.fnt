@@ -64,3 +64,5 @@ char id=119  x=108   y=13    width=5     height=8     xoffset=0     yoffset=2   
 char id=120  x=113   y=13    width=5     height=8     xoffset=0     yoffset=2     xadvance=5     page=0  chnl=15
 char id=121  x=118   y=13    width=5     height=9     xoffset=0     yoffset=2     xadvance=5     page=0  chnl=15
 char id=122  x=123   y=13    width=5     height=8     xoffset=0     yoffset=2     xadvance=5     page=0  chnl=15
+char id=45   x=98    y=24    width=5     height=8     xoffset=0     yoffset=2     xadvance=5     page=0  chnl=15
+char id=47   x=93    y=24    width=5     height=8     xoffset=0     yoffset=2     xadvance=5     page=0  chnl=15
