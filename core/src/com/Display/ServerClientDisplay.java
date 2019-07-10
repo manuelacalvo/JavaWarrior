@@ -1,7 +1,9 @@
 package com.Display;
 
 
+
 import com.adventuregames.MyGame;
+import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -13,36 +15,36 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.connection.Client;
+import com.connection.Server;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
+import com.shopmanagement.CollectionDisplay.CollectionFighterDisplay;
 
-
-import java.io.*;
-
-public class PlayerDisplay implements Screen {
+public class ServerClientDisplay implements Screen {
     private Stage stage;
     private MyGame game;
     private Skin skin;
     private TextureAtlas buttonAtlas;
-    private ImageTextButton Enter;
-    private ImageTextButton quit;
-    private TextField userName;
+    private ImageTextButton buttonServer;
+    private ImageTextButton buttonClient;
     private ImageTextButton.ImageTextButtonStyle textButtonStyle;
     private BitmapFont font;
     private Image image;
     private Collection coll;
+    private Player player;
 
 
-
-    public PlayerDisplay(MyGame aGame, final Collection coll) {
+    public ServerClientDisplay(MyGame aGame, final Player player, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
-        Table table = new Table();
+        Table table=new Table();
         table.setFillParent(true);
         this.coll = coll;
+        this.player = player;
         Texture texture = new Texture(Gdx.files.internal("core/assets/graphics/pictures/main_background.png"));
         image = new Image(texture);
-        Skin skin2 = new Skin(Gdx.files.internal("uiskin.json"));
+
         font = new BitmapFont();
         skin = new Skin();
         buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
@@ -52,37 +54,33 @@ public class PlayerDisplay implements Screen {
         textButtonStyle.up = skin.getDrawable("partyCancelSel");
         textButtonStyle.down = skin.getDrawable("partyCancelSel");
 
-        userName = new TextField("Enter your name",skin2);
-
-
-        Enter = new ImageTextButton("Next", textButtonStyle);
-        Enter.addListener(
+        buttonServer = new ImageTextButton("Player One", textButtonStyle);
+        buttonServer.addListener(
                 new ChangeListener() {
                     @Override
-                    public void changed(ChangeEvent event, Actor actor) {
-                        Player player  = (Player) load(userName.getText());
-                        Collection coll = new Collection(player);
-                        coll.shopOpen();
-                        game.setScreen(new GameDisplay(aGame, player, coll));
+                    public void changed (ChangeEvent event, Actor actor) {
+                        System.out.println("Connected...");
+                        Server server = new Server(game, player);
+                        server.go();
                     }
                 }
         );
-
-        quit = new ImageTextButton("Quit", textButtonStyle);
-        quit.addListener(new ChangeListener() {
+        buttonClient = new ImageTextButton("Player Two", textButtonStyle);
+        buttonClient.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                System.exit(0);
-
+                 Client client = new Client(game, player);
+                            client.go();
             }
         });
-        quit.setPosition(500,10);
 
-        table.add(userName);
-        table.add(Enter);
+
+        table.add(buttonServer);
+        table.add(buttonClient);
+
+
         stage.addActor(image);
         stage.addActor(table);
-        stage.addActor(quit);
 
 
     }
@@ -127,36 +125,6 @@ public class PlayerDisplay implements Screen {
     }
 
 
-    public Object load(String name) {
-        FileInputStream fis;
-        ObjectInputStream ois;
-        Object obj = new Object();
 
-
-        try {
-            File file = new File(name.hashCode() + ".txt");
-            if(file.createNewFile()){
-                obj = new Player(name);
-            }else {
-
-                fis = new FileInputStream(file);
-
-
-                ois = new ObjectInputStream(fis);
-
-                obj = ois.readObject();
-                ois.close();
-            }
-
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        return obj;
-
-    }
 
 }

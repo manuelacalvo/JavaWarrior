@@ -7,6 +7,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -27,6 +28,7 @@ public class FightScreen implements Screen, FightEventPlayer {
     private ArrayList<Fighter> enemies = new ArrayList<Fighter>();
     private Skin UISkin;
     private boolean debug;
+    private Sound sound;
 
     private Button superButt;
 
@@ -40,6 +42,9 @@ public class FightScreen implements Screen, FightEventPlayer {
         this.game=pGame;
         this.debug = game.isDebug();
 
+        sound=Gdx.audio.newSound(Gdx.files.internal("sound/fight.MP3"));
+
+        sound.play();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         // TABLE

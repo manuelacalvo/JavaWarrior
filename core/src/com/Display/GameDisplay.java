@@ -6,6 +6,7 @@ import com.adventuregames.MyGame;
 import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -15,7 +16,6 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.connection.Server;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
 import com.shopmanagement.CollectionDisplay.CollectionFighterDisplay;
@@ -36,6 +36,7 @@ public class GameDisplay implements Screen {
     private Image image;
     private Collection coll;
     private Player player;
+    private Sound sound;
 
 
     public GameDisplay(MyGame aGame, final Player player, final Collection coll) {
@@ -48,6 +49,9 @@ public class GameDisplay implements Screen {
         Texture texture = new Texture(Gdx.files.internal("core/assets/graphics/pictures/main_background.png"));
         image = new Image(texture);
 
+        sound=Gdx.audio.newSound(Gdx.files.internal("sound/The_Witcher.MP3"));
+
+        sound.play();
         font = new BitmapFont();
         skin = new Skin();
         buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
@@ -67,7 +71,9 @@ public class GameDisplay implements Screen {
                 new ChangeListener() {
                     @Override
                     public void changed (ChangeEvent event, Actor actor) {
-                       game.setScreen(new FightScreen(game));
+                        sound.stop();
+                        game.setScreen(new FightScreen(game));
+
                     }
                 }
         );
@@ -75,7 +81,9 @@ public class GameDisplay implements Screen {
         buttonMapMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
+                sound.stop();
                 gameLoopAttack();
+
             }
         });
 
@@ -83,12 +91,10 @@ public class GameDisplay implements Screen {
         buttonConnectedMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                System.out.println("Connected...");
-                Server server = new Server(game, player);
-                server.go();
+                sound.stop();
+                game.setScreen(new ServerClientDisplay(game, player, coll));
 
-                    /* Client client = new Client(game, player);
-                            client.go();*/
+
             }
         });
 
@@ -97,10 +103,12 @@ public class GameDisplay implements Screen {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 player.save();
-                System.exit(0);
+                sound.stop();
+                game.setScreen(new PlayerDisplay(game, coll));
+
             }
         });
-        quit.setPosition(800,10);
+        quit.setPosition(500,10);
 
         buttonShop = new ImageTextButton("Shop", textButtonStyleShop);
         buttonShop.addListener(new ChangeListener() {
@@ -108,6 +116,7 @@ public class GameDisplay implements Screen {
             public void changed (ChangeEvent event, Actor actor) {
 
                 game.setScreen(new CollectionFighterDisplay(game, player, coll));
+
             }
         });
 

@@ -3,6 +3,7 @@ package com.Display;
 import com.adventuregames.MyGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -27,6 +28,7 @@ public class FightMenuDisplay implements Screen {
     private TextureAtlas buttonAtlas;
     private int choice = 0;
     private Image image;
+    private Sound sound;
 
 
 
@@ -42,6 +44,7 @@ public class FightMenuDisplay implements Screen {
         image.setSize(stage.getWidth(), stage.getHeight());
         font = new BitmapFont();
         skin = new Skin();
+
         buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
         skin.addRegions(buttonAtlas);
         textButtonStyle = new ImageTextButton.ImageTextButtonStyle();
