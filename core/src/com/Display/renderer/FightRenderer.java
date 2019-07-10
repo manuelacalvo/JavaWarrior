@@ -29,15 +29,18 @@ public class FightRenderer {
     }
 
     public void render(SpriteBatch batch){
+        int windowWidth = Gdx.graphics.getWidth();
+        int windowHeight = Gdx.graphics.getHeight();
 
         /* BACKGROUND */
-        batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(background, 0, 0, windowWidth, windowHeight);
 
+        /* Render both fighters */
         if(playerTexture != null){
             batch.draw(
                     playerTexture,
-                    15,
-                    45,
+                    windowWidth/5,
+                    windowHeight/2,
                     100,
                     100,
                     0,
@@ -47,6 +50,19 @@ public class FightRenderer {
                     true,
                     false
             );
+        }
+        if(enemyTexture !=  null){
+            batch.draw(enemyTexture,
+                    windowWidth*3/5,
+                    windowHeight/2,
+                    100,
+                    100,
+                    0,
+                    0,
+                    100,
+                    100,
+                    false,
+                    false);
         }
     }
 }

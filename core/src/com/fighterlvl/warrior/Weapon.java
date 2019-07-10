@@ -21,46 +21,24 @@ public class Weapon {
     this.price = price;
   }
 
-
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public void setAttacksPerTurn(int attacksPerTurn) {
-    this.attacksPerTurn = attacksPerTurn;
-  }
-
-  public void setMaxDamage(int maxDamage) {
-    this.maxDamage = maxDamage;
-  }
-
-  public void setMinDamage(int minDamage) {
-    this.minDamage = minDamage;
-  }
-
   public String getName() {
     return name;
   }
 
-  public void setTakeable(boolean takeable) {
-    this.takeable = takeable;
-  }
-
-  public boolean getTakeable()
+  public boolean isTakeable()
   {
     return takeable;
   }
 
-  public int getAttacksPerTurn() {
+  int getAttacksPerTurn() {
     return attacksPerTurn;
   }
 
-  public int getMaxDamage() {
+  int getMaxDamage() {
     return maxDamage;
   }
 
-  public int getMinDamage() {
+  int getMinDamage() {
     return minDamage;
   }
 
@@ -74,8 +52,14 @@ public class Weapon {
 
   @Override
   public String toString() {
-    String def = " this is a weapon";
-    return def;
+    return "Weapon{" +
+            "name='" + name + '\'' +
+            ", attacksPerTurn=" + attacksPerTurn +
+            ", minDamage=" + minDamage +
+            ", maxDamage=" + maxDamage +
+            ", takeable=" + takeable +
+            ", price=" + price +
+            '}';
   }
 
   public double average()

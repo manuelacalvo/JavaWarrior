@@ -11,7 +11,10 @@ import com.badlogic.gdx.utils.Align;
 public class StatusBox extends Table {
 
     private Label nameLabel;
-    private Label lifeLabel;
+    private Label hpText;
+
+    private HPBar hpBar;
+
     private Table uiContainer;
 
     public StatusBox(Skin skin){
@@ -23,17 +26,25 @@ public class StatusBox extends Table {
         nameLabel = new Label("namenull", skin, "smallLabel");
         uiContainer.add(nameLabel).align(Align.left).padTop(0f).row();
 
-        lifeLabel = new Label("0", skin, "smallLabel");
-        uiContainer.add(lifeLabel).spaceTop(0f).expand().fill();
+        hpBar = new HPBar(skin);
+        uiContainer.add(hpBar).spaceTop(0f).expand().fill();
+
+        hpText = new Label("NaN/NaN", skin, "smallLabel");
+        uiContainer.row();
+        uiContainer.add(hpText).expand().right();
+
     }
 
-    public void setLifeLabel(String pLife){
-        lifeLabel.setText("Life: "+ pLife);
-    }
     public void setNameLabel(String pName){
         nameLabel.setText(pName);
     }
-    public Label getLifeLabel(){
-        return this.lifeLabel;
+
+    public void setHPText(int hpLeft, int hpTotal) {
+        hpText.setText(hpLeft+" / "+hpTotal);
     }
+
+    public HPBar getHPBar() {
+        return hpBar;
+    }
+
 }

@@ -1,8 +1,7 @@
 package com.fighterlvl.warrior;
 
-import com.adventuregames.fight.event.FightEvent;
-import com.adventuregames.fight.event.FightEventPlayer;
-import com.adventuregames.fight.event.FightEventQueuer;
+import com.adventuregames.fight.FIGHT_PARTY;
+import com.adventuregames.fight.event.*;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -16,13 +15,18 @@ public class Fighter implements FightEventQueuer {
     private Armor armor2;
     private ArrayList<Treasure> treasures;
     private int hitPoints;
+    private int maxHP;
     private int price;
     private boolean restOnce;
 
     private String thumbnailPath;
+    private FIGHT_PARTY party;
 
-    private FightEventPlayer eventPlayer;
+    private static FightEventPlayer eventPlayer;
 
+    /*
+    Deprecated : All Fighter should have a thumbnail
+     */
     public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int price ) {
         this.name = name;
         this.weapon = weapon;
@@ -30,11 +34,18 @@ public class Fighter implements FightEventQueuer {
         this.armor2 = null;
         this.treasures = treasures;
         this.hitPoints = hitPoints;
+        this.maxHP = hitPoints;
         this.price = price;
     }
     public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int price, String thumbnailPath) {
         this(name, weapon, armor1, treasures, hitPoints, price);
         setThumbnailPath(thumbnailPath);
+        this.party=FIGHT_PARTY.OPPONENT; // Default is OPPONENT
+
+    }
+    public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int price, String thumbnailPath, FIGHT_PARTY eParty) {
+        this(name, weapon, armor1, treasures, hitPoints, price, thumbnailPath);
+        this.party=FIGHT_PARTY.PLAYER;
     }
 
     public String getName()
@@ -46,49 +57,50 @@ public class Fighter implements FightEventQueuer {
         return weapon;
     }
 
-    public Armor getArmor1() {
+    private Armor getArmor1() {
         return armor1;
     }
 
-    public Armor getArmor2() {
+    private Armor getArmor2() {
         return armor2;
     }
 
-    public int getHitPoints() {
-        return hitPoints;
+    public int getHitPoints(){
+        return this.hitPoints;
+    }
+    public int getMaxHP(){
+        return this.maxHP;
     }
 
     public ArrayList<Treasure> getTreasures() {
         return treasures;
     }
 
-    public boolean isRestOnce() {
+    private boolean isRestOnce() {
         return restOnce;
     }
 
-    public void setRestOnce(boolean restOnce) {
+    private void setRestOnce(boolean restOnce) {
         this.restOnce = restOnce;
     }
 
-    public void setName(String name)
-    {
-        this.name = name;
+    /**
+     * Defense is the sum of armors points.
+     * @return defense value
+     */
+    private int getDefense(){
+        return (getArmor1()!=null ? getArmor1().getProtection():0)
+                + (getArmor2()!=null ? getArmor2().getProtection():0);
     }
-
     public void setArmor1(Armor armor1) {
         this.armor1 = armor1;
     }
-
-    public void setWeapon(Weapon weapon) {
-        this.weapon = weapon;
-    }
-
     public void setArmor2(Armor armor2) {
         this.armor2 = armor2;
     }
 
-    public void setHitPoints(int hitPoints) {
-        this.hitPoints -= hitPoints;
+    public void setWeapon(Weapon weapon) {
+        this.weapon = weapon;
     }
 
     public void setTreasures(ArrayList<Treasure> treasures) {
@@ -99,13 +111,21 @@ public class Fighter implements FightEventQueuer {
         return price;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
     @Override
     public String toString() {
-        return "Fighter{" + "weapon=" + weapon + ", armor 1 =" + armor1 + ", armor 2 =" + armor2 + ", treasures=" + treasures + ", hitPoints=" + hitPoints + '}';
+        return "Fighter{" +
+                "name='" + name + '\'' +
+                ", weapon=" + weapon +
+                ", armor1=" + armor1 +
+                ", armor2=" + armor2 +
+                ", treasures=" + treasures +
+                ", hitPoints=" + hitPoints +
+                ", maxHP=" + maxHP +
+                ", price=" + price +
+                ", restOnce=" + restOnce +
+                ", thumbnailPath='" + thumbnailPath + '\'' +
+                ", party=" + party +
+                '}';
     }
 
     /**
@@ -129,45 +149,70 @@ public class Fighter implements FightEventQueuer {
         */
     }
 
-    public void takesDamage( int points)
+    private void takeDamage(int hitPoints)
     {
-        this.setHitPoints(points);
+        changeHitPoints(-hitPoints);
     }
-    public boolean isAlive()
-    {
-        boolean alive;
-        if (getHitPoints()>0)
-        {
-            alive = true;
-        } else alive = false;
+    private void gainLife(int hitPoints){
+        changeHitPoints(hitPoints);
+    }
 
-        return alive;
+    /**
+     * Used internally to change hitpoints by takeDamage and gainLife
+     * Modify maxHP Accordingly
+     * @param delta amont of HP added
+     */
+    private void changeHitPoints(int delta){
+
+        int previousHP = this.getHitPoints();
+        setHitPoints(getHitPoints()+delta);
+        if(this.getHitPoints()>this.maxHP) maxHP = getHitPoints();
+
+        this.queueEvent(new HPChangeEvent(
+                this.getParty(),
+                previousHP,
+                getHitPoints(),
+                getMaxHP(),
+                0.5f));
     }
+    private void setHitPoints(int iHitPoints){
+        this.hitPoints = iHitPoints>0 && iHitPoints<=this.hitPoints ? iHitPoints:0;
+    }
+
+
+    public FIGHT_PARTY getParty(){ return this.party; }
+    public void setParty(FIGHT_PARTY eParty){ this.party=eParty; }
+
+    /**
+     * Tells if Fighter is alive
+     * @return true if Alive
+     */
+    public boolean isAlive() { return getHitPoints()>0 ; }
 
     /**
      * One turn of a fight between two Fighters
      * @method fight
      */
-    private void fight(Fighter enemy){
-        System.out.println(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
+    private void attack(Fighter enemy){
+        outPutText(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
         this.setRestOnce(false);
         //Different attacks based on weapon's attacks per turn
         if(this.isAlive() && enemy.isAlive()) {
 
             for (int i = 0; i < this.getWeapon().getAttacksPerTurn(); i++) {
-                System.out.println("Attack " + (i+1));
+                outPutText("Attack " + (i+1));
 
                 int rand = randomNumberGenerator(1, 20);
-                System.out.println("\tRandom : " + rand+
-                        "\t\tEnemy protection : " + enemy.getArmor1().getProtection());
-                if (rand > enemy.getArmor1().getProtection()) {
+                outPutText("\tRandom : " + rand+
+                        "\n\t\tEnemy protection : " + enemy.getDefense());
+                if (rand > enemy.getDefense()) {
                     int hitPower = randomNumberGenerator(getWeapon().getMinDamage(), getWeapon().getMaxDamage());
-                    enemy.takesDamage(hitPower);
-                    System.out.println("\tHit : " + hitPower);
-                    System.out.println("Life of " + enemy.getName()+ " is " + enemy.getHitPoints()+"\r\n");
+                    outPutText("\tHit : " + hitPower);
+                    enemy.takeDamage(hitPower);
+                    outPutText("Life of " + enemy.getName()+ " is " + enemy.getHitPoints()+"\r\n");
                 } else {
-                    enemy.takesDamage(0);
-                    System.out.println("This attack failed !");
+                    //enemy.takesDamage(0);
+                    outPutText("This attack failed !");
                 }
             }
             System.out.println("=====================================================");
@@ -178,29 +223,34 @@ public class Fighter implements FightEventQueuer {
      * Engage the fight between 2 Fighters
      * @param enemy
      */
-    public void fightTurn(Fighter enemy)
+    public void fight(Fighter enemy)
     {
         while(this.isAlive() && enemy.isAlive())
         {
-            this.fight(enemy);
-            enemy.fight(this);
+            this.attack(enemy);
+            enemy.attack(this);
         }
         if(!this.isAlive())
         {
-            System.out.println("You loose");
+            outPutText("You loose");
         }
         if(!enemy.isAlive())
         {
-            System.out.println("You won");
+            outPutText("You won");
             getEnnemyRessources(enemy);
         }
     }
 
-    public void getEnnemyWeapon(Fighter enemy)
+    private void outPutText(String sText){
+        System.out.println(sText);
+        queueEvent(new TextEvent(sText, true));
+    }
+
+    private void getEnnemyWeapon(Fighter enemy)
     {
         Scanner keyboard = new Scanner(System.in);
 
-        if(enemy.weapon.getTakeable() && this.weapon.isBetter(enemy.weapon))
+        if(enemy.weapon.isTakeable() && this.weapon.isBetter(enemy.weapon))
         {
             System.out.println(" You won, do you want to take your enemy's weapon? (1: take it 0: don't take it");
             System.out.println(enemy.weapon.toString());
@@ -218,7 +268,7 @@ public class Fighter implements FightEventQueuer {
         }
     }
 
-    public void getEnnemyArmor(Fighter enemy)
+    private void getEnnemyArmor(Fighter enemy)
     {
         Scanner keyboard = new Scanner(System.in);
 
@@ -255,7 +305,7 @@ public class Fighter implements FightEventQueuer {
 
     }
 
-    public void getEnnemyTreasure(Fighter enemy)
+    private void getEnnemyTreasure(Fighter enemy)
     {
 
         for(int j= 0; j<this.getTreasures().size(); j++) {
@@ -288,7 +338,7 @@ public class Fighter implements FightEventQueuer {
 
             if (attack == 0) {
                 int random = randomNumberGenerator(11, 20);
-                this.setHitPoints(-random);
+                this.gainLife(random);
                 str = "You choose to rest and you regain " + random + "points";
 
             } else {
@@ -304,32 +354,28 @@ public class Fighter implements FightEventQueuer {
 
     public String usePotion()
     {
-        String str = " ";
-        if(this.getTreasures().get(0).getNumber()> 0) {
-            this.getTreasures().get(0).setNumber(this.getTreasures().get(0).getNumber() - 1);
-            int random = (int) (Math.random() * (10 - 1)) + 1;
-            int hitPoint;
-            if (random < 4) // 30%
-            {
-                hitPoint = this.randomNumberGenerator(5, 10);
-                this.setHitPoints(-hitPoint);
-                str = "You earn " + hitPoint + " points";
-            } else if (random < 8) //40%
-            {
-                hitPoint = this.randomNumberGenerator(11, 20);
-                this.setHitPoints(-hitPoint);
-                str = "You earn " + hitPoint + " points";
-            } else if (random < 10) //20%
-            {
-                hitPoint = this.randomNumberGenerator(21, 30);
-                this.setHitPoints(-hitPoint);
-                str = "You earn " + hitPoint + " points";
-            } else if (random < 11) //10%
-            {
-                hitPoint = this.randomNumberGenerator(1, 20);
-                this.setHitPoints(hitPoint);
-                str = "You loose " + hitPoint + " points";
-            }
+      int treasureIndex = TREASURE_TYPE.POTION.ordinal();
+      String str = " ";
+      if(this.getTreasures().get(treasureIndex).getNumber()> 0) {
+          this.getTreasures().get(treasureIndex).setNumber(this.getTreasures().get(0).getNumber() - 1);
+
+          int random = randomNumberGenerator(1,10), min, max, hitPoint;
+          if (random <= 3) // 30%
+          {
+              min = 5 ; max = 10;
+          } else if (random <= 7) //40%
+          {
+              min = 11; max = 20;
+          } else if (random <= 9) //20%
+          {
+              min = 21; max = 30;
+          } else //10%
+          {
+              min = 1; max = 20;
+          }
+          hitPoint = this.randomNumberGenerator(min, max);
+          this.takeDamage(-hitPoint);
+          str = "You earn " + hitPoint + " points";
 
             str += "\n" + "Hit points" + this.hitPoints;
         }
@@ -349,13 +395,13 @@ public class Fighter implements FightEventQueuer {
 
             if (random == 1) {
                 str = "You double your points ";
-                this.setHitPoints(-(this.getHitPoints() * 2));
+                this.gainLife(this.getHitPoints());
 
             } else if (random == 2) {
                 str = "The scroll do nothing sorry";
             } else if (random == 3) {
                 str = "The scroll kill you... Too bad!!";
-                this.setHitPoints(this.getHitPoints());
+                this.takeDamage(this.getHitPoints());
 
 
             }
@@ -392,8 +438,8 @@ public class Fighter implements FightEventQueuer {
         }
     }
 
-    public void setEventPlayer(FightEventPlayer pEventPlayer){
-        this.eventPlayer = pEventPlayer;
+    public void setEventPlayer(FightEventPlayer oEventPlayer){
+        eventPlayer = oEventPlayer;
     }
     @Override
     public void queueEvent(FightEvent event) {

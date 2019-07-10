@@ -110,7 +110,7 @@ public class Collection {
 
 
             Weapon weapon = new Weapon(weaponName,attacksPerTurn,minDamage,maxDamage, takeableWeapon, priceWeapon);
-            if(weapon.getTakeable()) {
+            if(weapon.isTakeable()) {
                 setWeaponVector(weapon);
                 System.out.println(weapon.getName());
             }

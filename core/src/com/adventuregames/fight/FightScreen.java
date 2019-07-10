@@ -1,6 +1,7 @@
 package com.adventuregames.fight;
 
 import com.Display.AbstractScreen;
+import com.Display.renderer.EventQueueRenderer;
 import com.Display.renderer.FightRenderer;
 import com.adventuregames.MyGame;
 import com.adventuregames.fight.event.FightEvent;
@@ -27,12 +28,14 @@ import java.util.Queue;
 
 public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
+    /* FightScreen Controller */
+    private FightScreenController controller;
 
     /* VIEW */
     private Viewport gameViewport;
     private SpriteBatch batch;
     private FightRenderer fightRenderer;
-    //EventQueueRenderer
+    private EventQueueRenderer eventRenderer;
     //FightDebugRenderer
 
     /* UI */
@@ -40,8 +43,6 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
     private Table statusBoxRoot;
     private Table dialogueRoot;
-
-    private Fighter enemy;
 
     private DialogueBox dialogueBox;
     private StatusBox playerStatusBox;
@@ -51,6 +52,11 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
     private FightEvent currentEvent;
     // Double Ended Queue https://docs.oracle.com/javase/8/docs/api/index.html?java/util/ArrayDeque.html
     private Queue<FightEvent> queue = new ArrayDeque<FightEvent>();
+
+    /* Data */
+    private Fighter playerFighter;
+    private Fighter enemyFighter;
+
 
     /**
      * Default Test Constructor - in prod Enemy must be provided
@@ -68,21 +74,33 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
     /**
      * Fighter Screen Constructor
      * @param pGame - Game instance
-     * @param pEnemy The enemy involved
+     * @param pEnemy The enemyFighter involved
      */
     public FightScreen(MyGame pGame, Fighter pEnemy){
         super(pGame);
-        this.enemy = pEnemy;
-        getGame().getAssetManager().load(enemy.getThumbnailPath(),Texture.class);
+        this.enemyFighter = pEnemy;
+        this.playerFighter = getGame().getPlayer().getFighter();
+        this.playerFighter.setParty(FIGHT_PARTY.PLAYER); // Make sure playerFighter is tagged as player
+
+        getGame().getAssetManager().load(enemyFighter.getThumbnailPath(),Texture.class);
         getGame().getAssetManager().finishLoading();
         gameViewport=new ScreenViewport();
 
+        Fighter playerFighter = getGame().getPlayer().getFighter();
+        playerFighter.setEventPlayer(this);
+
         fightRenderer = new FightRenderer(
                 getGame().getAssetManager(),
-                getGame().getPlayer().getFighter().getThumbnailPath(),
-                enemy.getThumbnailPath());
+                playerFighter.getThumbnailPath(),
+                enemyFighter.getThumbnailPath());
+
+        eventRenderer = new EventQueueRenderer(getGame().getSkin(), queue);
 
         initUI();
+
+        controller = new FightScreenController(playerFighter, enemyFighter, queue, dialogueBox);
+
+        controller.startFight();
     }
 
     private void initUI(){
@@ -104,11 +122,12 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
         playerStatusBox = new StatusBox(getGame().getSkin());
         playerStatusBox.setNameLabel(getGame().getPlayer().getName());
-        playerStatusBox.setLifeLabel(String.valueOf(getGame().getPlayer().getFighter().getArmor1().getProtection()));
+        //playerStatusBox.setLifeLabel(String.valueOf(getGame().getPlayer().getFighter().getArmor1().getProtection()));
+        playerStatusBox.setHPText(playerFighter.getHitPoints(),playerFighter.getMaxHP());
 
         enemyStatusBox = new StatusBox(getGame().getSkin());
-        enemyStatusBox.setNameLabel(this.enemy.getName());
-        enemyStatusBox.setLifeLabel(String.valueOf(enemy.getArmor1().getProtection()));
+        enemyStatusBox.setNameLabel(this.enemyFighter.getName());
+        enemyStatusBox.setHPText(enemyFighter.getHitPoints(),enemyFighter.getMaxHP());
 
         statusBoxRoot.add(playerStatusBox).expand().align(Align.left);
         statusBoxRoot.add(enemyStatusBox).expand().align(Align.right);
@@ -134,7 +153,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
         //PLAYER CHARACTER
         // Image playerImage = new Image(getGame().getAssetManager().get(getGame().getPlayer().getFighter().getThumbnailPath(), Texture.class));
-        // Image enemyImage = new Image(getGame().getAssetManager().get(enemy.getThumbnailPath(), Texture.class));
+        // Image enemyImage = new Image(getGame().getAssetManager().get(enemyFighter.getThumbnailPath(), Texture.class));
         
         // Prepare Tables
 
@@ -143,10 +162,26 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
     }
 
+    @Override
+    public StatusBox getStatusBox(FIGHT_PARTY party) {
+        if (party == FIGHT_PARTY.PLAYER) {
+            return playerStatusBox;
+        } else if (party == FIGHT_PARTY.OPPONENT) {
+            return enemyStatusBox;
+        } else {
+            return null;
+        }
+    }
+
     /**
-     *
+     * Add an event to the queue to display
      */
     public void queueEvent(FightEvent event){queue.add(event);}
+
+    @Override
+    public DialogueBox getDialogueBox() {
+        return this.dialogueBox;
+    }
 
     /**
      * Called when this screen becomes the current screen for a {@link Game}.
@@ -169,6 +204,9 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
         batch.begin();
         fightRenderer.render(batch);
+        if(currentEvent != null){
+            eventRenderer.render(batch, currentEvent);
+        }
         batch.end();
 
         //uiStage.act();
@@ -219,8 +257,23 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
     @Override
     public void update(float delta) {
-        System.out.println(
-                "update implementation missing"
-        );
+
+        while ( currentEvent == null || currentEvent.isFinished()){
+            if(queue.isEmpty()){ // Event queue is empty
+                currentEvent = null;
+                break;
+            }else {
+                currentEvent = queue.poll();
+                currentEvent.begin(this);
+            }
+        }
+
+        if (currentEvent != null) {
+            currentEvent.update(delta);
+        }
+
+        uiStage.act();
     }
+
+
 }

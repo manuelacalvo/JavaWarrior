@@ -1,7 +1,5 @@
 package com.fighterlvl.warrior;
 
-
-
 public class Treasure {
 
   private String name;
@@ -9,8 +7,6 @@ public class Treasure {
   private int number;
   private int actionPoint;
   private int price;
-
-
 
   public Treasure(String name, int type, int number, int price){
 
