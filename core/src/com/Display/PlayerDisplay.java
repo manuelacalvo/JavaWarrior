@@ -34,7 +34,7 @@ public class PlayerDisplay implements Screen {
 
 
 
-    public PlayerDisplay(MyGame aGame, final Collection coll) {
+    public PlayerDisplay(final MyGame aGame, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table = new Table();

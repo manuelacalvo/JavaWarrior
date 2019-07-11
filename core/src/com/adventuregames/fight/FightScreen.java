@@ -7,7 +7,8 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
+//import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -16,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Fighter;
+import com.tools.JWAssetManager;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -23,12 +25,14 @@ import java.util.Queue;
 
 public class FightScreen implements Screen, FightEventPlayer {
 
+    private AssetManager assetManager;
+
     private MyGame game;
     private Stage stage;
     private ArrayList<Fighter> enemies = new ArrayList<Fighter>();
     private Skin UISkin;
     private boolean debug;
-    private Sound sound;
+    //private Sound sound;
 
     private Button superButt;
 
@@ -41,10 +45,10 @@ public class FightScreen implements Screen, FightEventPlayer {
 
         this.game=pGame;
         this.debug = game.isDebug();
+        this.assetManager = game.getAssetManager();
 
-        sound=Gdx.audio.newSound(Gdx.files.internal("sound/fight.MP3"));
-
-        sound.play();
+        //sound=Gdx.audio.newSound(Gdx.files.internal("sound/fight.MP3"));
+        //sound.play();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         // TABLE
@@ -53,13 +57,13 @@ public class FightScreen implements Screen, FightEventPlayer {
         Table tableFighters=new Table();
 
         // BACKGROUND
-        Texture backgroundTexture = game.getAssetManager().get("core/assets/graphics/pictures/main_background.png",Texture.class);
+        Texture backgroundTexture = assetManager.get(JWAssetManager.path_background,Texture.class);
         Image backgroundImage = new Image(backgroundTexture);
         backgroundImage.setFillParent(true);
         //SKIN
-        this.UISkin = game.getAssetManager().get("core/assets/graphics/ui/pixthulhu-ui/pixthulhu-ui.json",Skin.class);
+        //this.UISkin = game.getAssetManager().get("core/assets/graphics/ui/pixthulhu-ui/pixthulhu-ui.json",Skin.class);
 
-        initHUD();
+        //initHUD();
 
         Label promptLabel = new Label("Vide", UISkin);
 

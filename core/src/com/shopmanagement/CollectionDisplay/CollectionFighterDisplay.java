@@ -73,7 +73,7 @@ public class CollectionFighterDisplay implements Screen {
         Table table=new Table();
         Table table2 =new Table();
         this.player = player;
-        Skin skin2 = new Skin(Gdx.files.internal("uiskin.json"));
+        Skin skin2 = new Skin(Gdx.files.internal("core/assets/graphics/ui/uiskin/uiskin.json"));
         Gdx.input.setInputProcessor(stage);
 
         Texture textureShop = new Texture("core/assets/graphics/pictures/shop.jpg");

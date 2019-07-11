@@ -133,11 +133,12 @@ public class CollectionWeaponDisplay implements Screen {
         textButtonStyle.up = skin.getDrawable("continue");
         textButtonStyle.down = skin.getDrawable("continue");
 
+        //TODO
         Texture f1 = new Texture(Gdx.files.internal(coll.getWeaponVector().get(0).getRelativePathPicture()));
         Drawable drawable = new TextureRegionDrawable(new TextureRegion(f1));
         sword1 = new ImageButton(drawable);
         sword1.setSize(30,40);
-        Skin skin2 = new Skin(Gdx.files.internal("uiskin.json"));
+        Skin skin2 = new Skin(Gdx.files.internal("core/assets/graphics/ui/uiskin/uiskin.json"));
         price1Gold = new TextArea(Integer.toString(coll.getWeaponVector().get(0).getPrice()), skin2);
 
         Texture f2 = new Texture(Gdx.files.internal(coll.getWeaponVector().get(1).getRelativePathPicture()));
@@ -246,6 +247,7 @@ public class CollectionWeaponDisplay implements Screen {
                 str = coll.buyWeapon(coll.getWeaponVector().get(0));
             }
         });
+        
         TextTooltip tipw1 = new TextTooltip(coll.getWeaponVector().get(0).toString(), skin2);
         tipw1.setInstant(true);
         sword1.addListener(tipw1);

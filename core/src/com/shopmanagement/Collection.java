@@ -104,7 +104,7 @@ public class Collection {
 
     public void loadFighters() {
 
-        File file = new File("fighters.csv");
+        File file = new File("core/assets/data/fighters.csv");
 
         Scanner read_f = null;
         try {
@@ -275,7 +275,7 @@ public class Collection {
 
     public void readFightersAttacks()
     {
-        File file = new File("fightersAttack.txt");
+        File file = new File("core/assets/data/fightersAttack.csv");
 
         Scanner read_f = null;
         try {
@@ -323,7 +323,7 @@ public class Collection {
     public void readWeaponsAttacks()
     {
 
-        File file = new File("weapon_attack.txt");
+        File file = new File("core/assets/data/weapon_attack.csv");
 
         Scanner read_f = null;
         try {

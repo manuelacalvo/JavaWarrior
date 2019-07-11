@@ -4,8 +4,10 @@ import com.Display.PlayerDisplay;
 import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Texture;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
+import com.tools.JWAssetManager;
 
 
 public class MyGame extends Game {
@@ -16,14 +18,14 @@ public class MyGame extends Game {
 
     private boolean debug;
 
-    private AssetManager assetManager;
+    private JWAssetManager assetManager;
 
     /**
      * Standard constructor called from DesktopLauncher
-
      */
     public MyGame(){
-
+        /* DO NOT use getInstance() here - results in error*/
+        this.assetManager = null;
     }
 
     /**
@@ -37,11 +39,8 @@ public class MyGame extends Game {
 
     public void create () {
 
-
-
-        // INIT ASSET MANAGER
-        initAssetManager();
-
+        /* INIT ASSETS */
+        this.assetManager = JWAssetManager.getInstance();
 
         if (screenType == null) { //Standard case
             this.setScreen(new PlayerDisplay(this, collection));
@@ -52,18 +51,6 @@ public class MyGame extends Game {
                 this.setScreen(new FightScreen(this));
             }
         }
-    }
-
-    private void initAssetManager(){
-       /* String path_background = "core/assets/graphics/pictures/main_background.png";
-        String path_SkinUI = "core/assets/graphics/ui/pixthulhu-ui/pixthulhu-ui.json";
-        //String path_fighterThumbnail = this.getPlayer().getFighter().getThumbnailPath();
-
-        assetManager = new AssetManager();
-        assetManager.load(path_background, Texture.class);
-        assetManager.load(path_SkinUI, Skin.class);
-        assetManager.load(path_fighterThumbnail, Texture.class);
-        assetManager.finishLoading();*/
     }
 
     public void render () {
