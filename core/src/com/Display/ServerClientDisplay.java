@@ -9,17 +9,21 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.connection.Client;
 import com.connection.Server;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
-import com.shopmanagement.CollectionDisplay.CollectionFighterDisplay;
+
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 public class ServerClientDisplay implements Screen {
     private Stage stage;
@@ -28,11 +32,14 @@ public class ServerClientDisplay implements Screen {
     private TextureAtlas buttonAtlas;
     private ImageTextButton buttonServer;
     private ImageTextButton buttonClient;
+    private ImageTextButton showIP;
     private ImageTextButton.ImageTextButtonStyle textButtonStyle;
     private BitmapFont font;
     private Image image;
     private Collection coll;
     private Player player;
+    private String ip;
+    private TextField ipSet;
 
 
     public ServerClientDisplay(MyGame aGame, final Player player, final Collection coll) {
@@ -42,9 +49,11 @@ public class ServerClientDisplay implements Screen {
         table.setFillParent(true);
         this.coll = coll;
         this.player = player;
+        Skin skin2 = new Skin(Gdx.files.internal("uiskin.json"));
+        ipSet = new TextField("enter the IP Adresse", skin2);
         Texture texture = new Texture(Gdx.files.internal("core/assets/graphics/pictures/main_background.png"));
         image = new Image(texture);
-
+        ip = " ";
         font = new BitmapFont();
         skin = new Skin();
         buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
@@ -59,9 +68,10 @@ public class ServerClientDisplay implements Screen {
                 new ChangeListener() {
                     @Override
                     public void changed (ChangeEvent event, Actor actor) {
-                        System.out.println("Connected...");
+                        System.out.println("Connecting...");
                         Server server = new Server(game, player);
                         server.go();
+
                     }
                 }
         );
@@ -69,14 +79,33 @@ public class ServerClientDisplay implements Screen {
         buttonClient.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                 Client client = new Client(game, player);
-                            client.go();
+                System.out.println("Connecting...");
+                Client client = new Client(game, player);
+                client.go(ipSet.getText());
+
             }
         });
+        showIP = new ImageTextButton("IP Address", textButtonStyle);
+        showIP.addListener(
+                new ChangeListener() {
+                    @Override
+                    public void changed (ChangeEvent event, Actor actor) {
+                        try {
+
+                            showIP.setText(InetAddress.getLocalHost().getHostAddress());
+                        } catch (UnknownHostException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+        );
 
 
         table.add(buttonServer);
         table.add(buttonClient);
+        table.row();
+        table.add(showIP);
+        table.add(ipSet);
 
 
         stage.addActor(image);
@@ -97,6 +126,7 @@ public class ServerClientDisplay implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
+
     }
 
     @Override

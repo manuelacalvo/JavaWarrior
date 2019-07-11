@@ -36,7 +36,7 @@ public class GameDisplay implements Screen {
     private Image image;
     private Collection coll;
     private Player player;
-    //private Sound sound;
+    private Sound sound;
 
 
     public GameDisplay(MyGame aGame, final Player player, final Collection coll) {
@@ -49,9 +49,9 @@ public class GameDisplay implements Screen {
         Texture texture = new Texture(Gdx.files.internal("core/assets/graphics/pictures/main_background.png"));
         image = new Image(texture);
 
-        //sound=Gdx.audio.newSound(Gdx.files.internal("sound/The_Witcher.MP3"));
+        sound=Gdx.audio.newSound(Gdx.files.internal("sound/The_Witcher.MP3"));
 
-        //sound.play();
+        sound.play();
         font = new BitmapFont();
         skin = new Skin();
         buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
@@ -71,7 +71,7 @@ public class GameDisplay implements Screen {
                 new ChangeListener() {
                     @Override
                     public void changed (ChangeEvent event, Actor actor) {
-                        //sound.stop();
+                        sound.stop();
                         game.setScreen(new FightScreen(game));
 
                     }
@@ -81,7 +81,7 @@ public class GameDisplay implements Screen {
         buttonMapMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                //sound.stop();
+                sound.stop();
                 gameLoopAttack();
 
             }
@@ -91,7 +91,7 @@ public class GameDisplay implements Screen {
         buttonConnectedMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                //sound.stop();
+                sound.stop();
                 game.setScreen(new ServerClientDisplay(game, player, coll));
 
 
@@ -103,7 +103,7 @@ public class GameDisplay implements Screen {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 player.save();
-                //sound.stop();
+                sound.stop();
                 game.setScreen(new PlayerDisplay(game, coll));
 
             }

@@ -21,7 +21,7 @@ public class Server {
         this.ennemy = null;
     }
 
-    public void go() {
+        public void go() {
 
         try {
             ServerSocket serversock = new ServerSocket(4242);

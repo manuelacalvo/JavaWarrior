@@ -134,7 +134,7 @@ public class PlayerDisplay implements Screen {
 
 
         try {
-            File file = new File(name.hashCode() + ".txt");
+            File file = new File("user/" + name.hashCode() + ".txt");
             if(file.createNewFile()){
                 obj = new Player(name);
             }else {

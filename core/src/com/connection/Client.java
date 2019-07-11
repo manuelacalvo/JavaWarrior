@@ -6,8 +6,7 @@ import com.fighterlvl.warrior.Player;
 
 import java.io.*;
 import java.net.Socket;
-
-
+import java.util.Scanner;
 
 
 public class Client
@@ -23,11 +22,11 @@ public class Client
         this.ennemy = null;
     }
 
-    public void go()
+    public void go(String ip)
     {
         try
         {
-            Socket incoming = new Socket("192.168.0.36",4242);
+            Socket incoming = new Socket(ip,4242);
             BufferedReader bufIn = new BufferedReader(new InputStreamReader(System.in));
             PrintStream printStream = new PrintStream(incoming.getOutputStream());
             InputStreamReader stream = new InputStreamReader(incoming.getInputStream());
