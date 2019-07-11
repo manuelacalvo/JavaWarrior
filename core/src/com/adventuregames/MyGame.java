@@ -2,26 +2,19 @@ package com.adventuregames;
 
 import com.Display.PlayerDisplay;
 import com.Display.AbstractScreen;
-import com.Display.GameDisplay;
-import com.adventuregames.fight.FIGHT_PARTY;
 import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
 import com.tools.JWAssetManager;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.tools.SkinGenerator;
 
 public class MyGame extends Game {
 
-    private Player player;
-    private Collection collection;
     private Class screenType=null;
 
     private boolean debug = false;
@@ -54,7 +47,7 @@ public class MyGame extends Game {
         skin = SkinGenerator.generateSkin(assetManager);
 
         if (!debug) { //Standard case
-            this.setScreen(new PlayerDisplay(this, collection));
+            this.setScreen(new PlayerDisplay(this));
         } else {
             // DEBUG
             if (screenType == FightScreen.class) {
@@ -78,10 +71,6 @@ public class MyGame extends Game {
     public void dispose () {
     }
 
-    public Player getPlayer(){
-        return this.player;
-    }
-
     public AssetManager getAssetManager() {
         return assetManager;
     }
@@ -92,10 +81,6 @@ public class MyGame extends Game {
 
     public Skin getSkin(){
         return this.skin;
-    }
-
-    public Collection getCollection(){
-        return this.collection;
     }
 }
 

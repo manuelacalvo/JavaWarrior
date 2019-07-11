@@ -30,16 +30,14 @@ public class PlayerDisplay implements Screen {
     private ImageTextButton.ImageTextButtonStyle textButtonStyle;
     private BitmapFont font;
     private Image image;
-    private Collection coll;
 
 
 
-    public PlayerDisplay(final MyGame aGame, final Collection coll) {
+    public PlayerDisplay(final MyGame aGame) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table = new Table();
         table.setFillParent(true);
-        this.coll = coll;
         Texture texture = new Texture(Gdx.files.internal("core/assets/graphics/pictures/main_background.png"));
         image = new Image(texture);
         Skin skin2 = new Skin(Gdx.files.internal("uiskin.json"));
