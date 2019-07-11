@@ -9,5 +9,5 @@ public interface FightEventQueuer {
      * Adds an event to the queue to be displayed
      * @param event
      */
-    public void queueEvent(FightEvent event);
+    void queueEvent(FightEvent event);
 }

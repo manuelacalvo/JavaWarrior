@@ -1,9 +1,9 @@
 package com.fighterlvl.warrior;
 
-
 import java.io.Serializable;
 
 public class Treasure implements Serializable {
+
 
   private String name;
   private int type;
@@ -11,8 +11,8 @@ public class Treasure implements Serializable {
   private int actionPoint;
   private int price;
 
-
   public Treasure(String name, int type, int number, int price) {
+
 
     this.name = name;
     this.number = number;

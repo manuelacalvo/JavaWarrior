@@ -153,7 +153,8 @@ public class Collection {
         {
 
             Weapon weapon = new Weapon(fighters.get(i).get("Weapon"),Integer.parseInt(fighters.get(i).get("AttackPerTurn")),Integer.parseInt(fighters.get(i).get("MinDamage")),Integer.parseInt(fighters.get(i).get("MaxDamage")), Boolean.parseBoolean(fighters.get(i).get("WeaponTackable")), Integer.parseInt(fighters.get(i).get("WeaponPrice")), fighters.get(i).get("WeaponPicture"));
-            if(weapon.getTakeable()) {
+            if(weapon.isTakeable()) {
+
                 setWeaponVector(weapon);
 
             }

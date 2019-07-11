@@ -247,7 +247,7 @@ public class CollectionWeaponDisplay implements Screen {
                 str = coll.buyWeapon(coll.getWeaponVector().get(0));
             }
         });
-        
+
         TextTooltip tipw1 = new TextTooltip(coll.getWeaponVector().get(0).toString(), skin2);
         tipw1.setInstant(true);
         sword1.addListener(tipw1);

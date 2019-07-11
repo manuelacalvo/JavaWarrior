@@ -26,7 +26,6 @@ public class Weapon implements Serializable {
 
   }
 
-
   public Attack getAttack() {
     return attack;
   }
@@ -55,24 +54,20 @@ public class Weapon implements Serializable {
     return name;
   }
 
-  public void setTakeable(boolean takeable) {
-    this.takeable = takeable;
-  }
-
-  public boolean getTakeable()
+  public boolean isTakeable()
   {
     return takeable;
   }
 
-  public int getAttacksPerTurn() {
+  int getAttacksPerTurn() {
     return attacksPerTurn;
   }
 
-  public int getMaxDamage() {
+  int getMaxDamage() {
     return maxDamage;
   }
 
-  public int getMinDamage() {
+  int getMinDamage() {
     return minDamage;
   }
 
@@ -94,7 +89,14 @@ public class Weapon implements Serializable {
 
   @Override
   public String toString() {
-    return  "Name : " + this.getName() + '\n' + "Attacks per turn : " + this.getAttacksPerTurn() + '\n' + "Min Damage : " + this.getMinDamage() + '\n' + "Max damage : " + this.getMaxDamage();
+    return "Weapon{" +
+            "name='" + name + '\'' +
+            ", attacksPerTurn=" + attacksPerTurn +
+            ", minDamage=" + minDamage +
+            ", maxDamage=" + maxDamage +
+            ", takeable=" + takeable +
+            ", price=" + price +
+            '}';
   }
 
   public double average()

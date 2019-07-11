@@ -142,14 +142,22 @@ public class GameDisplay implements Screen {
             if(player.getFighter().isAlive()) {
                 player.setNbFights(player.getNbFights()+1);
                 coll.getFighterVector().get(0).fightTurnAtack(coll.getFighterVector().get(i));
-
-
-
             }
         }
         if(!player.getFighter().isAlive())
         {
             System.out.println(" You are dead. You've got " + player.getFighter().getHitPoints() + " life points and you've made " + player.getNbFights() + " fights");
+        }
+    }
+
+    public void gameLoop()
+    {
+        for(int i=1; i< coll.getFighterVector().size(); i++)
+        {
+            coll.getFighterVector().get(0).fight(coll.getFighterVector().get(i));
+        }
+        if(!player.getFighter().isAlive())        {
+            System.out.println(" You are dead. You've got \" + fighter.getHitPoints() + \" life points and you've made \" + nbFights + \" fights\");");
         }
     }
 

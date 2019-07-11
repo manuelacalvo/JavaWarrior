@@ -89,7 +89,7 @@ public class FightController {
         {
             if(!quitFight && fighter.isAlive()) {
                 int choice = 0;
-                coll.getFighterVector().get(0).fightTurn(coll.getFighterVector().get(i));
+                coll.getFighterVector().get(0).fight(coll.getFighterVector().get(i));
                 restOnce = false;
 
                 /*while(choice!= 4 && fighter.isAlive() && choice !=5 && !quitFight)

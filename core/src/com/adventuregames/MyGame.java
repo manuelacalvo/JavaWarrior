@@ -1,14 +1,22 @@
 package com.adventuregames;
 
 import com.Display.PlayerDisplay;
+import com.Display.AbstractScreen;
+import com.Display.GameDisplay;
+import com.adventuregames.fight.FIGHT_PARTY;
 import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
 import com.tools.JWAssetManager;
-
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.tools.SkinGenerator;
 
 public class MyGame extends Game {
 
@@ -16,9 +24,10 @@ public class MyGame extends Game {
     private Collection collection;
     private Class screenType=null;
 
-    private boolean debug;
+    private boolean debug = false;
 
     private JWAssetManager assetManager;
+    private Skin skin;
 
     /**
      * Standard constructor called from DesktopLauncher
@@ -29,11 +38,11 @@ public class MyGame extends Game {
     }
 
     /**
-     * Test&Debug constructo
+     * Test&Debug constructor
      * @param screenType type of the screen to debug
      */
     public MyGame(Class screenType){
-        this();
+        this.debug=true;
         this.screenType=screenType;
     }
 
@@ -42,11 +51,12 @@ public class MyGame extends Game {
         /* INIT ASSETS */
         this.assetManager = JWAssetManager.getInstance();
 
-        if (screenType == null) { //Standard case
+        skin = SkinGenerator.generateSkin(assetManager);
+
+        if (!debug) { //Standard case
             this.setScreen(new PlayerDisplay(this, collection));
         } else {
             // DEBUG
-            this.debug=true;
             if (screenType == FightScreen.class) {
                 this.setScreen(new FightScreen(this));
             }
@@ -55,6 +65,13 @@ public class MyGame extends Game {
 
     public void render () {
         super.render();
+
+        if(getScreen() instanceof AbstractScreen){
+            ((AbstractScreen)getScreen()).update(Gdx.graphics.getDeltaTime());
+        }
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        getScreen().render(Gdx.graphics.getDeltaTime());
     }
 
 
@@ -71,6 +88,14 @@ public class MyGame extends Game {
 
     public boolean isDebug() {
         return debug;
+    }
+
+    public Skin getSkin(){
+        return this.skin;
+    }
+
+    public Collection getCollection(){
+        return this.collection;
     }
 }
 

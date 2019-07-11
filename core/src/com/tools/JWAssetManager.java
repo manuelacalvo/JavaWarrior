@@ -2,6 +2,8 @@ package com.tools;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class JWAssetManager extends AssetManager {
 
@@ -11,6 +13,11 @@ public class JWAssetManager extends AssetManager {
     /* PICTURES */
     public final static String path_background = "core/assets/graphics/pictures/main_background.png";
     public final static String path_shopBG = "core/assets/graphics/pictures/shop.jpg";
+
+    public final static String path_pokemonUI = "core/assets/graphics/ui/pokemon-ui/uipack.atlas";
+
+    public final static String path_pokefont = "core/assets/font/pokemon/small_letters_font.fnt";
+    public final static String path_battlePack = "core/assets/graphics/ui/battle/battlepack.atlas";
 
     /* FIGHTERS *//*
     public final static String path_fighterUser = "core/assets/graphics/fighter_picture/User.jpg";
@@ -92,6 +99,9 @@ public class JWAssetManager extends AssetManager {
     private static void loadAssetsManager(){
         instance.load(JWAssetManager.path_shopBG, Texture.class);
         instance.load(JWAssetManager.path_background, Texture.class);
+        instance.load(path_pokemonUI, TextureAtlas.class);
+        instance.load(path_battlePack, TextureAtlas.class);
+        instance.load(path_pokefont, BitmapFont.class);
 
         //END
         instance.finishLoading();
