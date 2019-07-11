@@ -49,7 +49,7 @@ public class GameDisplay implements Screen {
         Texture texture = new Texture(Gdx.files.internal("core/assets/graphics/pictures/main_background.png"));
         image = new Image(texture);
 
-        sound=Gdx.audio.newSound(Gdx.files.internal("sound/The_Witcher.MP3"));
+        sound=Gdx.audio.newSound(Gdx.files.internal("core/assets/sound/The_Witcher.mp3"));
 
         sound.play();
         font = new BitmapFont();
