@@ -39,8 +39,20 @@ public class StatusBox extends Table {
 
     public StatusBox(MyGame oGame, Fighter oFighter){
         this(oGame.getSkin());
+        updateFighter(oFighter);
+    }
+
+    /**
+     * Used to change StatusBox infos internally and externally
+     * @param oFighter
+     */
+    public void updateFighter(Fighter oFighter){
         this.setNameLabel(oFighter.getName());
         this.setHPText(oFighter.getHitPoints(),oFighter.getMaxHP());
+    }
+    public void updateFighter(Fighter oFighter,int HPInstant, int HPMax){
+        this.setNameLabel(oFighter.getName());
+        this.setHPText(HPInstant, HPMax);
     }
 
     public void setNameLabel(String pName){
