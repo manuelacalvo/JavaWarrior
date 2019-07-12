@@ -61,6 +61,7 @@ public class PlayerDisplay implements Screen {
                         Player player  = (Player) load(userName.getText());
                         Collection coll = new Collection(player);
                         coll.shopOpen();
+                        game.setCollection(coll);
                         game.setScreen(new GameDisplay(aGame, player, coll));
                     }
                 }

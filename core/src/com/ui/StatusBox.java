@@ -1,9 +1,11 @@
 package com.ui;
 
+import com.adventuregames.MyGame;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
+import com.fighterlvl.warrior.Fighter;
 
 /**
  * Display name and life of a Fighter
@@ -33,6 +35,12 @@ public class StatusBox extends Table {
         uiContainer.row();
         uiContainer.add(hpText).expand().right();
 
+    }
+
+    public StatusBox(MyGame oGame, Fighter oFighter){
+        this(oGame.getSkin());
+        this.setNameLabel(oFighter.getName());
+        this.setHPText(oFighter.getHitPoints(),oFighter.getMaxHP());
     }
 
     public void setNameLabel(String pName){

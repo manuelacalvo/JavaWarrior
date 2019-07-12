@@ -2,6 +2,7 @@ package com.fighterlvl.warrior;
 
 import com.adventuregames.fight.FIGHT_PARTY;
 import com.adventuregames.fight.event.*;
+import com.tools.JWAssetManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -23,8 +24,9 @@ public class Fighter implements FightEventQueuer, Serializable {
     private String relativePathPicture;
 
     private FIGHT_PARTY party;
-
     private static FightEventPlayer eventPlayer;
+
+    public static Fighter placeHolderFighter = new Fighter("???",null,null,null,0,0, JWAssetManager.path_fighterMystery,FIGHT_PARTY.OPPONENT);
 
     public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int price, String relativePathPicture ) {
         this.name = name;
@@ -38,12 +40,14 @@ public class Fighter implements FightEventQueuer, Serializable {
         this.relativePathPicture = relativePathPicture;
         this.attacks = new ArrayList<>();
         this.attacks.add(new Attack());
-        this.attacks.add(weapon.getAttack());
+        if(weapon!=null){
+            this.attacks.add(weapon.getAttack());
+        }
         this.party=FIGHT_PARTY.OPPONENT; // Default is OPPONENT
     }
-    public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int price, String thumbnailPath, FIGHT_PARTY eParty) {
-        this(name, weapon, armor1, treasures, hitPoints, price, thumbnailPath);
-        this.party=FIGHT_PARTY.PLAYER;
+    public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int price, String relativePathPicture, FIGHT_PARTY eParty) {
+        this(name, weapon, armor1, treasures, hitPoints, price, relativePathPicture);
+        this.party=eParty;
     }
 
     public String getName()
@@ -164,7 +168,6 @@ public class Fighter implements FightEventQueuer, Serializable {
 
     /**
      * One turn of a fight between two Fighters
-     * @method fight
      */
     private void attack(Fighter enemy){
         outPutText(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
@@ -246,7 +249,7 @@ public class Fighter implements FightEventQueuer, Serializable {
         while(this.isAlive() && enemy.isAlive())
         {
             this.attack(enemy);
-            enemy.attack(this);
+            enemy.attack(this); // TODO : if enemy is dead the turn should stop without him attacking
         }
         if(!this.isAlive())
         {
@@ -255,7 +258,7 @@ public class Fighter implements FightEventQueuer, Serializable {
         if(!enemy.isAlive())
         {
             outPutText("You won");
-            getEnnemyRessources(enemy);
+            //getEnnemyRessources(enemy); FIXME Interraction
         }
     }
 
@@ -477,7 +480,7 @@ public class Fighter implements FightEventQueuer, Serializable {
         }
     }
 
-    public void setEventPlayer(FightEventPlayer oEventPlayer){
+    public static void setEventPlayer(FightEventPlayer oEventPlayer){
         eventPlayer = oEventPlayer;
     }
     @Override

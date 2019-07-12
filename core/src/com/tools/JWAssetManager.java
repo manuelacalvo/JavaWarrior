@@ -19,7 +19,7 @@ public class JWAssetManager extends AssetManager {
     public final static String path_pokefont = "core/assets/font/pokemon/small_letters_font.fnt";
     public final static String path_battlePack = "core/assets/graphics/ui/battle/battlepack.atlas";
 
-    /* FIGHTERS *//*
+    /* FIGHTERS */
     public final static String path_fighterUser = "core/assets/graphics/fighter_picture/User.jpg";
     public final static String path_fighterBerserker = "core/assets/graphics/fighter_picture/Berserker.jpg";
     public final static String path_fighterOrc = "core/assets/graphics/fighter_picture/Orc.jpg";
@@ -28,7 +28,8 @@ public class JWAssetManager extends AssetManager {
     public final static String path_fighterDragon = "core/assets/graphics/fighter_picture/Dragon.jpg";
     public final static String path_fighterNinja = "core/assets/graphics/fighter_picture/Ninja.jpg";
     public final static String path_fighterDoppleganger = "core/assets/graphics/fighter_picture/Doppleganger.jpg";
-    public final static String path_fighterNestOfSnakes = "core/assets/graphics/fighter_picture/Nest of snakes.jpg";*/
+    public final static String path_fighterNestOfSnakes = "core/assets/graphics/fighter_picture/Nest of snakes.jpg";
+    public final static String path_fighterMystery = "core/assets/graphics/fighter_picture/mystery.png";
 
     /* BACKGROUND *//*
     public final static String path_BGAerodactyl = "background/bgAerodactyl.png";
@@ -102,6 +103,17 @@ public class JWAssetManager extends AssetManager {
         instance.load(path_pokemonUI, TextureAtlas.class);
         instance.load(path_battlePack, TextureAtlas.class);
         instance.load(path_pokefont, BitmapFont.class);
+
+        instance.load(path_fighterUser, Texture.class);
+        instance.load(path_fighterMystery, Texture.class);
+        instance.load(path_fighterBerserker, Texture.class);
+        instance.load(path_fighterOrc, Texture.class);
+        instance.load(path_fighterTroll, Texture.class);
+        instance.load(path_fighterWizzard, Texture.class);
+        instance.load(path_fighterDragon, Texture.class);
+        instance.load(path_fighterNinja, Texture.class);
+        instance.load(path_fighterDoppleganger, Texture.class);
+        instance.load(path_fighterNestOfSnakes, Texture.class);
 
         //END
         instance.finishLoading();

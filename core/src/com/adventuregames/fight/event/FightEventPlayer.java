@@ -1,6 +1,7 @@
 package com.adventuregames.fight.event;
 
 import com.adventuregames.fight.FIGHT_PARTY;
+import com.fighterlvl.warrior.Fighter;
 import com.ui.DialogueBox;
 import com.ui.StatusBox;
 
@@ -14,6 +15,8 @@ public interface FightEventPlayer {
      * @param event FightEvent to add to the queue
      */
     void queueEvent(FightEvent event);
+
+    void setFighter(Fighter oFighter);
 
     DialogueBox getDialogueBox();
 

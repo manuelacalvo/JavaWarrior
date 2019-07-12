@@ -7,7 +7,6 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
-import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
 import com.tools.JWAssetManager;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -20,6 +19,7 @@ public class MyGame extends Game {
     private boolean debug = false;
 
     private JWAssetManager assetManager;
+    private Collection collection;
     private Skin skin;
 
     /**
@@ -68,19 +68,16 @@ public class MyGame extends Game {
     }
 
 
-    public void dispose () {
-    }
+    public void dispose () {}
 
-    public AssetManager getAssetManager() {
-        return assetManager;
-    }
+    public AssetManager getAssetManager() { return assetManager; }
 
-    public boolean isDebug() {
-        return debug;
-    }
+    public boolean isDebug() { return debug; }
 
-    public Skin getSkin(){
-        return this.skin;
-    }
+    public Skin getSkin(){ return this.skin; }
+
+    public Collection getCollection() { return collection; }
+
+    public void setCollection(Collection collection) { this.collection = collection; }
 }
 
