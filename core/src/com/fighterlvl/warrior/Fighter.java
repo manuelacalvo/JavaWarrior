@@ -21,21 +21,12 @@ public class Fighter implements FightEventQueuer, Serializable {
     private boolean restOnce;
     private ArrayList<Attack> attacks;
     private String relativePathPicture;
-    private String thumbnailPath;
-/*<<<<<<< HEAD
-    private FightEventPlayer eventPlayer;
 
-    public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int price, String relativePathPicture ) {
-=======*/
     private FIGHT_PARTY party;
 
     private static FightEventPlayer eventPlayer;
 
-    /*
-    Deprecated : All Fighter should have a thumbnail
-     */
     public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int price, String relativePathPicture ) {
-//>>>>>>> fl_dev
         this.name = name;
         this.weapon = weapon;
         this.armor1 = armor1;
@@ -60,19 +51,9 @@ public class Fighter implements FightEventQueuer, Serializable {
         return  name;
     }
 
-
-
-    public Weapon getWeapon() {
-        return weapon;
-    }
-
-    private Armor getArmor1() {
-        return armor1;
-    }
-
-    private Armor getArmor2() {
-        return armor2;
-    }
+    public Weapon getWeapon() { return weapon; }
+    private Armor getArmor1() { return armor1; }
+    private Armor getArmor2() { return armor2; }
 
     public int getHitPoints(){
         return this.hitPoints;
@@ -81,17 +62,11 @@ public class Fighter implements FightEventQueuer, Serializable {
         return this.maxHP;
     }
 
-    public ArrayList<Treasure> getTreasures() {
-        return treasures;
-    }
+    public ArrayList<Treasure> getTreasures() { return treasures; }
 
-    private boolean isRestOnce() {
-        return restOnce;
-    }
+    private boolean isRestOnce() { return restOnce; }
 
-    private void setRestOnce(boolean restOnce) {
-        this.restOnce = restOnce;
-    }
+    private void setRestOnce(boolean restOnce) { this.restOnce = restOnce; }
 
     /**
      * Defense is the sum of armors points.
@@ -101,36 +76,18 @@ public class Fighter implements FightEventQueuer, Serializable {
         return (getArmor1()!=null ? getArmor1().getProtection():0)
                 + (getArmor2()!=null ? getArmor2().getProtection():0);
     }
-    public void setArmor1(Armor armor1) {
-        this.armor1 = armor1;
-    }
-    public void setArmor2(Armor armor2) {
-        this.armor2 = armor2;
-    }
+    public void setArmor1(Armor armor1) { this.armor1 = armor1; }
+    public void setArmor2(Armor armor2) { this.armor2 = armor2; }
+    public void setWeapon(Weapon weapon) { this.weapon = weapon; }
 
-    public void setWeapon(Weapon weapon) {
-        this.weapon = weapon;
-    }
+    public void setTreasures(ArrayList<Treasure> treasures) { this.treasures = treasures; }
 
-    public void setTreasures(ArrayList<Treasure> treasures) {
-        this.treasures = treasures;
-    }
+    public int getPrice() { return price; }
 
-    public int getPrice() {
-        return price;
-    }
+    public String getRelativePathPicture() { return relativePathPicture; }
 
-    public String getRelativePathPicture() {
-        return relativePathPicture;
-    }
-
-    private ArrayList<Attack> getAttacks() {
-        return attacks;
-    }
-
-    public void setAttacks(Attack attack) {
-        this.attacks.add(attack);
-    }
+    public ArrayList<Attack> getAttacks() { return attacks; }
+    public void setAttacks(Attack attack) { this.attacks.add(attack); }
 
     @Override
     public String toString() {
@@ -146,7 +103,6 @@ public class Fighter implements FightEventQueuer, Serializable {
                 ", restOnce=" + restOnce +
                 ", attacks=" + attacks +
                 ", relativePathPicture='" + relativePathPicture + '\'' +
-                ", thumbnailPath='" + thumbnailPath + '\'' +
                 ", party=" + party +
                 '}';
     }
@@ -156,7 +112,6 @@ public class Fighter implements FightEventQueuer, Serializable {
      *
      * @param min The minimum value
      * @param max The maximum value
-     * @method randomNumberGenerator
      */
     public int randomNumberGenerator(int min, int max) {
         //Maths.random VS Random.next()
@@ -172,18 +127,12 @@ public class Fighter implements FightEventQueuer, Serializable {
         */
     }
 
-    private void takeDamage(int hitPoints)
-    {
-        changeHitPoints(-hitPoints);
-    }
-
-    private void gainLife(int hitPoints){
-        changeHitPoints(hitPoints);
-    }
+    private void takeDamage(int hitPoints) { changeHitPoints(-hitPoints); }
+    private void gainLife(int hitPoints){ changeHitPoints(hitPoints); }
 
     /**
      * Used internally to change hitpoints by takeDamage and gainLife
-     * Modify maxHP Accordingly
+     * Modify maxHP Accordingly with EVENT
      * @param delta amont of HP added
      */
     private void changeHitPoints(int delta){
@@ -203,7 +152,6 @@ public class Fighter implements FightEventQueuer, Serializable {
     private void setHitPoints(int iHitPoints){
         this.hitPoints = iHitPoints>0 && iHitPoints<=this.hitPoints ? iHitPoints:0;
     }
-
 
     public FIGHT_PARTY getParty(){ return this.party; }
     public void setParty(FIGHT_PARTY eParty){ this.party=eParty; }
@@ -330,6 +278,10 @@ public class Fighter implements FightEventQueuer, Serializable {
         }
     }
 
+    /**
+     * Output text to both Console and GUI
+     * @param sText Text to display
+     */
     private void outPutText(String sText){
         System.out.println(sText);
         queueEvent(new TextEvent(sText, true));
@@ -410,7 +362,6 @@ public class Fighter implements FightEventQueuer, Serializable {
 
     }
 
-
     public void  getEnnemyRessources(Fighter enemy)
     {
         getEnnemyWeapon(enemy);
@@ -443,43 +394,42 @@ public class Fighter implements FightEventQueuer, Serializable {
 
     public String usePotion()
     {
-      int treasureIndex = TREASURE_TYPE.POTION.ordinal();
-      String str = " ";
-      if(this.getTreasures().get(treasureIndex).getNumber()> 0) {
+        int treasureIndex = TREASURE_TYPE.POTION.ordinal();
+        String str = " ";
+        if(this.getTreasures().get(treasureIndex).getNumber()> 0) {
           this.getTreasures().get(treasureIndex).setNumber(this.getTreasures().get(0).getNumber() - 1);
 
-          int random = randomNumberGenerator(1,10), min, max, hitPoint;
-          if (random <= 3) // 30%
-          {
-              min = 5 ; max = 10;
-          } else if (random <= 7) //40%
-          {
-              min = 11; max = 20;
-          } else if (random <= 9) //20%
-          {
-              min = 21; max = 30;
-          } else //10%
-          {
-              min = 1; max = 20;
-          }
-          hitPoint = this.randomNumberGenerator(min, max);
-          this.takeDamage(-hitPoint);
-          str = "You earn " + hitPoint + " points";
+            int random = randomNumberGenerator(1,10), min, max, hitPoint;
+            if (random <= 3) // 30%
+            {
+                min = 5 ; max = 10;
+            } else if (random <= 7) //40%
+            {
+                min = 11; max = 20;
+            } else if (random <= 9) //20%
+            {
+                min = 21; max = 30;
+            } else //10%
+            {
+                min = 1; max = 20;
+            }
+            hitPoint = this.randomNumberGenerator(min, max);
+            this.takeDamage(-hitPoint);
+            str = "You earn " + hitPoint + " points";
 
             str += "\n" + "Hit points" + this.hitPoints;
         }
         else str = "You don't have any potions ";
 
         return str;
-
     }
 
     public String useScroll()
     {
         String str = " ";
-
-        if(this.getTreasures().get(1).getNumber() > 0) {
-            this.getTreasures().get(1).setNumber(this.getTreasures().get(1).getNumber() - 1);
+        int treasureIndex = TREASURE_TYPE.SCROLL.ordinal();
+        if(this.getTreasures().get(treasureIndex).getNumber() > 0) {
+            this.getTreasures().get(treasureIndex).setNumber(this.getTreasures().get(treasureIndex).getNumber() - 1);
             int random = randomNumberGenerator(1, 3);
 
             if (random == 1) {
@@ -527,7 +477,6 @@ public class Fighter implements FightEventQueuer, Serializable {
         }
     }
 
-
     public void setEventPlayer(FightEventPlayer oEventPlayer){
         eventPlayer = oEventPlayer;
     }
@@ -536,11 +485,5 @@ public class Fighter implements FightEventQueuer, Serializable {
         eventPlayer.queueEvent(event);
     }
 
-    public String getThumbnailPath() {
-        return thumbnailPath;
-    }
-    public void setThumbnailPath(String thumbnailPath) {
-        this.thumbnailPath = thumbnailPath;
-    }
 }
 
