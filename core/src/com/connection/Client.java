@@ -44,7 +44,7 @@ public class Client
             Object object= objectInputStream.readObject();
             ennemy = (Fighter) object ;
             printStream.println("player one is playing...");
-            game.setScreen(new FightScreen(game, ennemy));
+            game.setScreen(new FightScreen(game));
             //player.getFighter().fight(ennemy);
             printStream.println("turn of player two:");
             String advice = reader.readLine();
