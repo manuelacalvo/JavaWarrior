@@ -16,7 +16,7 @@ public interface FightEventPlayer {
      */
     void queueEvent(FightEvent event);
 
-    void setFighter(Fighter oFighter);
+    void setFighter(Fighter oFighter, int HPInstant, int HPMax);
 
     DialogueBox getDialogueBox();
 

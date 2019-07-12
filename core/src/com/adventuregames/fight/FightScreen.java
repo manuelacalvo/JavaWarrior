@@ -233,11 +233,11 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
      * Used to change a Fighter on the scene
      * @param oFighter
      */
-    public void setFighter(Fighter oFighter){
+    public void setFighter(Fighter oFighter,int HPInstant, int HPMax){
         if(oFighter.getParty()==FIGHT_PARTY.OPPONENT){
-            enemyStatusBox=new StatusBox(getGame(),oFighter);
+            enemyStatusBox.updateFighter(oFighter, HPInstant, HPMax);
         } else{
-            playerStatusBox=new StatusBox(getGame(),oFighter);
+            playerStatusBox.updateFighter(oFighter, HPInstant, HPMax);
         }
         fightRenderer.updatePlayerTexturePath(oFighter.getParty(),oFighter.getRelativePathPicture());
     }

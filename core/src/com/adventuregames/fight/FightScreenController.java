@@ -72,7 +72,6 @@ public class FightScreenController extends InputAdapter implements FightEventQue
 
     /**
      * Adds an event to the queue to be displayed
-     *
      * @param event
      */
     @Override
