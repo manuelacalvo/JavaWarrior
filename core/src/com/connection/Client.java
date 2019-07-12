@@ -1,6 +1,8 @@
 package com.connection;
 
+import com.Display.GameDisplay;
 import com.adventuregames.MyGame;
+import com.adventuregames.fight.FightScreen;
 import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
 
@@ -14,12 +16,13 @@ public class Client
     private boolean end = false;
     private Player player;
     private Fighter ennemy;
-
+    private MyGame game;
 
     public Client(MyGame aGame, Player player)
     {
         this.player = player;
         this.ennemy = null;
+        this.game = aGame;
     }
 
     public void go(String ip)
@@ -41,7 +44,8 @@ public class Client
             Object object= objectInputStream.readObject();
             ennemy = (Fighter) object ;
             printStream.println("player one is playing...");
-            player.getFighter().fight(ennemy);
+            game.setScreen(new FightScreen(game, ennemy));
+            //player.getFighter().fight(ennemy);
             printStream.println("turn of player two:");
             String advice = reader.readLine();
             System.out.println(advice);
