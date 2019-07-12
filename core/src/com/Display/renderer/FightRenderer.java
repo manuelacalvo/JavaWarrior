@@ -1,7 +1,9 @@
 package com.Display.renderer;
 
+import com.adventuregames.fight.FIGHT_PARTY;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -23,7 +25,7 @@ public class FightRenderer {
         TextureAtlas atlas=assetManager.get("core/assets/graphics/ui/battle/battlepack.atlas", TextureAtlas.class);
         background = atlas.findRegion("background");
         platform = atlas.findRegion("platform");
-
+        
         playerTexture = assetManager.get(playerTexturePath);
         enemyTexture = assetManager.get(enemyTexturePath);
     }
@@ -64,5 +66,12 @@ public class FightRenderer {
                     false,
                     false);
         }
+    }
+
+    public void updatePlayerTexturePath(FIGHT_PARTY eParty, String texturePath) {
+        if(eParty==FIGHT_PARTY.OPPONENT)
+            this.enemyTexture = assetManager.get(texturePath);
+        else
+            this.playerTexture = assetManager.get(texturePath);
     }
 }

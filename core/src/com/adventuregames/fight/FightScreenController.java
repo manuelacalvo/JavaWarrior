@@ -1,87 +1,92 @@
 package com.adventuregames.fight;
 
+import com.adventuregames.MyGame;
 import com.adventuregames.fight.event.FightEvent;
+import com.adventuregames.fight.event.FightEventPlayer;
+import com.adventuregames.fight.event.FightEventQueuer;
+import com.adventuregames.fight.event.FighterChangeEvent;
 import com.badlogic.gdx.InputAdapter;
 import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
+import com.shopmanagement.Collection;
 import com.ui.DialogueBox;
 
 import java.util.Queue;
 
-public class FightScreenController extends InputAdapter {
+public class FightScreenController extends InputAdapter implements FightEventQueuer {
 
-    public enum STATE{
-        FIGHTING, //While the fight is engaged
-        SELECT_ACTION, //choose what to do after victory
-        DEACTIVATED // Do nothing
-        ;
-    }
-
-    private STATE state = STATE.DEACTIVATED;
+    private FIGHT_STATE state = FIGHT_STATE.DEACTIVATED;
+    private MyGame game;
+    private FightEventPlayer eventPlayer;
 
     private DialogueBox dialogueBox;
     private Queue<FightEvent> queue;
 
-    private Fighter player;
-    private Fighter enemy;
+    private Fighter playerFighter;
+    private Fighter enemyFighter;
     /*
     Add here more elements to update
      */
-    FightScreenController(Fighter oPlayer, Fighter oEnemy, Queue<FightEvent> queue, DialogueBox dialogueBox){
+    FightScreenController(MyGame oGame, FightScreen fightScreen, Queue<FightEvent> queue, DialogueBox dialogueBox){
+        this.game=oGame;
+        this.eventPlayer=fightScreen;
         this.dialogueBox=dialogueBox;
         this.queue = queue;
 
-        this.player = oPlayer;
-        this.enemy=oEnemy;
-    }
+        this.state = FIGHT_STATE.WAITING;
 
-    void startFight(){
-        player.fight(enemy);
+        setPlayerFighter(game.getCollection().getPlayer().getFighter());
     }
 
     /**
      * Display UI to choose what to do after the fight
      */
     private void displayNextFightDialogue(){
-        this.state=STATE.SELECT_ACTION;
+        this.state=FIGHT_STATE.SELECT_ACTION;
         dialogueBox.setVisible(true);
         dialogueBox.animateText("What do you wnat to do next ?");
     }
 
-    private boolean isDisplayingNextDialogue(){return this.state==STATE.SELECT_ACTION;}
-
-    public FightScreenController(Queue<FightEvent> pQueue){
-        this.queue=pQueue;
-    }
+    private boolean isDisplayingNextDialogue(){return this.state==FIGHT_STATE.SELECT_ACTION;}
 
     @Override
     public boolean keyDown(int keycode) {
         return super.keyDown(keycode);
     }
 
-    /*
-    public void gameLoop()
+    public FIGHT_STATE getState(){ return this.state; }
+
+    void gameLoop()
     {
+        Collection coll = game.getCollection();
+
         for(int i=1; i< coll.getFighterVector().size(); i++)
         {
-            if(!quitFight && fighter.isAlive()) {
-                int choice = 0;
-                coll.getFighterVector().get(0).fight(coll.getFighterVector().get(i));
-                restOnce = false;
-
-                /*while(choice!= 4 && fighter.isAlive() && choice !=5 && !quitFight)
-                {
-
-                    choice = choiceMenuFight(coll.getFighterVector().get(i));
-
-                }*//*
-
-
-            }
+            setEnemyFighter(coll.getFighterVector().get(i));
+            playerFighter.fight(enemyFighter);
         }
-        if(!fighter.isAlive())
-        {
+        if(!playerFighter.isAlive())        {
             System.out.println(" You are dead. You've got \" + fighter.getHitPoints() + \" life points and you've made \" + nbFights + \" fights\");");
         }
-    }*/
+    }
+
+    /**
+     * Adds an event to the queue to be displayed
+     *
+     * @param event
+     */
+    @Override
+    public void queueEvent(FightEvent event) {
+        eventPlayer.queueEvent(event);
+    }
+
+    private void setPlayerFighter(Fighter playerFighter) {
+        this.playerFighter = playerFighter;
+        queueEvent(new FighterChangeEvent(playerFighter));
+    }
+
+    private void setEnemyFighter(Fighter enemyFighter) {
+        this.enemyFighter = enemyFighter;
+        queueEvent(new FighterChangeEvent(enemyFighter));
+    }
 }

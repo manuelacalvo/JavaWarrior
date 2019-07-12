@@ -1,6 +1,5 @@
 package com.java.warrior.desktop;
 
-import com.adventuregames.FightController;
 import com.adventuregames.MyGame;
 //import com.adventuregames.fight.FightScreen;
 import com.adventuregames.fight.FIGHT_PARTY;

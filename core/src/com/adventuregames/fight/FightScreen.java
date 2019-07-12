@@ -57,50 +57,33 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
     private Fighter playerFighter;
     private Fighter enemyFighter;
 
-
-    /**
-     * Default Test Constructor - in prod Enemy must be provided
-     * @param pGame - Game instance
-     */
-    public FightScreen(MyGame pGame){
-        this(pGame,
-                new Fighter("MrOrc",
-                pGame.getCollection().getWeaponVector().firstElement(),
-                pGame.getCollection().getArmorVector().firstElement(),
-                new ArrayList<Treasure>(),
-                30,0,"core/assets/graphics/fighter_picture/Orc.jpg"));
-    }
-
     /**
      * Fighter Screen Constructor
      * @param pGame - Game instance
-     * @param pEnemy The enemyFighter involved
      */
-    public FightScreen(MyGame pGame, Fighter pEnemy){
+    public FightScreen(MyGame pGame){
         super(pGame);
-        this.enemyFighter = pEnemy;
-        this.playerFighter = getGame().getPlayer().getFighter();
+        this.playerFighter = getGame().getCollection().getPlayer().getFighter();
         this.playerFighter.setParty(FIGHT_PARTY.PLAYER); // Make sure playerFighter is tagged as player
 
-        getGame().getAssetManager().load(enemyFighter.getThumbnailPath(),Texture.class);
-        getGame().getAssetManager().finishLoading();
+        enemyFighter = Fighter.placeHolderFighter;
+
         gameViewport=new ScreenViewport();
 
-        Fighter playerFighter = getGame().getPlayer().getFighter();
-        playerFighter.setEventPlayer(this);
+        Fighter.setEventPlayer(this);
 
         fightRenderer = new FightRenderer(
                 getGame().getAssetManager(),
-                playerFighter.getThumbnailPath(),
-                enemyFighter.getThumbnailPath());
+                playerFighter.getRelativePathPicture(),
+                enemyFighter.getRelativePathPicture());
 
         eventRenderer = new EventQueueRenderer(getGame().getSkin(), queue);
 
         initUI();
 
-        controller = new FightScreenController(playerFighter, enemyFighter, queue, dialogueBox);
+        controller = new FightScreenController(getGame(), this, queue, dialogueBox);
 
-        controller.startFight();
+        controller.gameLoop();
     }
 
     private void initUI(){
@@ -120,15 +103,8 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
         statusBoxRoot = new Table();
         statusBoxRoot.setFillParent(true);
 
-        playerStatusBox = new StatusBox(getGame().getSkin());
-        playerStatusBox.setNameLabel(getGame().getPlayer().getName());
-        //playerStatusBox.setLifeLabel(String.valueOf(getGame().getPlayer().getFighter().getArmor1().getProtection()));
-        playerStatusBox.setHPText(playerFighter.getHitPoints(),playerFighter.getMaxHP());
-
-        enemyStatusBox = new StatusBox(getGame().getSkin());
-        enemyStatusBox.setNameLabel(this.enemyFighter.getName());
-        enemyStatusBox.setHPText(enemyFighter.getHitPoints(),enemyFighter.getMaxHP());
-
+        playerStatusBox = new StatusBox(getGame(),this.playerFighter);
+        enemyStatusBox = new StatusBox(getGame(),this.enemyFighter);
         statusBoxRoot.add(playerStatusBox).expand().align(Align.left);
         statusBoxRoot.add(enemyStatusBox).expand().align(Align.right);
 
@@ -140,22 +116,10 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
         dialogueBox = new DialogueBox(getGame().getSkin());
         dialogueRoot.add(dialogueBox).expand().align(Align.bottom);
 
-        // TABLE
-
-
         // BACKGROUND
         Texture backgroundTexture = getGame().getAssetManager().get("core/assets/graphics/pictures/main_background.png",Texture.class);
         Image backgroundImage = new Image(backgroundTexture);
         backgroundImage.setFillParent(true);
-
-        ///////////////////////
-        //Label promptLabel = new Label("Vide", getGame().getSkin());
-
-        //PLAYER CHARACTER
-        // Image playerImage = new Image(getGame().getAssetManager().get(getGame().getPlayer().getFighter().getThumbnailPath(), Texture.class));
-        // Image enemyImage = new Image(getGame().getAssetManager().get(enemyFighter.getThumbnailPath(), Texture.class));
-        
-        // Prepare Tables
 
         // Load all on uiStage
         uiStage.addActor(statusBoxRoot);
@@ -204,7 +168,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
         batch.begin();
         fightRenderer.render(batch);
-        if(currentEvent != null){
+        if(currentEvent != null && getGame().isDebug()){
             eventRenderer.render(batch, currentEvent);
         }
         batch.end();
@@ -219,41 +183,31 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
      * @see ApplicationListener#resize(int, int)
      */
     @Override
-    public void resize(int width, int height) {
-
-    }
+    public void resize(int width, int height) {}
 
     /**
      * @see ApplicationListener#pause()
      */
     @Override
-    public void pause() {
-
-    }
+    public void pause() {}
 
     /**
      * @see ApplicationListener#resume()
      */
     @Override
-    public void resume() {
-
-    }
+    public void resume() {}
 
     /**
      * Called when this screen is no longer the current screen for a {@link Game}.
      */
     @Override
-    public void hide() {
-
-    }
+    public void hide() {}
 
     /**
      * Called when this screen should release all resources.
      */
     @Override
-    public void dispose() {
-        uiStage.dispose();
-    }
+    public void dispose() { uiStage.dispose(); }
 
     @Override
     public void update(float delta) {
@@ -275,5 +229,16 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
         uiStage.act();
     }
 
-
+    /**
+     * Used to change a Fighter on the scene
+     * @param oFighter
+     */
+    public void setFighter(Fighter oFighter){
+        if(oFighter.getParty()==FIGHT_PARTY.OPPONENT){
+            enemyStatusBox=new StatusBox(getGame(),oFighter);
+        } else{
+            playerStatusBox=new StatusBox(getGame(),oFighter);
+        }
+        fightRenderer.updatePlayerTexturePath(oFighter.getParty(),oFighter.getRelativePathPicture());
+    }
 }

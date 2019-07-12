@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
 import com.shopmanagement.CollectionDisplay.CollectionFighterDisplay;
@@ -104,8 +105,7 @@ public class GameDisplay implements Screen {
             public void changed (ChangeEvent event, Actor actor) {
                 player.save();
                 sound.stop();
-                game.setScreen(new PlayerDisplay(game, coll));
-
+                game.setScreen(new PlayerDisplay(game));
             }
         });
         quit.setPosition(500,10);
@@ -147,17 +147,6 @@ public class GameDisplay implements Screen {
         if(!player.getFighter().isAlive())
         {
             System.out.println(" You are dead. You've got " + player.getFighter().getHitPoints() + " life points and you've made " + player.getNbFights() + " fights");
-        }
-    }
-
-    public void gameLoop()
-    {
-        for(int i=1; i< coll.getFighterVector().size(); i++)
-        {
-            coll.getFighterVector().get(0).fight(coll.getFighterVector().get(i));
-        }
-        if(!player.getFighter().isAlive())        {
-            System.out.println(" You are dead. You've got \" + fighter.getHitPoints() + \" life points and you've made \" + nbFights + \" fights\");");
         }
     }
 
