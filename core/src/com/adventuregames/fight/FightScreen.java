@@ -30,6 +30,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
     /* FightScreen Controller */
     private FightScreenController controller;
+    private boolean connected;
 
     /* VIEW */
     private Viewport gameViewport;
@@ -62,7 +63,27 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
      * @param pGame - Game instance
      */
     public FightScreen(MyGame pGame){
+        this(pGame, false);
+    }
+    /**
+     * Network fight constructor
+     * @param pGame MyGame instance
+     * @param oFighter Distant Enemy fighter
+     */
+    public FightScreen(MyGame pGame, Fighter oFighter){
+        this(pGame,true);
+        oFighter.setParty(FIGHT_PARTY.OPPONENT);
+        setFighter(oFighter,oFighter.getHitPoints(),oFighter.getMaxHP());
+    }
+
+    /**
+     * Internal constructor
+     * @param pGame
+     * @param bConnected
+     */
+    private FightScreen(MyGame pGame, boolean bConnected){
         super(pGame);
+        this.connected = bConnected;
         this.playerFighter = getGame().getCollection().getPlayer().getFighter();
         this.playerFighter.setParty(FIGHT_PARTY.PLAYER); // Make sure playerFighter is tagged as player
 
@@ -83,7 +104,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
         controller = new FightScreenController(getGame(), this, queue, dialogueBox);
 
-        controller.gameLoop();
+        if(!connected)controller.gameLoop();
     }
 
     private void initUI(){
