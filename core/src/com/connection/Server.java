@@ -1,14 +1,12 @@
 package com.connection;
 
 import com.adventuregames.MyGame;
-import com.adventuregames.fight.FightScreen;
+import com.adventuregames.fight.FightAttackDisplay;
 import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
 
 import java.io.*;
 import java.net.*;
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Server {
     private boolean end = false;
@@ -53,8 +51,12 @@ public class Server {
                         player.setFighter((Fighter) obj);
                         obj = objectInputStream.readObject();
                         ennemy = (Fighter) obj;
+
                         printStream.println("player two is playing...");
-                        game.setScreen(new FightScreen(game));
+                        player.setEnnemi(ennemy);
+                        game.setScreen(new FightAttackDisplay(game, player.getFighter(), player.getEnnemi()));
+
+                        // game.setScreen(new FightAttackDisplay((game)));
                        // player.getFighter().fight(ennemy);
                         printStream.println("turn of player one: ");
 

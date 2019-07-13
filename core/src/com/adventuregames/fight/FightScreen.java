@@ -1,6 +1,8 @@
 package com.adventuregames.fight;
 
 import com.Display.AbstractScreen;
+import com.Display.FightMenuDisplay;
+import com.Display.GameDisplay;
 import com.Display.renderer.EventQueueRenderer;
 import com.Display.renderer.FightRenderer;
 import com.adventuregames.MyGame;
@@ -113,6 +115,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
         dialogueRoot.setFillParent(true);
         uiStage.addActor(dialogueRoot);
 
+
         dialogueBox = new DialogueBox(getGame().getSkin());
         dialogueRoot.add(dialogueBox).expand().align(Align.bottom);
 
@@ -153,6 +156,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(uiStage);
+
     }
 
     /**
@@ -175,6 +179,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
         //uiStage.act();
         uiStage.draw();
+
     }
 
     /**
@@ -213,8 +218,12 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
     public void update(float delta) {
 
         while ( currentEvent == null || currentEvent.isFinished()){
-            if(queue.isEmpty()){ // Event queue is empty
+            if(queue.isEmpty()) { // Event queue is empty
                 currentEvent = null;
+                if(playerFighter.isAlive()) {
+                    getGame().setScreen(new FightMenuDisplay(getGame(), getGame().getCollection().getPlayer()));
+                }
+                else getGame().setScreen(new GameDisplay(getGame(),getGame().getCollection().getPlayer(), getGame().getCollection()));
                 break;
             }else {
                 currentEvent = queue.poll();
@@ -225,6 +234,8 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
         if (currentEvent != null) {
             currentEvent.update(delta);
         }
+
+
 
         uiStage.act();
     }

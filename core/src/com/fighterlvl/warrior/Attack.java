@@ -35,7 +35,7 @@ public class Attack implements Serializable {
 
     public String toString()
     {
-        return getName() + " : min Damage " + getMinDamage() + ", max Damage" + getMaxDamage();
+        return getName() + " : " + getMinDamage() + ", " + getMaxDamage();
     }
     public String getName() {
         return name;

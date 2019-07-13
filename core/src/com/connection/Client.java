@@ -1,14 +1,12 @@
 package com.connection;
 
-import com.Display.GameDisplay;
 import com.adventuregames.MyGame;
-import com.adventuregames.fight.FightScreen;
+import com.adventuregames.fight.FightAttackDisplay;
 import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Scanner;
 
 
 public class Client
@@ -43,9 +41,11 @@ public class Client
 
             Object object= objectInputStream.readObject();
             ennemy = (Fighter) object ;
+            player.setEnnemi(ennemy);
             printStream.println("player one is playing...");
-            game.setScreen(new FightScreen(game));
+            //game.setScreen(new FightAttackDisplay((game)));
             //player.getFighter().fight(ennemy);
+            game.setScreen(new FightAttackDisplay(game, player.getFighter(), player.getEnnemi()));
             printStream.println("turn of player two:");
             String advice = reader.readLine();
             System.out.println(advice);
@@ -65,8 +65,13 @@ public class Client
                     printStream.println("object needed");
                     player.setFighter((Fighter)objectInputStream.readObject());
                     ennemy = (Fighter)objectInputStream.readObject();
+
+
                     printStream.println("player one is playing...");
-                    player.getFighter().fight(ennemy);
+                    //game.setScreen(new FightAttackDisplay((game)));
+                    //player.getFighter().fight(ennemy);
+                    player.setEnnemi(ennemy);
+                    game.setScreen(new FightAttackDisplay(game, player.getFighter(), player.getEnnemi()));
                     printStream.println("turn of player two: ");
 
 

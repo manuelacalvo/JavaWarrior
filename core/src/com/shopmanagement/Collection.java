@@ -13,7 +13,8 @@ public class Collection {
     private Player player;
     private Vector<Fighter> fighterVector;
     private Vector<Weapon> weaponVector;
-    private Vector<Armor> armorVector ;
+    private Vector<Armor> armor1Vector ;
+    private Vector<Armor> armor2Vector ;
     private Vector<Treasure> treasureVector ;
     private ArrayList<Attack> fighterAttack;
     private ArrayList<Attack> weaponAttack;
@@ -24,7 +25,8 @@ public class Collection {
         this.player = player;
         fighterVector =  new Vector<Fighter>();
         weaponVector = new Vector<Weapon>();
-        armorVector = new Vector<Armor>();
+        armor1Vector = new Vector<Armor>();
+        armor2Vector = new Vector<Armor>();
         treasureVector= new Vector<Treasure>();
         fighterAttack = new ArrayList<>();
         weaponAttack = new ArrayList<>();
@@ -38,8 +40,12 @@ public class Collection {
         return fighterVector;
     }
 
-    public Vector<Armor> getArmorVector() {
-        return armorVector;
+    public Vector<Armor> getArmor1Vector() {
+        return armor1Vector;
+    }
+
+    public Vector<Armor> getArmor2Vector() {
+        return armor2Vector;
     }
 
     public Vector<Weapon> getWeaponVector() {
@@ -70,8 +76,12 @@ public class Collection {
         this.fighterVector = fighterVector;
     }
 
-    public void setArmorVector(Vector<Armor> armorVector) {
-        this.armorVector = armorVector;
+    public void setArmor1Vector(Vector<Armor> armorVector) {
+        this.armor1Vector = armorVector;
+    }
+
+    public void setArmor2Vector(Vector<Armor> armorVector) {
+        this.armor2Vector = armorVector;
     }
 
     public void setFighterAttack(Attack fighterAttack) {
@@ -86,8 +96,12 @@ public class Collection {
         this.player = player;
     }
 
-    public void setArmorVector(Armor armor) {
-        this.armorVector.add(armor);
+    public void setArmor1Vector(Armor armor) {
+        this.armor1Vector.add(armor);
+    }
+
+    public void setArmor2Vector(Armor armor) {
+        this.armor2Vector.add(armor);
     }
 
     public void setFighterVector(Fighter fighter) {
@@ -163,7 +177,7 @@ public class Collection {
             Armor armor1 = new Armor(fighters.get(i).get("Armor1"), 1, Boolean.parseBoolean(fighters.get(i).get("Armor1Tackable")),Integer.parseInt(fighters.get(i).get("Protection1")), Integer.parseInt(fighters.get(i).get("Armor1Price")), fighters.get(i).get("Armor1Picture"));
             if(armor1.getTakeable())
             {
-                setArmorVector(armor1);
+                setArmor1Vector(armor1);
 
             }
 
@@ -188,7 +202,7 @@ public class Collection {
                 f.setArmor2(armor2);
                 if(armor2.getTakeable())
                 {
-                    setArmorVector(armor2);
+                    setArmor2Vector(armor2);
 
 
                 }
@@ -211,7 +225,7 @@ public class Collection {
 
         player.setCollectionFighter(getFighterVector().get(0));
         player.setCollectionWeapon(getWeaponVector().get(0));
-        player.setCollectionArmor(getArmorVector().get(0));
+        player.setCollectionArmor1(getArmor1Vector().get(0));
 
 
     }
@@ -232,14 +246,28 @@ public class Collection {
         return  str;
     }
 
-    public String buyArmor(Armor armor)
+    public String buyArmor1(Armor armor)
     {
         String str = "";
         if(getPlayer().getMoney()>= armor.getPrice())
         {
             str = "You buy a " + armor.getName();
             getPlayer().reducePrice(armor.getPrice());
-            getPlayer().setCollectionArmor(armor);
+            getPlayer().setCollectionArmor1(armor);
+        }
+        else str = "You can't buy it you don't have enough money";
+
+        return  str;
+    }
+
+    public String buyArmor2(Armor armor)
+    {
+        String str = "";
+        if(getPlayer().getMoney()>= armor.getPrice())
+        {
+            str = "You buy a " + armor.getName();
+            getPlayer().reducePrice(armor.getPrice());
+            getPlayer().setCollectionArmor2(armor);
         }
         else str = "You can't buy it you don't have enough money";
 

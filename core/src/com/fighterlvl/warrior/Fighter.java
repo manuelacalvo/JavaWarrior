@@ -1,10 +1,17 @@
 package com.fighterlvl.warrior;
 
+import com.adventuregames.MyGame;
 import com.adventuregames.fight.FIGHT_PARTY;
+import com.adventuregames.fight.FightAttackDisplay;
+import com.adventuregames.fight.FightScreen;
 import com.adventuregames.fight.event.*;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
+import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import com.tools.JWAssetManager;
 
 import java.io.Serializable;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -22,9 +29,12 @@ public class Fighter implements FightEventQueuer, Serializable {
     private boolean restOnce;
     private ArrayList<Attack> attacks;
     private String relativePathPicture;
-
+    private Boolean timeToChoseAttack;
+    private Boolean hadChoseAttack;
+    private int choiceAttack;
     private FIGHT_PARTY party;
     private static FightEventPlayer eventPlayer;
+    private String str;
 
     public static Fighter placeHolderFighter = new Fighter("???",null,null,null,0,0, JWAssetManager.path_fighterMystery,FIGHT_PARTY.OPPONENT);
 
@@ -37,9 +47,12 @@ public class Fighter implements FightEventQueuer, Serializable {
         this.hitPoints = hitPoints;
         this.maxHP = hitPoints;
         this.price = price;
+        this.str = " ";
+        this.timeToChoseAttack = false;
         this.relativePathPicture = relativePathPicture;
         this.attacks = new ArrayList<>();
         this.attacks.add(new Attack());
+        this.hadChoseAttack = false;
         if(weapon!=null){
             this.attacks.add(weapon.getAttack());
         }
@@ -50,15 +63,19 @@ public class Fighter implements FightEventQueuer, Serializable {
         this.party=eParty;
     }
 
+    public String getStr() {
+        return str;
+    }
+
     public String getName()
     {
         return  name;
     }
 
+
     public Weapon getWeapon() { return weapon; }
     private Armor getArmor1() { return armor1; }
     private Armor getArmor2() { return armor2; }
-
     public int getHitPoints(){
         return this.hitPoints;
     }
@@ -66,11 +83,30 @@ public class Fighter implements FightEventQueuer, Serializable {
         return this.maxHP;
     }
 
+    public Boolean getTimeToChoseAttack() {
+        return timeToChoseAttack;
+    }
+
+    public Boolean getHadChoseAttack() {
+        return hadChoseAttack;
+    }
+
+    public void setHadChoseAttack(Boolean hadChoseAttack) {
+        this.hadChoseAttack = hadChoseAttack;
+    }
+
+    public void setChoiceAttack(int choiceAttack) {
+        this.choiceAttack = choiceAttack;
+    }
+
+
+
     public ArrayList<Treasure> getTreasures() { return treasures; }
 
     private boolean isRestOnce() { return restOnce; }
 
     private void setRestOnce(boolean restOnce) { this.restOnce = restOnce; }
+
 
     /**
      * Defense is the sum of armors points.
@@ -95,20 +131,8 @@ public class Fighter implements FightEventQueuer, Serializable {
 
     @Override
     public String toString() {
-        return "Fighter{" +
-                "name='" + name + '\'' +
-                ", weapon=" + weapon +
-                ", armor1=" + armor1 +
-                ", armor2=" + armor2 +
-                ", treasures=" + treasures +
-                ", hitPoints=" + hitPoints +
-                ", maxHP=" + maxHP +
-                ", price=" + price +
-                ", restOnce=" + restOnce +
-                ", attacks=" + attacks +
-                ", relativePathPicture='" + relativePathPicture + '\'' +
-                ", party=" + party +
-                '}';
+        return "name='" + name + '\'' +
+                ", hitPoints=" + hitPoints;
     }
 
     /**
@@ -153,7 +177,9 @@ public class Fighter implements FightEventQueuer, Serializable {
                 0.5f));
     }
 
-    private void setHitPoints(int iHitPoints){
+
+
+    public void setHitPoints(int iHitPoints){
         this.hitPoints = iHitPoints>0 && iHitPoints<=this.hitPoints ? iHitPoints:0;
     }
 
@@ -196,50 +222,33 @@ public class Fighter implements FightEventQueuer, Serializable {
     }
 
     public void fight_attacks(Fighter enemy){
-        System.out.println(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
-        this.setRestOnce(false);
+
         //Different attacks based on weapon's attacks per turn
         if(this.isAlive() && enemy.isAlive()) {
 
             for (int i = 0; i < this.getWeapon().getAttacksPerTurn(); i++) {
-                System.out.println("Attack " + (i+1));
+                str += "Attack " + (i+1);
 
 
-                int rand = impactAttack();
-                System.out.println("\tRandom : " + rand+
-                        "\t\tEnemy protection : " + enemy.getArmor1().getProtection());
+                int rand = getAttacks().get(this.choiceAttack).calculateImpact();;
+                str += "\n\tRandom : " + rand+
+                        "\t\tEnemy protection : " + enemy.getArmor1().getProtection();
                 if (rand > enemy.getArmor1().getProtection()) {
                     int hitPower = randomNumberGenerator(getWeapon().getMinDamage(), getWeapon().getMaxDamage());
                     enemy.takeDamage(hitPower);
-                    System.out.println("\tHit : " + hitPower);
-                    System.out.println("Life of " + enemy.getName()+ " is " + enemy.getHitPoints()+"\r\n");
+                    str +="\n\tHit : " + hitPower;
+                    str +="\nLife of " + enemy.getName()+ " is " + enemy.getHitPoints()+"\r\n";
                 } else {
                     enemy.takeDamage(0);
-                    System.out.println("This attack failed !");
+                    str+="\nThis attack failed !";
                 }
+
             }
-            System.out.println("=====================================================");
+
         }
     }
 
-    public int impactAttack()
-    {
-        System.out.println("You have " + getAttacks().size() + " attacks available : ");
-        Scanner keyboard = new Scanner(System.in);
-        int choice = 0;
-        int random = 0;
-        for(int i=0; i<getAttacks().size(); i++)
-        {
-            System.out.println(i+". " + getAttacks().get(i). toString());
-        }
 
-        choice = keyboard.nextInt();
-
-        random = getAttacks().get(choice).calculateImpact();
-
-        return random;
-
-    }
     /**
      * Engage the fight between 2 Fighters
      * @param enemy
@@ -264,20 +273,19 @@ public class Fighter implements FightEventQueuer, Serializable {
 
     public void fightTurnAtack(Fighter enemy)
     {
-        int i=1;
         while(this.isAlive() && enemy.isAlive())
         {
-            this.fight_attacks(enemy);
+            //this.fight_attacks(enemy);
             enemy.fight(this);
         }
         if(!this.isAlive())
         {
-            System.out.println("You loose");
+          str = "You loose";
         }
         if(!enemy.isAlive())
         {
-            System.out.println("You won");
-            getEnnemyRessources(enemy);
+            str = "You won";
+            //getEnnemyRessources(enemy);
         }
     }
 
@@ -487,6 +495,8 @@ public class Fighter implements FightEventQueuer, Serializable {
     public void queueEvent(FightEvent event) {
         eventPlayer.queueEvent(event);
     }
+
+
 
 }
 

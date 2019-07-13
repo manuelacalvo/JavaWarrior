@@ -12,7 +12,16 @@ public class Armor implements Serializable {
   private int price;
   private String relativePathPicture;
 
+  public Armor()
+  {
+    this.protection = 0;
+    this.name = null;
+    this.type = 0;
+    this.takeable = false;
+    this.price = 0;
+    this.relativePathPicture = "core/assets/graphics/items/no.png";
 
+  }
 
   public Armor(String name, int type, boolean takeable, int protection, int price, String relativePathPicture){
     this.protection = protection;

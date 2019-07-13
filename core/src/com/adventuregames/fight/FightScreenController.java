@@ -1,5 +1,6 @@
 package com.adventuregames.fight;
 
+import com.Display.FightMenuDisplay;
 import com.adventuregames.MyGame;
 import com.adventuregames.fight.event.FightEvent;
 import com.adventuregames.fight.event.FightEventPlayer;
@@ -7,7 +8,6 @@ import com.adventuregames.fight.event.FightEventQueuer;
 import com.adventuregames.fight.event.FighterChangeEvent;
 import com.badlogic.gdx.InputAdapter;
 import com.fighterlvl.warrior.Fighter;
-import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
 import com.ui.DialogueBox;
 
@@ -27,6 +27,7 @@ public class FightScreenController extends InputAdapter implements FightEventQue
     /*
     Add here more elements to update
      */
+
     FightScreenController(MyGame oGame, FightScreen fightScreen, Queue<FightEvent> queue, DialogueBox dialogueBox){
         this.game=oGame;
         this.eventPlayer=fightScreen;
@@ -38,6 +39,8 @@ public class FightScreenController extends InputAdapter implements FightEventQue
         setPlayerFighter(game.getCollection().getPlayer().getFighter());
     }
 
+
+
     /**
      * Display UI to choose what to do after the fight
      */
@@ -47,7 +50,7 @@ public class FightScreenController extends InputAdapter implements FightEventQue
         dialogueBox.animateText("What do you wnat to do next ?");
     }
 
-    private boolean isDisplayingNextDialogue(){return this.state==FIGHT_STATE.SELECT_ACTION;}
+    private boolean isDisplayingNextDialogue(){return this.state==FIGHT_STATE.SELECT_NEW_FIGHTER;}
 
     @Override
     public boolean keyDown(int keycode) {
@@ -58,18 +61,48 @@ public class FightScreenController extends InputAdapter implements FightEventQue
 
     void gameLoop()
     {
+        //this.state = FIGHT_STATE.SELECT_ACTION;
+        //dialogueBox.setVisible(false);
+
         Collection coll = game.getCollection();
 
-        for(int i=1; i< coll.getFighterVector().size(); i++)
-        {
-            setEnemyFighter(coll.getFighterVector().get(i));
+        //for(int i=1; i< coll.getFighterVector().size(); i++)
+        //{
+            //game.setScreen(new FightScreen(game));
+
+            setEnemyFighter(game.getCollection().getPlayer().getEnnemi());
             playerFighter.fight(enemyFighter);
-        }
-        if(!playerFighter.isAlive())        {
+        //}
+        /*if(!playerFighter.isAlive())        {
             System.out.println(" You are dead. You've got \" + fighter.getHitPoints() + \" life points and you've made \" + nbFights + \" fights\");");
-        }
+        }*/
     }
 
+    public void displayNextDialogue()
+    {
+        this.state = FIGHT_STATE.SELECT_NEW_FIGHTER;
+        dialogueBox.setVisible(true);
+        dialogueBox.animateText("Send out next fighter?");
+    }
+
+    public void update(float delta)
+    {
+        if(isDisplayingNextDialogue() && dialogueBox.isFinished())
+        {
+
+        }
+    }
+    public void gameLoopAttack()
+    {
+        Collection coll = game.getCollection();
+            setEnemyFighter(coll.getFighterVector().get(1));
+            playerFighter.fightTurnAtack(coll.getFighterVector().get(1));
+
+        if(!playerFighter.isAlive())
+    {
+            System.out.println(" You are dead. You've got " + playerFighter.getHitPoints() + " life points and you've made " + playerFighter + " fights");
+        }
+    }
     /**
      * Adds an event to the queue to be displayed
      *

@@ -1,6 +1,7 @@
 package com.Display;
 
 import com.adventuregames.MyGame;
+import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
@@ -84,7 +85,9 @@ public class FightMenuDisplay implements Screen {
         buttonFight.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-              //  game.setScreen(new GameDisplay(game, player));
+                game.getCollection().getPlayer().setNbFights( game.getCollection().getPlayer().getNbFights()+1);
+                player.setEnnemi(game.getCollection().getFighterVector().get(game.getCollection().getPlayer().getNbFights()+1));
+                game.setScreen(new FightScreen(game));
 
 
             }

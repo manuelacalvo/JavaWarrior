@@ -27,7 +27,7 @@ public class FighterScreenTest {
 
          player.setFighter(new Fighter("FighterN1",
                 collec.getWeaponVector().firstElement(),
-                collec.getArmorVector().firstElement(),
+                collec.getArmor1Vector().firstElement(),
                 new ArrayList<Treasure>(),
                 30,0,"core/assets/graphics/fighter_picture/User.jpg",
                  FIGHT_PARTY.PLAYER));
