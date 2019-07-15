@@ -2,6 +2,7 @@ package com.connection;
 
 import com.adventuregames.MyGame;
 import com.adventuregames.fight.FightAttackDisplay;
+import com.adventuregames.fight.FightScreen;
 import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
 
@@ -43,8 +44,8 @@ public class Client
             ennemy = (Fighter) object ;
             player.setEnnemi(ennemy);
             printStream.println("player one is playing...");
-            //game.setScreen(new FightAttackDisplay((game)));
-            //player.getFighter().fight(ennemy);
+            game.setScreen(new FightScreen((game), 1, true));
+            //player.getFighter().fight_attacks(ennemy);
            // game.setScreen(new FightAttackDisplay(game, player.getFighter(), player.getEnnemi()));
             printStream.println("turn of player two:");
             String advice = reader.readLine();
@@ -68,10 +69,11 @@ public class Client
 
 
                     printStream.println("player one is playing...");
-                    //game.setScreen(new FightAttackDisplay((game)));
-                    //player.getFighter().fight(ennemy);
+                    game.setScreen(new FightScreen((game),1,true));
                     player.setEnnemi(ennemy);
-                   // game.setScreen(new FightAttackDisplay(game, player.getFighter(), player.getEnnemi()));
+                    player.getFighter().fight_attacks(ennemy);
+
+
                     printStream.println("turn of player two: ");
 
 
@@ -83,7 +85,7 @@ public class Client
                     objectOutputStream.writeObject(player.getFighter());
                     objectOutputStream.flush();
                 }
-                if(!player.getFighter().isAlive())
+                /*if(!player.getFighter().isAlive())
                 {
                     end = true;
                     System.out.println("you are dead");
@@ -93,7 +95,7 @@ public class Client
                         end = true;
                         System.out.println("you win");
                     }
-                }
+                }*/
 
             }
 

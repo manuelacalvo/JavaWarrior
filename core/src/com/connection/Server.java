@@ -2,6 +2,7 @@ package com.connection;
 
 import com.adventuregames.MyGame;
 import com.adventuregames.fight.FightAttackDisplay;
+import com.adventuregames.fight.FightScreen;
 import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
 
@@ -54,7 +55,7 @@ public class Server {
 
                         printStream.println("player two is playing...");
                         player.setEnnemi(ennemy);
-                       // game.setScreen(new FightAttackDisplay(game, player.getFighter(), player.getEnnemi()));
+                        game.setScreen(new FightScreen(game, 1, true));
 
                         // game.setScreen(new FightAttackDisplay((game)));
                        // player.getFighter().fight(ennemy);
@@ -69,7 +70,7 @@ public class Server {
                     objectOutputStream.writeObject(player.getFighter());
                 }
 
-                   if(!player.getFighter().isAlive())
+                /*   if(!player.getFighter().isAlive())
                     {
                         System.out.println("you are dead");
                         end = true;
@@ -81,7 +82,7 @@ public class Server {
                         end = true;
                         System.out.println("you win");
                     }
-                   }
+                   }*/
 
             }
         } catch (Exception e) {

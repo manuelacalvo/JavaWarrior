@@ -63,17 +63,21 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
     //fightAttackMode = 1 --> first part of the fightAttack
     //fightAttackMode = 2 --> second part of the fightAttack
     private int fightAttackMode = 0;
+    private boolean connected;
 
     /**
      * Fighter Screen Constructor
      * @param pGame - Game instance
      */
-    public FightScreen(MyGame pGame, int attackChoosen){
+    public FightScreen(MyGame pGame, int attackChoosen, boolean connected){
         super(pGame);
+        this.connected = connected;
         this.playerFighter = getGame().getCollection().getPlayer().getFighter();
         this.playerFighter.setParty(FIGHT_PARTY.PLAYER); // Make sure playerFighter is tagged as player
         fightAttackMode = attackChoosen;
-        enemyFighter = Fighter.placeHolderFighter;
+        this.enemyFighter = getGame().getCollection().getPlayer().getEnnemi();
+        this.enemyFighter.setParty(FIGHT_PARTY.OPPONENT);
+        // enemyFighter = Fighter.placeHolderFighter;
 
         gameViewport=new ScreenViewport();
 
@@ -90,7 +94,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
         controller = new FightScreenController(getGame(), this, queue, dialogueBox);
 
-        controller.gameLoop(fightAttackMode);
+        controller.gameLoop(fightAttackMode, connected);
     }
 
     private void initUI(){
@@ -241,15 +245,18 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
                 }
                 if(fightAttackMode == 2 )
                 {   currentEvent = null;
-                    enemyFighter = getGame().getCollection().getPlayer().getEnnemi();
-                    System.out.println(enemyFighter.isAlive());
-                    if (enemyFighter.isAlive()) {
+
+                    if(connected == false) {
+                        enemyFighter = new Fighter(getGame().getCollection().getPlayer().getEnnemi());
+
+                        if (enemyFighter.isAlive()) {
 
                             fightAttackMode = 1;
-                            getGame().setScreen(new FightScreen(getGame(), fightAttackMode));
+                            getGame().setScreen(new FightScreen(getGame(), fightAttackMode, connected));
 
-                    } else
-                     getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
+                        } else
+                            getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
+                    }
 
                 }
                 break;

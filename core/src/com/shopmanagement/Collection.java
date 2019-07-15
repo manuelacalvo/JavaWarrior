@@ -222,8 +222,8 @@ public class Collection {
 
         setTreasureVector(potion);
         setTreasureVector(scroll);
-
-        player.setCollectionFighter(getFighterVector().get(0));
+        Fighter fighter = new Fighter(getFighterVector().get(0));
+        player.setCollectionFighter(fighter);
         player.setCollectionWeapon(getWeaponVector().get(0));
         player.setCollectionArmor1(getArmor1Vector().get(0));
 
@@ -239,7 +239,8 @@ public class Collection {
         {
             str = "You buy a " + f.getName();
             getPlayer().reducePrice(f.getPrice());
-            getPlayer().setCollectionFighter(f);
+            Fighter f2 = new Fighter(f);
+            getPlayer().setCollectionFighter(f2);
         }
         else str = "You can't buy it you don't have enough money";
 
@@ -460,7 +461,8 @@ public class Collection {
     {
         this.loadFighters();
 
-        player.setFighter(this.getFighterVector().get(0));
+        Fighter fighter = new Fighter(this.getFighterVector().get(0));
+        player.setFighter(fighter);
 
 
     }

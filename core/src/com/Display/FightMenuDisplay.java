@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
 
 public class FightMenuDisplay implements Screen {
@@ -86,7 +87,8 @@ public class FightMenuDisplay implements Screen {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 game.getCollection().getPlayer().setNbFights( game.getCollection().getPlayer().getNbFights()+1);
-                player.setEnnemi(game.getCollection().getFighterVector().get(game.getCollection().getPlayer().getNbFights()+1));
+                Fighter enemy = new Fighter(game.getCollection().getFighterVector().get(game.getCollection().getPlayer().getNbFights()+1));
+                player.setEnnemi(enemy);
                 game.setScreen(new FightScreen(game, 0));
 
 

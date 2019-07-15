@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
 import com.shopmanagement.CollectionDisplay.CollectionFighterDisplay;
@@ -74,22 +75,27 @@ public class GameDisplay implements Screen {
                     public void changed (ChangeEvent event, Actor actor) {
                         sound.stop();
                         coll.getFighterVector().get(1).setHitPoints(3);
-                        player.setEnnemi(game.getCollection().getFighterVector().get(game.getCollection().getPlayer().getNbFights()+1));
-
-                        game.setScreen(new FightScreen(game, 0));
+                        Fighter enemy = new Fighter(game.getCollection().getFighterVector().get(game.getCollection().getPlayer().getNbFights()+1));
+                        player.setEnnemi(enemy);
+                        System.out.println(player.getEnnemi().getHitPoints());
+                        game.setScreen(new FightScreen(game, 0, false));
 
                     }
                 }
         );
+
         buttonMapMode = new ImageTextButton("Adventure", textButtonStyle);
         buttonMapMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 sound.stop();
+                Fighter fighter = new Fighter(game.getCollection().getFighterVector().get(0));
+                player.setFighter(fighter);
                 coll.getFighterVector().get(1).setHitPoints(3);
-                player.setEnnemi(game.getCollection().getFighterVector().get(1));
+                Fighter enemy = new Fighter(game.getCollection().getFighterVector().get(1));
+                player.setEnnemi(enemy);
 
-                game.setScreen(new FightScreen(game, 1));
+                game.setScreen(new FightScreen(game, 1, false));
 
             }
         });
@@ -98,7 +104,8 @@ public class GameDisplay implements Screen {
         buttonConnectedMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-
+                Fighter fighter = new Fighter(coll.getFighterVector().get(0));
+                player.setFighter(fighter);
                 sound.stop();
                 game.setScreen(new ServerClientDisplay(game, player, coll));
 
@@ -110,6 +117,7 @@ public class GameDisplay implements Screen {
         quit.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
+
                 player.save();
                 sound.stop();
                 game.setScreen(new PlayerDisplay(game));
@@ -121,7 +129,8 @@ public class GameDisplay implements Screen {
         buttonShop.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-
+                Fighter fighter = new Fighter(coll.getFighterVector().get(0));
+                player.setFighter(fighter);
                 game.setScreen(new CollectionFighterDisplay(game, player, coll));
 
             }

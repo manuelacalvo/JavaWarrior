@@ -57,46 +57,53 @@ public class FightScreenController extends InputAdapter implements FightEventQue
 
     public FIGHT_STATE getState(){ return this.state; }
 
-    void gameLoop(int fightAttackMode)
+    void gameLoop(int fightAttackMode, boolean connected)
     {
 
         Collection coll = game.getCollection();
+        enemyFighter = game.getCollection().getPlayer().getEnnemi();
+        if(connected == false) {
+            if (fightAttackMode == 0) {
 
-        setEnemyFighter(game.getCollection().getPlayer().getEnnemi());
-        if(fightAttackMode == 0) {
-            setEnemyFighter(game.getCollection().getPlayer().getEnnemi());
-            playerFighter.fight(enemyFighter);
-        }
-        if(fightAttackMode == 1)
-        {
-            playerFighter.fightAttackBegin();
-        }
-        if(fightAttackMode == 2)
-        {
-
-            if(playerFighter.isAlive()) {
-                playerFighter.fight_attacks(enemyFighter);
+                playerFighter.fight(enemyFighter);
             }
-
-            if(enemyFighter.isAlive()) {
-                enemyFighter.fight_attacks(playerFighter);
-                enemyFighter.setChoiceAttack(enemyFighter.randomNumberGenerator(0,2));
+            if (fightAttackMode == 1) {
+                playerFighter.fightAttackBegin();
             }
-            playerFighter.fightTurnAtack(enemyFighter);
+            if (fightAttackMode == 2) {
 
+                if (playerFighter.isAlive()) {
+                    playerFighter.fight_attacks(enemyFighter);
+                }
+
+                if (enemyFighter.isAlive()) {
+                    enemyFighter.fight_attacks(playerFighter);
+                    enemyFighter.setChoiceAttack(enemyFighter.randomNumberGenerator(0, 2));
+                }
+                playerFighter.fightTurnAtack(enemyFighter);
+
+            }
+        }
+        if(connected == true) {
+            if (fightAttackMode == 1) {
+                playerFighter.fightAttackBegin();
+            }
+            if (fightAttackMode == 2) {
+
+                if (playerFighter.isAlive()) {
+                    playerFighter.fight_attacks(enemyFighter);
+                }
+                playerFighter.fightTurnAtack(enemyFighter);
+
+            }
         }
 
-        System.out.println("test enemy alive : " + enemyFighter.isAlive());
+
 
     }
 
 
-    public void displayNextDialogue()
-    {
-        this.state = FIGHT_STATE.SELECT_NEW_FIGHTER;
-        dialogueBox.setVisible(true);
-        dialogueBox.animateText("Send out next fighter?");
-    }
+
 
 
 

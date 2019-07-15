@@ -36,8 +36,25 @@ public class Fighter implements FightEventQueuer, Serializable {
     private static FightEventPlayer eventPlayer;
     private String str;
 
+
     public static Fighter placeHolderFighter = new Fighter("???",null,null,null,0,0, JWAssetManager.path_fighterMystery,FIGHT_PARTY.OPPONENT);
 
+    public Fighter(Fighter fighter)
+    {
+        this.name = fighter.getName();
+        this.weapon = fighter.getWeapon();
+        this.armor1 = fighter.getArmor1();
+        this.armor2 = fighter.getArmor2();
+        this.treasures = fighter.getTreasures();
+        this.hitPoints = fighter.getHitPoints();
+        this.maxHP = hitPoints;
+        this.price = getPrice();
+        this.str = " ";
+        this.timeToChoseAttack = false;
+        this.relativePathPicture = fighter.getRelativePathPicture();
+        this.attacks = fighter.getAttacks();
+        this.party=fighter.getParty(); // Default is OPPONENT
+    }
     public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int price, String relativePathPicture ) {
         this.name = name;
         this.weapon = weapon;
@@ -61,6 +78,12 @@ public class Fighter implements FightEventQueuer, Serializable {
     public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int price, String relativePathPicture, FIGHT_PARTY eParty) {
         this(name, weapon, armor1, treasures, hitPoints, price, relativePathPicture);
         this.party=eParty;
+    }
+
+    public Fighter copyFigther(Fighter fighter)
+    {
+        Fighter fighterTest = new Fighter(fighter.getName(),fighter.getWeapon(), fighter.getArmor1(), fighter.getTreasures(), fighter.getHitPoints(), fighter.getPrice(), fighter.getRelativePathPicture(), fighter.getParty());
+        return fighterTest;
     }
 
     public String getStr() {

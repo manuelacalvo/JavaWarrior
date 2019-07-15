@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Armor;
+import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
 import com.shopmanagement.Collection;
 
@@ -75,7 +76,8 @@ public class SelectFighterDisplay implements Screen {
                 {
                    armor = player.getCollectionArmor2().get(l);
                 }
-                player.selectFighter(player.getCollectionFighter().get(i), player.getCollectionWeapon().get(j), player.getCollectionArmor1().get(k),armor);
+                Fighter fighter = new Fighter(player.getCollectionFighter().get(i));
+                player.selectFighter(fighter, player.getCollectionWeapon().get(j), player.getCollectionArmor1().get(k),armor);
                 game.setScreen(new GameDisplay(game, player, coll));
             }
         });
