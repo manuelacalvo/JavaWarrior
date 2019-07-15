@@ -1,0 +1,10 @@
+Name;MinDamage;MaxDamage;RelationWith
+Super attack;10;15;User
+Hydroblast;8;12;Orc
+Venom;10;13;Nest of snakes
+Ultimate punch;10;15;Troll
+Sacredfury;15;16;Berserker
+Ryuu ga waka teki wo kurau;10;17;Ninja
+Dracarys;10;15;Dragon
+Illusion;10;15;Doppleganger
+Stupéfix;18;20;Wizard

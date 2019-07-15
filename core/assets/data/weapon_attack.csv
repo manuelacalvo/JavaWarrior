@@ -1,0 +1,4 @@
+Name;MinDamage;MaxDamage;RelationWith
+Needle;5;15;Sword
+Charge;10;18;Dagger
+Fire sword;16;20;Super sword
