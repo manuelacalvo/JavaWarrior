@@ -76,7 +76,7 @@ public class GameDisplay implements Screen {
                         coll.getFighterVector().get(1).setHitPoints(3);
                         player.setEnnemi(game.getCollection().getFighterVector().get(game.getCollection().getPlayer().getNbFights()+1));
 
-                        game.setScreen(new FightScreen(game));
+                        game.setScreen(new FightScreen(game, 0));
 
                     }
                 }
@@ -86,9 +86,10 @@ public class GameDisplay implements Screen {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 sound.stop();
+                coll.getFighterVector().get(1).setHitPoints(3);
+                player.setEnnemi(game.getCollection().getFighterVector().get(1));
 
-                player.setEnnemi(coll.getFighterVector().get(1));
-                game.setScreen(new FightAttackDisplay(game, player.getFighter(), player.getEnnemi()));
+                game.setScreen(new FightScreen(game, 1));
 
             }
         });

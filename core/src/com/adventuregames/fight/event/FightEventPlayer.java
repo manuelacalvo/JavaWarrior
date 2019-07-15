@@ -15,7 +15,7 @@ public interface FightEventPlayer {
      * @param event FightEvent to add to the queue
      */
     void queueEvent(FightEvent event);
-
+    void queueAttack(FightEvent event);
     void setFighter(Fighter oFighter);
 
     DialogueBox getDialogueBox();

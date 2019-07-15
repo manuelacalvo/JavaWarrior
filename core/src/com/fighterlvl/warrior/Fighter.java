@@ -221,31 +221,33 @@ public class Fighter implements FightEventQueuer, Serializable {
         }
     }
 
+    public void fightAttackBegin()
+    {
+        outPutText(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
+
+
+        outPutText( "Choose One Attack");
+
+    }
+
     public void fight_attacks(Fighter enemy){
-
-        //Different attacks based on weapon's attacks per turn
-        if(this.isAlive() && enemy.isAlive()) {
-
-            for (int i = 0; i < this.getWeapon().getAttacksPerTurn(); i++) {
-                str += "Attack " + (i+1);
-
-
-                int rand = getAttacks().get(this.choiceAttack).calculateImpact();;
-                str += "\n\tRandom : " + rand+
-                        "\t\tEnemy protection : " + enemy.getArmor1().getProtection();
+        outPutText(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
+        this.setRestOnce(false);
+                int rand = getAttacks().get(this.choiceAttack).calculateImpact();
+                outPutText("\tAttack : " + getAttacks().get(this.choiceAttack).toString() + "\nRand : " + rand+
+                        "\nEnemy protection : " + enemy.getDefense());
                 if (rand > enemy.getArmor1().getProtection()) {
                     int hitPower = randomNumberGenerator(getWeapon().getMinDamage(), getWeapon().getMaxDamage());
                     enemy.takeDamage(hitPower);
-                    str +="\n\tHit : " + hitPower;
-                    str +="\nLife of " + enemy.getName()+ " is " + enemy.getHitPoints()+"\r\n";
+                    outPutText("\tHit : " + hitPower);
+                    outPutText("Life of " + enemy.getName()+ " is " + enemy.getHitPoints()+"\r\n");
                 } else {
                     enemy.takeDamage(0);
-                    str+="\nThis attack failed !";
+                    outPutText("This attack failed !");
                 }
 
-            }
+        System.out.println("Player : " + this.getName() + " isAlive : " + this.isAlive());
 
-        }
     }
 
 
@@ -273,18 +275,13 @@ public class Fighter implements FightEventQueuer, Serializable {
 
     public void fightTurnAtack(Fighter enemy)
     {
-        while(this.isAlive() && enemy.isAlive())
-        {
-            //this.fight_attacks(enemy);
-            enemy.fight(this);
-        }
         if(!this.isAlive())
         {
-          str = "You loose";
+          outPutText( "You loose");
         }
         if(!enemy.isAlive())
         {
-            str = "You won";
+            outPutText("You won");
             //getEnnemyRessources(enemy);
         }
     }
@@ -297,6 +294,7 @@ public class Fighter implements FightEventQueuer, Serializable {
         System.out.println(sText);
         queueEvent(new TextEvent(sText, true));
     }
+
 
     private void getEnnemyWeapon(Fighter enemy)
     {
@@ -495,6 +493,8 @@ public class Fighter implements FightEventQueuer, Serializable {
     public void queueEvent(FightEvent event) {
         eventPlayer.queueEvent(event);
     }
+
+
 
 
 

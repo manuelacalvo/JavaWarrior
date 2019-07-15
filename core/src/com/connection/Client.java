@@ -45,7 +45,7 @@ public class Client
             printStream.println("player one is playing...");
             //game.setScreen(new FightAttackDisplay((game)));
             //player.getFighter().fight(ennemy);
-            game.setScreen(new FightAttackDisplay(game, player.getFighter(), player.getEnnemi()));
+           // game.setScreen(new FightAttackDisplay(game, player.getFighter(), player.getEnnemi()));
             printStream.println("turn of player two:");
             String advice = reader.readLine();
             System.out.println(advice);
@@ -71,7 +71,7 @@ public class Client
                     //game.setScreen(new FightAttackDisplay((game)));
                     //player.getFighter().fight(ennemy);
                     player.setEnnemi(ennemy);
-                    game.setScreen(new FightAttackDisplay(game, player.getFighter(), player.getEnnemi()));
+                   // game.setScreen(new FightAttackDisplay(game, player.getFighter(), player.getEnnemi()));
                     printStream.println("turn of player two: ");
 
 

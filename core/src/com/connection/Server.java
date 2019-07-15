@@ -54,7 +54,7 @@ public class Server {
 
                         printStream.println("player two is playing...");
                         player.setEnnemi(ennemy);
-                        game.setScreen(new FightAttackDisplay(game, player.getFighter(), player.getEnnemi()));
+                       // game.setScreen(new FightAttackDisplay(game, player.getFighter(), player.getEnnemi()));
 
                         // game.setScreen(new FightAttackDisplay((game)));
                        // player.getFighter().fight(ennemy);

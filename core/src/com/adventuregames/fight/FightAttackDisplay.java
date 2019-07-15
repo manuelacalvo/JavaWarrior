@@ -26,32 +26,29 @@ import com.ui.DialogueBox;
 
 public class FightAttackDisplay implements Screen {
 
-private Stage stage;
-private MyGame game;
-private ImageTextButton attack1;
-private ImageTextButton attack2;
-private ImageTextButton attack3;
-private Image fighterImage;
-private Image enemyImage;
-private Fighter fighter;
-private Fighter enemy;
-private ImageTextButton.ImageTextButtonStyle textButtonStyle;
-private BitmapFont font;
-private Skin skin;
-private TextureAtlas buttonAtlas;
-private int choice = 0;
-private Image image;
-private Table tableAttack;
-private DialogueBox dialogueBox;
-private String text;
-private SpriteBatch batch;
-private Image imageText;
+    private Stage stage;
+    private MyGame game;
+    private ImageTextButton attack1;
+    private ImageTextButton attack2;
+    private ImageTextButton attack3;
+    private Fighter fighter;
+    private Fighter enemy;
+    private ImageTextButton.ImageTextButtonStyle textButtonStyle;
+    private BitmapFont font;
+    private Skin skin;
+    private TextureAtlas buttonAtlas;
+    private int choice = 0;
+    private Image image;
+    private Table tableAttack;
+    private String text;
+    private SpriteBatch batch;
 
 
 
 
 
-public FightAttackDisplay(MyGame aGame,Fighter fighter,  Fighter enemy) {
+
+    public FightAttackDisplay(MyGame aGame,Fighter fighter,  Fighter enemy) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         tableAttack=new Table();
@@ -66,28 +63,15 @@ public FightAttackDisplay(MyGame aGame,Fighter fighter,  Fighter enemy) {
         font = new BitmapFont();
         skin = new Skin();
 
-        Texture textureText = new Texture(Gdx.files.internal("core/assets/graphics/pictures/text.png"));
-        imageText = new Image(textureText);
-        imageText.setSize(stage.getWidth(), stage.getHeight()/2);
-        imageText.setPosition(0,0);
 
 
-        text = fighter.getName() + "'s Turn + Life : " + fighter.getHitPoints();
+
+        text = fighter.getName() + "'s Turn + Life : " + fighter.getHitPoints() + "\nChoose your attack";
 
 
-        Texture texture1 = new Texture(Gdx.files.internal(fighter.getRelativePathPicture()));
-        fighterImage = new Image(texture1);
-        fighterImage.setSize(100,100);
-        fighterImage.setPosition(70,300);
 
 
-        Texture texture2 = new Texture(enemy.getRelativePathPicture());
-        enemyImage = new Image(texture2);
-        enemyImage.setSize(100,100);
-        enemyImage.setPosition(450,300);
-
-
-    buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
         skin.addRegions(buttonAtlas);
         textButtonStyle = new ImageTextButton.ImageTextButtonStyle();
         textButtonStyle.font = font;
@@ -97,42 +81,41 @@ public FightAttackDisplay(MyGame aGame,Fighter fighter,  Fighter enemy) {
         attack1.addListener(new ChangeListener() {
 
 
-        @Override
-        public void changed (ChangeEvent event, Actor actor) {
-        fighter.setChoiceAttack(0);
-        fighter.fight_attacks(enemy);
-        tableAttack.setVisible(false);
-        dispose();
-        }
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                fighter.setChoiceAttack(0);
+                game.setScreen(new FightScreen(game, 2));
+
+
+                dispose();
+            }
         });
 
         attack2 = new ImageTextButton(fighter.getAttacks().get(1).toString(), textButtonStyle);
         attack2.addListener(new ChangeListener() {
 
 
-        @Override
-        public void changed (ChangeEvent event, Actor actor) {
-            fighter.setChoiceAttack(1);
-            fighter.fight_attacks(enemy);
-            tableAttack.setVisible(false);
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                fighter.setChoiceAttack(1);
+                game.setScreen(new FightScreen(game, 2));
 
-        }
-    });
-    attack3 = new ImageTextButton(fighter.getAttacks().get(2).toString(), textButtonStyle);
-    attack3.addListener(new ChangeListener() {
-
-
-        @Override
-        public void changed (ChangeEvent event, Actor actor) {
-            fighter.setChoiceAttack(2);
-            fighter.fight_attacks(enemy);
-            tableAttack.setVisible(false);
-
-        }
-    });
+            }
+        });
+        attack3 = new ImageTextButton(fighter.getAttacks().get(2).toString(), textButtonStyle);
+        attack3.addListener(new ChangeListener() {
 
 
-    Skin skin2 = new Skin(Gdx.files.internal("core/assets/graphics/ui/uiskin/uiskin.json"));
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                fighter.setChoiceAttack(2);
+                game.setScreen(new FightScreen(game, 2));
+
+            }
+        });
+
+
+        Skin skin2 = new Skin(Gdx.files.internal("core/assets/graphics/ui/uiskin/uiskin.json"));
 
         tableAttack.add(attack1);
         tableAttack.row();
@@ -145,9 +128,6 @@ public FightAttackDisplay(MyGame aGame,Fighter fighter,  Fighter enemy) {
 
 
         stage.addActor(image);
-        stage.addActor(imageText);
-        stage.addActor(fighterImage);
-        stage.addActor(enemyImage);
         stage.addActor(tableAttack);
 
 
@@ -155,27 +135,27 @@ public FightAttackDisplay(MyGame aGame,Fighter fighter,  Fighter enemy) {
 
 
 
-        }
+    }
 
 
     @Override
     public void dispose() {
         stage.dispose();
-        }
+    }
 
-        @Override
-        public void pause() {
-        }
+    @Override
+    public void pause() {
+    }
 
-@Override
-        public void render(float delta) {
+    @Override
+    public void render(float delta) {
 
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
 
         text = fighter.getStr();
-         stage.draw();
+        stage.draw();
         batch.begin();
         font.setColor(Color.BLACK);
         font.draw(batch, text, 200, 175);
@@ -188,27 +168,27 @@ public FightAttackDisplay(MyGame aGame,Fighter fighter,  Fighter enemy) {
         }
 
 
-        }
+    }
 
-@Override
-public void resize(int width, int height) {
+    @Override
+    public void resize(int width, int height) {
 
-        }
-@Override
-public void resume() {
+    }
+    @Override
+    public void resume() {
 
-        }
+    }
 
-@Override
-public void hide() {
+    @Override
+    public void hide() {
 
-        }
+    }
 
 
-@Override
-public void show() {
+    @Override
+    public void show() {
         Gdx.input.setInputProcessor(stage);
-        }
+    }
 
 
-        }
+}

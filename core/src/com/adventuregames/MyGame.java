@@ -51,7 +51,7 @@ public class MyGame extends Game {
         } else {
             // DEBUG
             if (screenType == FightScreen.class) {
-                this.setScreen(new FightScreen(this));
+                this.setScreen(new FightScreen(this, 0));
             }
         }
     }

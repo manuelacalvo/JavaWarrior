@@ -87,7 +87,7 @@ public class FightMenuDisplay implements Screen {
             public void changed (ChangeEvent event, Actor actor) {
                 game.getCollection().getPlayer().setNbFights( game.getCollection().getPlayer().getNbFights()+1);
                 player.setEnnemi(game.getCollection().getFighterVector().get(game.getCollection().getPlayer().getNbFights()+1));
-                game.setScreen(new FightScreen(game));
+                game.setScreen(new FightScreen(game, 0));
 
 
             }

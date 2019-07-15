@@ -39,8 +39,6 @@ public class FightScreenController extends InputAdapter implements FightEventQue
         setPlayerFighter(game.getCollection().getPlayer().getFighter());
     }
 
-
-
     /**
      * Display UI to choose what to do after the fight
      */
@@ -59,24 +57,39 @@ public class FightScreenController extends InputAdapter implements FightEventQue
 
     public FIGHT_STATE getState(){ return this.state; }
 
-    void gameLoop()
+    void gameLoop(int fightAttackMode)
     {
-        //this.state = FIGHT_STATE.SELECT_ACTION;
-        //dialogueBox.setVisible(false);
 
         Collection coll = game.getCollection();
 
-        //for(int i=1; i< coll.getFighterVector().size(); i++)
-        //{
-            //game.setScreen(new FightScreen(game));
-
+        setEnemyFighter(game.getCollection().getPlayer().getEnnemi());
+        if(fightAttackMode == 0) {
             setEnemyFighter(game.getCollection().getPlayer().getEnnemi());
             playerFighter.fight(enemyFighter);
-        //}
-        /*if(!playerFighter.isAlive())        {
-            System.out.println(" You are dead. You've got \" + fighter.getHitPoints() + \" life points and you've made \" + nbFights + \" fights\");");
-        }*/
+        }
+        if(fightAttackMode == 1)
+        {
+            playerFighter.fightAttackBegin();
+        }
+        if(fightAttackMode == 2)
+        {
+
+            if(playerFighter.isAlive()) {
+                playerFighter.fight_attacks(enemyFighter);
+            }
+
+            if(enemyFighter.isAlive()) {
+                enemyFighter.fight_attacks(playerFighter);
+                enemyFighter.setChoiceAttack(enemyFighter.randomNumberGenerator(0,2));
+            }
+            playerFighter.fightTurnAtack(enemyFighter);
+
+        }
+
+        System.out.println("test enemy alive : " + enemyFighter.isAlive());
+
     }
+
 
     public void displayNextDialogue()
     {
@@ -85,24 +98,8 @@ public class FightScreenController extends InputAdapter implements FightEventQue
         dialogueBox.animateText("Send out next fighter?");
     }
 
-    public void update(float delta)
-    {
-        if(isDisplayingNextDialogue() && dialogueBox.isFinished())
-        {
 
-        }
-    }
-    public void gameLoopAttack()
-    {
-        Collection coll = game.getCollection();
-            setEnemyFighter(coll.getFighterVector().get(1));
-            playerFighter.fightTurnAtack(coll.getFighterVector().get(1));
 
-        if(!playerFighter.isAlive())
-    {
-            System.out.println(" You are dead. You've got " + playerFighter.getHitPoints() + " life points and you've made " + playerFighter + " fights");
-        }
-    }
     /**
      * Adds an event to the queue to be displayed
      *

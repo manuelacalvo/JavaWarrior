@@ -59,15 +59,20 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
     private Fighter playerFighter;
     private Fighter enemyFighter;
 
+    //fightAttackMode = 0 --> usual fight
+    //fightAttackMode = 1 --> first part of the fightAttack
+    //fightAttackMode = 2 --> second part of the fightAttack
+    private int fightAttackMode = 0;
+
     /**
      * Fighter Screen Constructor
      * @param pGame - Game instance
      */
-    public FightScreen(MyGame pGame){
+    public FightScreen(MyGame pGame, int attackChoosen){
         super(pGame);
         this.playerFighter = getGame().getCollection().getPlayer().getFighter();
         this.playerFighter.setParty(FIGHT_PARTY.PLAYER); // Make sure playerFighter is tagged as player
-
+        fightAttackMode = attackChoosen;
         enemyFighter = Fighter.placeHolderFighter;
 
         gameViewport=new ScreenViewport();
@@ -85,7 +90,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
         controller = new FightScreenController(getGame(), this, queue, dialogueBox);
 
-        controller.gameLoop();
+        controller.gameLoop(fightAttackMode);
     }
 
     private void initUI(){
@@ -144,6 +149,8 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
      * Add an event to the queue to display
      */
     public void queueEvent(FightEvent event){queue.add(event);}
+
+    public void queueAttack(FightEvent event){queue.add(event);}
 
     @Override
     public DialogueBox getDialogueBox() {
@@ -218,14 +225,37 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
     public void update(float delta) {
 
         while ( currentEvent == null || currentEvent.isFinished()){
-            if(queue.isEmpty()) { // Event queue is empty
-                currentEvent = null;
-                if(playerFighter.isAlive()) {
-                    getGame().setScreen(new FightMenuDisplay(getGame(), getGame().getCollection().getPlayer()));
+            if(queue.isEmpty() ) { // Event queue is empty
+                if(fightAttackMode == 0 ) {
+                    currentEvent = null;
+                    if (playerFighter.isAlive()) {
+                        getGame().setScreen(new FightMenuDisplay(getGame(), getGame().getCollection().getPlayer()));
+                    } else
+                        getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
                 }
-                else getGame().setScreen(new GameDisplay(getGame(),getGame().getCollection().getPlayer(), getGame().getCollection()));
+                if(fightAttackMode ==1) {
+                    currentEvent = null;
+                    if (playerFighter.isAlive()) {
+                    getGame().setScreen(new FightAttackDisplay(getGame(), playerFighter, enemyFighter));
+                    }
+                }
+                if(fightAttackMode == 2 )
+                {   currentEvent = null;
+                    enemyFighter = getGame().getCollection().getPlayer().getEnnemi();
+                    System.out.println(enemyFighter.isAlive());
+                    if (enemyFighter.isAlive()) {
+
+                            fightAttackMode = 1;
+                            getGame().setScreen(new FightScreen(getGame(), fightAttackMode));
+
+                    } else
+                     getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
+
+                }
                 break;
-            }else {
+
+            }
+            else {
                 currentEvent = queue.poll();
                 currentEvent.begin(this);
             }
