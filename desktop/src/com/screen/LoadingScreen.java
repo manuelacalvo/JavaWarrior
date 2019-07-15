@@ -32,13 +32,13 @@ public class LoadingScreen extends AbstractScreen{
         super(context);
         this.assetManager = context.getAssetManager();
         this.gameCamera = context.getGameCamera();
-        this.PlayerGender = context.setPlayerGender("F");
+        this.PlayerGender = context.setPlayerGender("M");
 
         //TODO set screen to choose character gender
-        assetManager.load("RessourcesTileset/Hero" + PlayerGender + ".atlas", TextureAtlas.class);
+        assetManager.load("Ressources/Tileset/Hero" + PlayerGender + ".atlas", TextureAtlas.class);
         font = new BitmapFont(Gdx.files.internal("Ressources/Font/arcade/arcade.fnt"));
         batch = new SpriteBatch();
-        splashAtlas = new TextureAtlas("assets/splash.atlas");
+        splashAtlas = new TextureAtlas("Ressources/Splash/splash.atlas");
         Array<TextureAtlas.AtlasRegion> runningFrames = splashAtlas.findRegions("Font");
         runningAnimation = new Animation(latency, runningFrames, Animation.PlayMode.LOOP);
         TextureRegion firstTexture = runningFrames.first();
@@ -60,7 +60,7 @@ public class LoadingScreen extends AbstractScreen{
         batch.end();
         if ((Gdx.input.isKeyPressed(Input.Keys.ENTER) || (Gdx.input.isKeyPressed(Input.Keys.DEL))) && assetManager.update()){
             //TODO : Add a animation smooth to go to the Game screen
-            context.setScreen(SCREEN_TYPE.GAME);
+            getApp().setScreen(SCREEN_TYPE.GAME);
         }
     }
     @Override

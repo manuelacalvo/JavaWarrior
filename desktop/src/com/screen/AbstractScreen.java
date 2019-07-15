@@ -23,4 +23,8 @@ public abstract class AbstractScreen implements Screen {
   public abstract void hide();
   @Override
   public abstract void dispose();
+
+  public JavaWarrior getApp() {
+    return context;
+  }
 }

@@ -70,14 +70,14 @@ public class Actor {
 
     //todo here collision
     //bellow is the code to select a Fight zone interaction on my map
-    /*MapObject Fight = map.getLayers().get("Fight").getObjects().get("FightZone");
+    MapObject Fight = map.getLayers().get("Fight").getObjects().get("FightZone");
     Rectangle FightRect = ((RectangleMapObject) Fight).getRectangle();
     oxFight = (int) FightRect.getX();
     oyFight = (int) FightRect.getY();
     wxFight = (int) FightRect.getX() + (int) FightRect.getWidth();
     hyFight = (int) FightRect.getY() + (int) FightRect.getHeight();
     if ((x + dir.getDirx() <= wxFight/Settings.SCALED_TILE_SIZE) && (y + dir.getDiry() <= hyFight/Settings.SCALED_TILE_SIZE) && (x + dir.getDirx() >= oxFight/Settings.SCALED_TILE_SIZE) && (y + dir.getDiry() >= oyFight/Settings.SCALED_TILE_SIZE)){ return false; }
-*/
+
     initMove(dir);
     playerLayer.setCell(this.x,this.y,null);
     this.x += dir.getDirx();
@@ -148,8 +148,10 @@ public class Actor {
   }
 
   public void reface(WAY dir){
-    if (state != ACTOR_STATE.STANDING){ return; } // Can't reface if you're walking.
-    if (lookingAt == dir){ return; } // Can't reface if you're already looking at.
+    // Can't reface if you're walking.
+    if (state != ACTOR_STATE.STANDING){ return; }
+    // Can't reface if you're already looking at.
+    if (lookingAt == dir){ return; }
     lookingAt = dir;
     state = ACTOR_STATE.STANDING;
     EffectTimer = 0f;
@@ -157,12 +159,10 @@ public class Actor {
 
   public float getX(){ return x; }
   public float getY(){ return y; }
-  public float getMovementX() {
-    return MovementX;
-  }
-  public float getMovementY() {
-    return MovementY;
-  }
+  public float getMovementX() { return MovementX; }
+  public float getMovementY() { return MovementY; }
+  public int getDestX() { return destX; }
+  public int getDestY() { return destY; }
 
   public TextureRegion getSpirit(){
     if (state == ACTOR_STATE.WALKING) {
@@ -182,5 +182,4 @@ public class Actor {
       sprite.draw(batch);
     }
   }
-
 }

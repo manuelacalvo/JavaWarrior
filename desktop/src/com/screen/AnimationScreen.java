@@ -19,7 +19,7 @@ public class AnimationScreen extends AbstractScreen{
         Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(Gdx.input.isKeyPressed(Input.Keys.ENTER))
-        { context.setScreen(SCREEN_TYPE.LOADING); }
+        { getApp().setScreen(SCREEN_TYPE.GAME); }
     }
 
     @Override

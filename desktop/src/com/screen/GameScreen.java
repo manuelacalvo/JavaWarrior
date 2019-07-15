@@ -54,7 +54,7 @@ public class GameScreen extends AbstractScreen {
 
     if ( PlayerGender.equals("M")){ GenderAtlas = "M"; }
     else if (PlayerGender.equals("F")){ GenderAtlas = "F"; }
-    TextureAtlas world = assetManager.get("RessourcesTileset/Hero" + GenderAtlas + ".atlas", TextureAtlas.class);
+    TextureAtlas world = assetManager.get("Ressources/Tileset/Hero" + GenderAtlas + ".atlas", TextureAtlas.class);
     EffectsInit Effect = new EffectsInit(
             new Animation(0.3f/3f, world.findRegions("run_north"), Animation.PlayMode.LOOP_REVERSED),
             new Animation(0.3f/3f, world.findRegions("run_south"), Animation.PlayMode.LOOP_REVERSED),
@@ -115,8 +115,8 @@ public class GameScreen extends AbstractScreen {
     this.gameCamera.position.y = Character.getMovementY()*Settings.SCALED_TILE_SIZE;
     this.gameCamera.update();
 
-    float worldStartX = Gdx.graphics.getWidth() / 2 - gameCamera.position.x;
-    float worldStartY = Gdx.graphics.getHeight() / 2 - gameCamera.position.y;
+    float worldStartX = Gdx.graphics.getWidth()/2 - gameCamera.position.x;
+    float worldStartY = Gdx.graphics.getHeight()/2 - gameCamera.position.y;
 
     batch.draw(Character.getSpirit(),
             worldStartX + Character.getMovementX() * Settings.SCALED_TILE_SIZE,
@@ -127,8 +127,12 @@ public class GameScreen extends AbstractScreen {
     batch.end();
 
     //Change screen if fight
-    if ((Character.getMovementX() <= wxFight/Settings.SCALED_TILE_SIZE) && (Character.getMovementY() <= hyFight/Settings.SCALED_TILE_SIZE) && (Character.getMovementX() >= oxFight/Settings.SCALED_TILE_SIZE) && (Character.getMovementY() >= oyFight/Settings.SCALED_TILE_SIZE) && (randomNumberGenerator(1,9) == 3)){
-      context.setScreen(SCREEN_TYPE.ANIMATE);
+    if ((Character.getDestX() <= wxFight/Settings.SCALED_TILE_SIZE) &&
+            (Character.getDestY() <= hyFight/Settings.SCALED_TILE_SIZE) &&
+            (Character.getDestX() >= oxFight/Settings.SCALED_TILE_SIZE) &&
+            (Character.getDestY() >= oyFight/Settings.SCALED_TILE_SIZE) &&
+            (randomNumberGenerator(1,600) == 246)) {
+      getApp().setScreen(SCREEN_TYPE.ANIMATE);
     }
   }
 

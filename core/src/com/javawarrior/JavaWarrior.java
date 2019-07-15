@@ -16,11 +16,13 @@ import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.enumfile.SCREEN_TYPE;
 import com.screen.AbstractScreen;
+import com.screen.GameScreen;
 
 import java.util.EnumMap;
 
 public class JavaWarrior extends Game {
 
+	private GameScreen gameScreen;
 	private static final String TAG = JavaWarrior.class.getSimpleName();
 	private EnumMap<SCREEN_TYPE, AbstractScreen> screenCache;
 	private AssetManager assetManager;
@@ -36,7 +38,9 @@ public class JavaWarrior extends Game {
 
 	@Override
 	public void create() {
-	    Gdx.app.setLogLevel(Application.LOG_DEBUG); //debug information
+		//To debug with TAG
+	    Gdx.app.setLogLevel(Application.LOG_DEBUG);
+
 		accumulator = 0;
 	    world = new World(new Vector2(0, 0), true);
 		assetManager = new AssetManager();
@@ -45,6 +49,7 @@ public class JavaWarrior extends Game {
 		mapProperties = new MapProperties();
 		gameCamera = new OrthographicCamera();
 		screenCache = new EnumMap<SCREEN_TYPE, AbstractScreen>(SCREEN_TYPE.class);
+
 		setScreen(SCREEN_TYPE.LOADING);
 	}
 
@@ -66,6 +71,7 @@ public class JavaWarrior extends Game {
 		}
 	}
 
+	public GameScreen getGameScreen() { return gameScreen; }
 	public AssetManager getAssetManager() { return assetManager; }
 	public OrthographicCamera getGameCamera() { return gameCamera; }
 	public TiledMap getMap() { return map; }
