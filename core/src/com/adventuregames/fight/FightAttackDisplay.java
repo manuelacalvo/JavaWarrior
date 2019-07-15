@@ -48,7 +48,7 @@ public class FightAttackDisplay implements Screen {
 
 
 
-    public FightAttackDisplay(MyGame aGame,Fighter fighter,  Fighter enemy) {
+    public FightAttackDisplay(MyGame aGame,Fighter fighter,  Fighter enemy, boolean connected) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         tableAttack=new Table();
@@ -84,7 +84,7 @@ public class FightAttackDisplay implements Screen {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 fighter.setChoiceAttack(0);
-                game.setScreen(new FightScreen(game, 2));
+                game.setScreen(new FightScreen(game, 2, connected));
 
 
                 dispose();
@@ -98,7 +98,7 @@ public class FightAttackDisplay implements Screen {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 fighter.setChoiceAttack(1);
-                game.setScreen(new FightScreen(game, 2));
+                game.setScreen(new FightScreen(game, 2, connected));
 
             }
         });
@@ -109,7 +109,7 @@ public class FightAttackDisplay implements Screen {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 fighter.setChoiceAttack(2);
-                game.setScreen(new FightScreen(game, 2));
+                game.setScreen(new FightScreen(game, 2, connected));
 
             }
         });

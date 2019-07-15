@@ -240,7 +240,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
                 if(fightAttackMode ==1) {
                     currentEvent = null;
                     if (playerFighter.isAlive()) {
-                    getGame().setScreen(new FightAttackDisplay(getGame(), playerFighter, enemyFighter));
+                    getGame().setScreen(new FightAttackDisplay(getGame(), playerFighter, enemyFighter, connected));
                     }
                 }
                 if(fightAttackMode == 2 )

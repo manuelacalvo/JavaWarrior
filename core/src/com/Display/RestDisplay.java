@@ -43,7 +43,7 @@ public class RestDisplay implements Screen {
         font = new BitmapFont();
         str = player.getFighter().takeARest(player.getEnnemi());
         if (str.charAt(0) == ' ') {
-            game.setScreen(new FightScreen(game, 0));
+            game.setScreen(new FightScreen(game, 0, false));
         }
 
 
