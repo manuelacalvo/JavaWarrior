@@ -1,6 +1,8 @@
 package com.adventuregames.fight;
 
-public enum FIGHT_PARTY {
+import java.io.Serializable;
+
+public enum FIGHT_PARTY implements Serializable {
     PLAYER,
     OPPONENT,
     ;

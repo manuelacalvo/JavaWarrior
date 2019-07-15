@@ -2,7 +2,9 @@ package com.adventuregames.fight.event;
 
 import com.fighterlvl.warrior.Fighter;
 
-public class FighterChangeEvent extends FightEvent {
+import java.io.Serializable;
+
+public class FighterChangeEvent extends FightEvent implements Serializable {
 
     private Fighter fighter;
 

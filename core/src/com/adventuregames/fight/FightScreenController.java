@@ -1,6 +1,5 @@
 package com.adventuregames.fight;
 
-import com.Display.FightMenuDisplay;
 import com.adventuregames.MyGame;
 import com.adventuregames.fight.event.FightEvent;
 import com.adventuregames.fight.event.FightEventPlayer;
@@ -11,9 +10,10 @@ import com.fighterlvl.warrior.Fighter;
 import com.shopmanagement.Collection;
 import com.ui.DialogueBox;
 
+import java.io.Serializable;
 import java.util.Queue;
 
-public class FightScreenController extends InputAdapter implements FightEventQueuer {
+public class FightScreenController extends InputAdapter implements FightEventQueuer, Serializable {
 
     private FIGHT_STATE state = FIGHT_STATE.DEACTIVATED;
     private MyGame game;

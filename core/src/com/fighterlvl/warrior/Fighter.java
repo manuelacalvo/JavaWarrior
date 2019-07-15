@@ -1,20 +1,11 @@
 package com.fighterlvl.warrior;
 
-import com.adventuregames.MyGame;
 import com.adventuregames.fight.FIGHT_PARTY;
-import com.adventuregames.fight.FightAttackDisplay;
-import com.adventuregames.fight.FightScreen;
 import com.adventuregames.fight.event.*;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
-import com.tools.JWAssetManager;
 
 import java.io.Serializable;
-import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Fighter implements FightEventQueuer, Serializable {
 
@@ -33,11 +24,12 @@ public class Fighter implements FightEventQueuer, Serializable {
     private Boolean hadChoseAttack;
     private int choiceAttack;
     private FIGHT_PARTY party;
-    private static FightEventPlayer eventPlayer;
+    private static FightEventPlayer eventPlayer ;
+
     private String str;
 
 
-    public static Fighter placeHolderFighter = new Fighter("???",null,null,null,0,0, JWAssetManager.path_fighterMystery,FIGHT_PARTY.OPPONENT);
+    //public static Fighter placeHolderFighter = new Fighter("???",null,null,null,0,0, JWAssetManager.path_fighterMystery,FIGHT_PARTY.OPPONENT);
 
     public Fighter(Fighter fighter)
     {
@@ -97,8 +89,8 @@ public class Fighter implements FightEventQueuer, Serializable {
 
 
     public Weapon getWeapon() { return weapon; }
-    private Armor getArmor1() { return armor1; }
-    private Armor getArmor2() { return armor2; }
+    public Armor getArmor1() { return armor1; }
+    public Armor getArmor2() { return armor2; }
     public int getHitPoints(){
         return this.hitPoints;
     }
@@ -319,66 +311,23 @@ public class Fighter implements FightEventQueuer, Serializable {
     }
 
 
-    private void getEnnemyWeapon(Fighter enemy)
+    public void getEnnemyWeapon(Fighter enemy)
     {
-        Scanner keyboard = new Scanner(System.in);
-
-        if(enemy.weapon.isTakeable() && this.weapon.isBetter(enemy.weapon))
-        {
-            System.out.println(" You won, do you want to take your enemy's weapon? (1: take it 0: don't take it");
-            System.out.println(enemy.weapon.toString());
-            int choice = keyboard.nextInt();
-
-            if(choice == 1)
-            {
-                System.out.println(" You change your weapon with success");
                 this.setWeapon(enemy.getWeapon());
-            }
-            if(choice == 2)
-            {
-                System.out.println(" You choose to keep your weapon");
-            }
-        }
     }
 
-    private void getEnnemyArmor(Fighter enemy)
+    public void getEnnemyArmor1(Fighter enemy) {
+
+        this.setArmor1(enemy.getArmor1());
+    }
+
+    public void getEnnemyArmor2(Fighter enemy)
     {
-        Scanner keyboard = new Scanner(System.in);
-
-        if(enemy.armor1.getTakeable() && this.armor1.isBetter(enemy.armor1)) {
-            System.out.println(" You won, do you want to take your enemy's first armor? (1: take it 0: don't take it");
-            System.out.println(enemy.armor1.toString());
-            int choice = keyboard.nextInt();
-
-            if (choice == 1) {
-                System.out.println(" You change your first armor with success");
-                this.setArmor1(enemy.getArmor1());
-            }
-            if (choice == 2) {
-                System.out.println(" You choose to keep your first armor");
-            }
-        }
-            if(enemy.getArmor2() != null && enemy.armor2.getTakeable() && this.armor2.isBetter(enemy.armor2))
-            {
-
-                System.out.println(" Do you want to take your enemy's second armor? (1: take it 0: don't take it");
-                System.out.println(enemy.armor2.toString());
-                int choice = keyboard.nextInt();
-
-                if(choice == 1)
-                {
-                    System.out.println(" You change your second armor with success");
                     this.setArmor2(enemy.getArmor2());
-                }
-                if(choice == 2)
-                {
-                    System.out.println(" You choose to keep your second armor");
-                }
-            }
 
     }
 
-    private void getEnnemyTreasure(Fighter enemy)
+    public void getEnnemyTreasure(Fighter enemy)
     {
 
         for(int j= 0; j<this.getTreasures().size(); j++) {
@@ -394,12 +343,6 @@ public class Fighter implements FightEventQueuer, Serializable {
 
     }
 
-    public void  getEnnemyRessources(Fighter enemy)
-    {
-        getEnnemyWeapon(enemy);
-        getEnnemyArmor(enemy);
-        getEnnemyTreasure(enemy);
-    }
 
     public String takeARest(Fighter enemy)
     {
@@ -446,7 +389,7 @@ public class Fighter implements FightEventQueuer, Serializable {
                 min = 1; max = 20;
             }
             hitPoint = this.randomNumberGenerator(min, max);
-            this.takeDamage(-hitPoint);
+            this.gainLife(hitPoint);
             str = "You earn " + hitPoint + " points";
 
             str += "\n" + "Hit points" + this.hitPoints;
@@ -482,32 +425,6 @@ public class Fighter implements FightEventQueuer, Serializable {
         return  str;
     }
 
-    public void takeItem()
-    {
-        int choice = 0;
-        Scanner keyboard = new Scanner(System.in);
-
-        while(this.treasures.get(0).getNumber() != 0 && choice != 2 && this.isAlive()) {
-            System.out.println("You have " + this.treasures.get(0).getNumber() + " potions, do you want to use one? (1: take it 2: don't take it");
-            choice =  keyboard.nextInt();
-
-            if(choice == 1)
-            {
-                this.usePotion();
-            }
-
-        }
-        choice = 0;
-        while(this.treasures.get(1).getNumber() != 0 && choice != 2 && this.isAlive()) {
-            System.out.println("You have " + this.treasures.get(1).getNumber() + " scroll, do you want to use one? (1: take it 2: don't take it");
-            choice =  keyboard.nextInt();
-
-            if(choice == 1)
-            {
-                this.useScroll();
-            }
-        }
-    }
 
     public static void setEventPlayer(FightEventPlayer oEventPlayer){
         eventPlayer = oEventPlayer;

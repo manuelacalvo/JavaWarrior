@@ -1,30 +1,28 @@
 package com.adventuregames.fight;
 
 
-import com.Display.GameDisplay;
-import com.badlogic.gdx.Screen;
 import com.adventuregames.MyGame;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Fighter;
-import com.fighterlvl.warrior.Player;
-import com.sun.corba.se.impl.copyobject.FallbackObjectCopierImpl;
-import com.ui.DialogueBox;
 
-public class FightAttackDisplay implements Screen {
+import java.io.Serializable;
+
+public class FightAttackDisplay implements Screen, Serializable {
 
     private Stage stage;
     private MyGame game;

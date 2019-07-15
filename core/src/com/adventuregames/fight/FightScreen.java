@@ -1,8 +1,8 @@
 package com.adventuregames.fight;
 
 import com.Display.AbstractScreen;
-import com.Display.FightMenuDisplay;
 import com.Display.GameDisplay;
+import com.Display.TakeFeatures;
 import com.Display.renderer.EventQueueRenderer;
 import com.Display.renderer.FightRenderer;
 import com.adventuregames.MyGame;
@@ -15,20 +15,20 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.fighterlvl.warrior.Fighter;
-import com.fighterlvl.warrior.Treasure;
 import com.ui.DialogueBox;
 import com.ui.StatusBox;
 
+import java.io.Serializable;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Queue;
 
-public class FightScreen extends AbstractScreen implements FightEventPlayer {
+public class FightScreen extends AbstractScreen implements FightEventPlayer, Serializable {
 
     /* FightScreen Controller */
     private FightScreenController controller;
@@ -233,7 +233,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
                 if(fightAttackMode == 0 ) {
                     currentEvent = null;
                     if (playerFighter.isAlive()) {
-                        getGame().setScreen(new FightMenuDisplay(getGame(), getGame().getCollection().getPlayer()));
+                        getGame().setScreen(new TakeFeatures(getGame(), getGame().getCollection().getPlayer()));
                     } else
                         getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
                 }

@@ -1,7 +1,10 @@
 package com.fighterlvl.warrior;
 
 
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Player implements Serializable {
@@ -156,7 +159,7 @@ public class Player implements Serializable {
 
         try {
             FileOutputStream fos;
-            fos = new FileOutputStream(getName().hashCode() + ".txt");
+            fos = new FileOutputStream("user/" + getName().hashCode() + ".txt");
 
             ObjectOutputStream oos;
             oos = new ObjectOutputStream(fos);

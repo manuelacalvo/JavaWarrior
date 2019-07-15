@@ -4,7 +4,9 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.ui.DialogueBox;
 
-public class TextEvent extends FightEvent {
+import java.io.Serializable;
+
+public class TextEvent extends FightEvent implements Serializable {
 
     private boolean finished = false;
 

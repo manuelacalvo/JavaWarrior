@@ -5,10 +5,12 @@ import com.badlogic.gdx.math.Interpolation;
 import com.ui.HPBar;
 import com.ui.StatusBox;
 
+import java.io.Serializable;
+
 /**
  * A BattleEvent where HP can be seen, depleting.
  */
-public class HPChangeEvent extends FightEvent {
+public class HPChangeEvent extends FightEvent implements Serializable {
 
     private FIGHT_PARTY party;
 
