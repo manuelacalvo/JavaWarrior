@@ -5,7 +5,6 @@ import com.Display.GameDisplay;
 import com.Display.TakeFeatures;
 import com.Display.renderer.EventQueueRenderer;
 import com.Display.renderer.FightRenderer;
-import com.adventuregames.MyGame;
 import com.adventuregames.fight.event.FightEvent;
 import com.adventuregames.fight.event.FightEventPlayer;
 import com.badlogic.gdx.ApplicationListener;
@@ -21,6 +20,7 @@ import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.fighterlvl.warrior.Fighter;
+import com.javawarrior.JWGame;
 import com.ui.DialogueBox;
 import com.ui.StatusBox;
 
@@ -69,7 +69,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer, Ser
      * Fighter Screen Constructor
      * @param pGame - Game instance
      */
-    public FightScreen(MyGame pGame, int attackChoosen, boolean connected){
+    public FightScreen(JWGame pGame, int attackChoosen, boolean connected){
         super(pGame);
         this.connected = connected;
         this.playerFighter = getGame().getCollection().getPlayer().getFighter();

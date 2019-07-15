@@ -1,5 +1,6 @@
 package com.openworld.screen;
 
+import com.Display.AbstractScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
@@ -7,10 +8,10 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.utils.Array;
-import com.openworld.enumfile.SCREEN_TYPE;
-import com.javawarrior.JavaWarrior;
+import com.Display.SCREEN_TYPE;
+import com.javawarrior.JWGame;
 
-public class LoadingScreen extends AbstractScreen{
+public class LoadingScreen extends AbstractScreen {
 
     private final AssetManager assetManager;
     private OrthographicCamera gameCamera;
@@ -25,14 +26,16 @@ public class LoadingScreen extends AbstractScreen{
     private BitmapFont font;
     private String PlayerGender;
 
-    public LoadingScreen(JavaWarrior context) {
-        super(context);
-        this.assetManager = context.getAssetManager();
-        this.gameCamera = context.getGameCamera();
-        this.PlayerGender = context.setPlayerGender("F");
+    public LoadingScreen(JWGame game) {
+        super(game);
+        this.assetManager = game.getAssetManager();
+        this.gameCamera = game.getGameCamera();
+        this.PlayerGender = game.setPlayerGender("F");
 
         //TODO set screen to choose character gender
         assetManager.load("RessourcesTileset/Hero" + PlayerGender + ".atlas", TextureAtlas.class);
+        assetManager.finishLoading();
+
         font = new BitmapFont(Gdx.files.internal("Ressources/Font/arcade/arcade.fnt"));
         batch = new SpriteBatch();
         splashAtlas = new TextureAtlas("assets/splash.atlas");
@@ -57,7 +60,7 @@ public class LoadingScreen extends AbstractScreen{
         batch.end();
         if ((Gdx.input.isKeyPressed(Input.Keys.ENTER) || (Gdx.input.isKeyPressed(Input.Keys.DEL))) && assetManager.update()){
             //TODO : Add a animation smooth to go to the Game screen
-            context.setScreen(SCREEN_TYPE.GAME);
+            getGame().setScreen(SCREEN_TYPE.GAME);
         }
     }
     @Override
@@ -68,6 +71,10 @@ public class LoadingScreen extends AbstractScreen{
     }
     @Override
     public void pause() { }
+
+    @Override
+    public void update(float delta) {}
+
     @Override
     public void resume() { }
     @Override

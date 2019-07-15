@@ -1,6 +1,6 @@
 package com.idea;
 
-import com.javawarrior.JavaWarrior;
+import com.javawarrior.JWGame;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 
@@ -16,6 +16,6 @@ public class DesktopLauncher {
         config.height = 400;
         config.width = 600;
         config.vSyncEnabled = true;
-        new LwjglApplication(new JavaWarrior(), config);
+        new LwjglApplication(new JWGame(), config);
     }
 }

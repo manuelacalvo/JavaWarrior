@@ -1,8 +1,6 @@
 package com.Display;
 
-import com.adventuregames.MyGame;
 import com.adventuregames.fight.FightScreen;
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -17,11 +15,12 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Player;
+import com.javawarrior.JWGame;
 
 public class RestDisplay implements Screen {
 
     private Stage stage;
-    private MyGame game;
+    private JWGame game;
     private BitmapFont font;
     private Batch batch;
     private String str;
@@ -32,7 +31,7 @@ public class RestDisplay implements Screen {
     private TextureAtlas buttonAtlas;
 
 
-    public RestDisplay(MyGame aGame, Player player) {
+    public RestDisplay(JWGame aGame, Player player) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);

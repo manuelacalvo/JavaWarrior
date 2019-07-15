@@ -1,12 +1,12 @@
 package com.adventuregames.fight;
 
-import com.adventuregames.MyGame;
 import com.adventuregames.fight.event.FightEvent;
 import com.adventuregames.fight.event.FightEventPlayer;
 import com.adventuregames.fight.event.FightEventQueuer;
 import com.adventuregames.fight.event.FighterChangeEvent;
 import com.badlogic.gdx.InputAdapter;
 import com.fighterlvl.warrior.Fighter;
+import com.javawarrior.JWGame;
 import com.shopmanagement.Collection;
 import com.ui.DialogueBox;
 
@@ -16,7 +16,7 @@ import java.util.Queue;
 public class FightScreenController extends InputAdapter implements FightEventQueuer, Serializable {
 
     private FIGHT_STATE state = FIGHT_STATE.DEACTIVATED;
-    private MyGame game;
+    private JWGame game;
     private FightEventPlayer eventPlayer;
 
     private DialogueBox dialogueBox;
@@ -28,7 +28,7 @@ public class FightScreenController extends InputAdapter implements FightEventQue
     Add here more elements to update
      */
 
-    FightScreenController(MyGame oGame, FightScreen fightScreen, Queue<FightEvent> queue, DialogueBox dialogueBox){
+    FightScreenController(JWGame oGame, FightScreen fightScreen, Queue<FightEvent> queue, DialogueBox dialogueBox){
         this.game=oGame;
         this.eventPlayer=fightScreen;
         this.dialogueBox=dialogueBox;

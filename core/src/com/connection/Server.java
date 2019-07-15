@@ -1,10 +1,9 @@
 package com.connection;
 
-import com.adventuregames.MyGame;
-import com.adventuregames.fight.FightAttackDisplay;
 import com.adventuregames.fight.FightScreen;
 import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
+import com.javawarrior.JWGame;
 
 import java.io.*;
 import java.net.*;
@@ -13,10 +12,10 @@ public class Server {
     private boolean end = false;
     private Player player;
     private Fighter ennemy;
-    private MyGame game;
+    private JWGame game;
 
 
-    public Server(MyGame aGame, Player player)
+    public Server(JWGame aGame, Player player)
     {
         this.player = player;
         this.ennemy = null;

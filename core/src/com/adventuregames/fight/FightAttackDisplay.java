@@ -1,7 +1,5 @@
 package com.adventuregames.fight;
 
-
-import com.adventuregames.MyGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
@@ -19,13 +17,14 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Fighter;
+import com.javawarrior.JWGame;
 
 import java.io.Serializable;
 
 public class FightAttackDisplay implements Screen, Serializable {
 
     private Stage stage;
-    private MyGame game;
+    private JWGame game;
     private ImageTextButton attack1;
     private ImageTextButton attack2;
     private ImageTextButton attack3;
@@ -46,7 +45,7 @@ public class FightAttackDisplay implements Screen, Serializable {
 
 
 
-    public FightAttackDisplay(MyGame aGame,Fighter fighter,  Fighter enemy, boolean connected) {
+    public FightAttackDisplay(JWGame aGame, Fighter fighter, Fighter enemy, boolean connected) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         tableAttack=new Table();

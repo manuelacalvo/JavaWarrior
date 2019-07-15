@@ -1,13 +1,13 @@
 package com.Display;
 
-import com.adventuregames.MyGame;
 import com.badlogic.gdx.Screen;
+import com.javawarrior.JWGame;
 
 public abstract class AbstractScreen implements Screen {
 
-    private MyGame game;
+    private JWGame game;
 
-    public AbstractScreen(MyGame game) {
+    public AbstractScreen(JWGame game) {
         this.game = game;
     }
 
@@ -34,7 +34,7 @@ public abstract class AbstractScreen implements Screen {
     @Override
     public abstract void show();
 
-    public MyGame getGame() {
+    public JWGame getGame() {
         return game;
     }
 

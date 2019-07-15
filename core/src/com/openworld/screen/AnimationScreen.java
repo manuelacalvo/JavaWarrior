@@ -1,14 +1,15 @@
 package com.openworld.screen;
 
+import com.Display.AbstractScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
-import com.openworld.enumfile.SCREEN_TYPE;
-import com.javawarrior.JavaWarrior;
+import com.Display.SCREEN_TYPE;
+import com.javawarrior.JWGame;
 
-public class AnimationScreen extends AbstractScreen{
+public class AnimationScreen extends AbstractScreen {
 
-    public AnimationScreen(JavaWarrior context) {
+    public AnimationScreen(JWGame context) {
         super(context);
     }
     @Override
@@ -19,7 +20,7 @@ public class AnimationScreen extends AbstractScreen{
         Gdx.gl.glClearColor(1f, 1f, 1f, 1f);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         if(Gdx.input.isKeyPressed(Input.Keys.ENTER))
-        { context.setScreen(SCREEN_TYPE.LOADING); }
+        { getGame().setScreen(SCREEN_TYPE.LOADING); }
     }
 
     @Override
@@ -32,4 +33,9 @@ public class AnimationScreen extends AbstractScreen{
     public void hide() { }
     @Override
     public void dispose() { }
+
+    @Override
+    public void update(float delta) {
+
+    }
 }

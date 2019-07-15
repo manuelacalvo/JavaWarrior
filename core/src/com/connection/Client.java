@@ -1,10 +1,9 @@
 package com.connection;
 
-import com.adventuregames.MyGame;
-import com.adventuregames.fight.FightAttackDisplay;
 import com.adventuregames.fight.FightScreen;
 import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
+import com.javawarrior.JWGame;
 
 import java.io.*;
 import java.net.Socket;
@@ -15,9 +14,9 @@ public class Client
     private boolean end = false;
     private Player player;
     private Fighter ennemy;
-    private MyGame game;
+    private JWGame game;
 
-    public Client(MyGame aGame, Player player)
+    public Client(JWGame aGame, Player player)
     {
         this.player = player;
         this.ennemy = null;

@@ -1,7 +1,6 @@
 package com.Display;
 
 import com.badlogic.gdx.Screen;
-import com.adventuregames.MyGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -16,12 +15,13 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Armor;
 import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
+import com.javawarrior.JWGame;
 import com.shopmanagement.Collection;
 
 
 public class SelectFighterDisplay implements Screen {
     private Stage stage;
-    private MyGame game;
+    private JWGame game;
     private Image shop;
     private Image fighter;
     private Image weapon;
@@ -42,7 +42,7 @@ public class SelectFighterDisplay implements Screen {
     private Drawable drawable, drawable2, drawable3, drawable4, drawable5, drawable6, drawable7;
     private String f4Name;
 
-    public SelectFighterDisplay(MyGame aGame, final Player aplayer, final Collection coll) {
+    public SelectFighterDisplay(JWGame aGame, final Player aplayer, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         this.player = aplayer;

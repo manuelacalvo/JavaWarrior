@@ -1,5 +1,6 @@
 package com.openworld.screen;
 
+import com.Display.AbstractScreen;
 import com.openworld.PackAnimations.EffectsInit;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
@@ -11,9 +12,9 @@ import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.openworld.enumfile.SCREEN_TYPE;
+import com.Display.SCREEN_TYPE;
 import com.idea.Settings;
-import com.javawarrior.JavaWarrior;
+import com.javawarrior.JWGame;
 import com.openworld.actor.Actor;
 import com.openworld.actor.PlayerController;
 import com.badlogic.gdx.Gdx;
@@ -38,7 +39,7 @@ public class GameScreen extends AbstractScreen {
   private int wxFight;
   private int hyFight;
 
-  public GameScreen(final JavaWarrior context) {
+  public GameScreen(final JWGame context) {
 
     super(context);
     batch = new SpriteBatch();
@@ -124,7 +125,7 @@ public class GameScreen extends AbstractScreen {
 
     //Change screen if fight
     if ((Character.getMovementX() <= wxFight/Settings.SCALED_TILE_SIZE) && (Character.getMovementY() <= hyFight/Settings.SCALED_TILE_SIZE) && (Character.getMovementX() >= oxFight/Settings.SCALED_TILE_SIZE) && (Character.getMovementY() >= oyFight/Settings.SCALED_TILE_SIZE) && (randomNumberGenerator(1,9) == 3)){
-      context.setScreen(SCREEN_TYPE.ANIMATE);
+      getGame().setScreen(SCREEN_TYPE.ANIMATE);
     }
   }
 
@@ -137,6 +138,10 @@ public class GameScreen extends AbstractScreen {
 
   @Override
   public void pause(){}
+
+  @Override
+  public void update(float delta) {}
+
   @Override
   public void resume(){}
   @Override

@@ -1,9 +1,5 @@
 package com.Display;
 
-
-
-import com.adventuregames.MyGame;
-import com.adventuregames.fight.FightAttackDisplay;
 import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -19,12 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
+import com.javawarrior.JWGame;
 import com.shopmanagement.Collection;
 import com.shopmanagement.CollectionDisplay.CollectionFighterDisplay;
 
 public class GameDisplay implements Screen {
     private Stage stage;
-    private MyGame game;
+    private JWGame game;
     private Skin skin;
     private TextureAtlas buttonAtlas;
     private ImageTextButton buttonFightMode;
@@ -41,7 +38,7 @@ public class GameDisplay implements Screen {
     private Sound sound;
 
 
-    public GameDisplay(MyGame aGame, final Player player, final Collection coll) {
+    public GameDisplay(JWGame aGame, final Player player, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table=new Table();
@@ -89,6 +86,8 @@ public class GameDisplay implements Screen {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 sound.stop();
+
+                // TODO To LTB
                 Fighter fighter = new Fighter(game.getCollection().getFighterVector().get(0));
                 player.setFighter(fighter);
                 coll.getFighterVector().get(1).setHitPoints(3);

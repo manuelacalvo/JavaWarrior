@@ -1,10 +1,13 @@
 package com.javawarrior;
 
+import com.Display.AbstractScreen;
+import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -12,18 +15,30 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
-import com.openworld.enumfile.SCREEN_TYPE;
-import com.openworld.screen.AbstractScreen;
+import com.Display.SCREEN_TYPE;
+import com.openworld.screen.LoadingScreen;
+import com.shopmanagement.Collection;
+import com.tools.JWAssetManager;
+import com.tools.SkinGenerator;
 
 import java.util.EnumMap;
 
-public class JavaWarrior extends Game {
+public class JWGame extends Game {
 
-	private static final String TAG = JavaWarrior.class.getSimpleName();
+	private Class screenType=null;
+
+	private boolean debug = false;
+
+	private JWAssetManager assetManager;
+	private Collection collection;
+	private Skin skin;
+
+	//private static final String TAG = JWGame.class.getSimpleName();
 	private EnumMap<SCREEN_TYPE, AbstractScreen> screenCache;
-	private AssetManager assetManager;
+	//private AssetManager assetManager;
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer mapRenderer;
 	private OrthographicCamera gameCamera;
@@ -34,18 +49,36 @@ public class JavaWarrior extends Game {
 	private static final float FIXED_TIME = 1 / 60f;
 	private float accumulator;
 
+
+
 	@Override
 	public void create() {
-	    Gdx.app.setLogLevel(Application.LOG_DEBUG); //debug information
+
+		// TODO : Check ORDER
+		/* INIT ASSETS */
+		this.assetManager = JWAssetManager.getInstance();
+
+		skin = SkinGenerator.generateSkin(assetManager);
+
 		accumulator = 0;
 	    world = new World(new Vector2(0, 0), true);
-		assetManager = new AssetManager();
+		//assetManager = new AssetManager();
 		map = new TmxMapLoader().load("Ressources/Map/Map3.tmx");
 		mapRenderer = new OrthogonalTiledMapRenderer(map);
 		mapProperties = new MapProperties();
 		gameCamera = new OrthographicCamera();
 		screenCache = new EnumMap<SCREEN_TYPE, AbstractScreen>(SCREEN_TYPE.class);
-		setScreen(SCREEN_TYPE.LOADING);
+
+		if (!debug) { //Standard case
+			//setScreen(SCREEN_TYPE.LOADING);
+			setScreen(new LoadingScreen(this));
+		} else {
+			Gdx.app.setLogLevel(Application.LOG_DEBUG); //debug information
+			// DEBUG
+			if (screenType == FightScreen.class) {
+				this.setScreen(new FightScreen(this, 0, false));
+			}
+		}
 	}
 
 	public void setScreen(final SCREEN_TYPE screen_type) {
@@ -54,7 +87,7 @@ public class JavaWarrior extends Game {
 		if(screen == null){
 			try{
 				//Gdx.app.debug(TAG, "Creating new screen " + screen_type);  //debug information
-				final AbstractScreen newScreen = (AbstractScreen) ClassReflection.getConstructor(screen_type.getScreenClass(), JavaWarrior.class).newInstance(this);
+				final AbstractScreen newScreen = (AbstractScreen) ClassReflection.getConstructor(screen_type.getScreenClass(), JWGame.class).newInstance(this);
 				screenCache.put(screen_type, newScreen);
 				setScreen(newScreen);
 			} catch (Exception e) {
@@ -65,16 +98,6 @@ public class JavaWarrior extends Game {
 			setScreen(screen_type);
 		}
 	}
-
-	public AssetManager getAssetManager() { return assetManager; }
-	public OrthographicCamera getGameCamera() { return gameCamera; }
-	public TiledMap getMap() { return map; }
-	public OrthogonalTiledMapRenderer getMapRenderer() { return mapRenderer; }
-	public MapProperties getMapProperties() { return mapProperties; }
-	public World getWorld() { return world; }
-	public String getPlayerGender() { return PlayerGender; }
-
-	public String setPlayerGender(String playerGender) { PlayerGender = playerGender; return playerGender;}
 
 	// Fix the frames so they always wait for the game engine to be done before rendering the next frame (in order to detect correctly collision)
 	@Override
@@ -90,6 +113,14 @@ public class JavaWarrior extends Game {
 		}
 		// Pourcentage % left before next step gonna help us do interpollation (having an quarter frame mouvement so it's smoother on screen)
 		/* final float alpha = accumulator / FIXED_TIME; */
+
+		// TODO : check render instructions order
+		if(getScreen() instanceof com.Display.AbstractScreen){
+			((com.Display.AbstractScreen)getScreen()).update(Gdx.graphics.getDeltaTime());
+		}
+		Gdx.gl.glClearColor(0f, 0f, 0f, 1f);
+		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		getScreen().render(Gdx.graphics.getDeltaTime());
 	}
 
 	@Override
@@ -100,4 +131,40 @@ public class JavaWarrior extends Game {
 		mapRenderer.dispose();
 		world.dispose();
 	}
+
+	/**
+	 * Standard constructor called from DesktopLauncher
+	 */
+	public JWGame(){
+		/* DO NOT use getInstance() here - results in error*/
+		this.assetManager = null;
+	}
+
+	/**
+	 * Test&Debug constructor
+	 * @param screenType type of the screen to debug
+	 */
+	public JWGame(Class screenType){
+		this.debug=true;
+		this.screenType=screenType;
+	}
+
+	public AssetManager getAssetManager() { return assetManager; }
+
+	public boolean isDebug() { return debug; }
+
+	public Skin getSkin(){ return this.skin; }
+
+	public Collection getCollection() { return collection; }
+
+	public void setCollection(Collection collection) { this.collection = collection; }
+
+	public OrthographicCamera getGameCamera() { return gameCamera; }
+	public TiledMap getMap() { return map; }
+	public OrthogonalTiledMapRenderer getMapRenderer() { return mapRenderer; }
+	public MapProperties getMapProperties() { return mapProperties; }
+	public World getWorld() { return world; }
+	public String getPlayerGender() { return PlayerGender; }
+
+	public String setPlayerGender(String playerGender) { PlayerGender = playerGender; return playerGender;}
 }

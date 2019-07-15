@@ -1,6 +1,5 @@
 package com.Display;
 
-import com.adventuregames.MyGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
@@ -17,10 +16,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Player;
+import com.javawarrior.JWGame;
 
 public class TakeFeatures implements Screen {
     private Stage stage;
-    private MyGame game;
+    private JWGame game;
     private ImageTextButton buttonWeapon;
     private Image weapon;
     private ImageTextButton buttonArmor1;
@@ -39,7 +39,7 @@ public class TakeFeatures implements Screen {
 
 
 
-    public TakeFeatures(MyGame aGame, final Player player) {
+    public TakeFeatures(JWGame aGame, final Player player) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
