@@ -22,17 +22,13 @@ public class TakeFeatures implements Screen {
     private Stage stage;
     private MyGame game;
     private ImageTextButton buttonWeapon;
-    private Image weapon;
     private ImageTextButton buttonArmor1;
-    private Image armor1;
     private ImageTextButton buttonArmor2;
-    private Image armor2;
     private ImageTextButton buttonContinue;
     private ImageTextButton.ImageTextButtonStyle textButtonStyle;
     private BitmapFont font;
     private Skin skin;
     private TextureAtlas buttonAtlas;
-    private int choice = 0;
     private Image image;
     private Sound sound;
 
@@ -98,35 +94,28 @@ public class TakeFeatures implements Screen {
             }
         });
 
-        if(player.getEnnemi().getWeapon().isTakeable()) {
-            Texture texture2 = new Texture(Gdx.files.internal(player.getEnnemi().getWeapon().getRelativePathPicture()));
-            weapon = new Image(texture2);
-        }
-
-        if(player.getEnnemi().getWeapon().isTakeable()) {
-            Texture texture3 = new Texture(Gdx.files.internal(player.getEnnemi().getArmor1().getRelativePathPicture()));
-            armor1 = new Image(texture3);
-        }
 
 
         Table weaponTable = new Table();
-        weaponTable.add(weapon);
         weaponTable.row();
         weaponTable.add(buttonWeapon);
         if(player.getEnnemi().getWeapon().isTakeable() && !player.getFighter().getWeapon().isBetter(player.getEnnemi().getWeapon()))
         {
             weaponTable.setVisible(true);
-        }else weaponTable.setVisible(false);
+        }else
+        {
+            weaponTable.setVisible(false);
+        }
 
         Table armor1Table = new Table();
-        armor1Table.add(armor1);
-        armor1Table.row();
         armor1Table.add(buttonArmor1);
         if(player.getEnnemi().getArmor1().getTakeable() && !player.getFighter().getArmor1().isBetter(player.getFighter().getArmor1())) {
-
                 armor1Table.setVisible(true);
+        }else
+        {
+            armor1Table.setVisible(false);
 
-        }else armor1Table.setVisible(false);
+        }
 
 
         Table table = new Table();
@@ -134,16 +123,19 @@ public class TakeFeatures implements Screen {
         table.add(armor1Table);
         table.setPosition(300, 300);
 
-        if(player.getEnnemi().getArmor2().getName() == "null") {
-            Texture texture4 = new Texture(Gdx.files.internal(player.getEnnemi().getArmor2().getRelativePathPicture()));
-            armor2 = new Image(texture4);
+        if(!player.getEnnemi().getArmor2().getName().equals("null")) {
+
             Table armor2Table = new Table();
-            armor2Table.add(armor2);
-            armor2Table.row();
             armor2Table.add(buttonArmor2);
             if (player.getEnnemi().getArmor2() != null && player.getEnnemi().getArmor2().getTakeable() && !player.getFighter().getArmor2().isBetter(player.getEnnemi().getArmor2())) {
+
                 armor2Table.setVisible(true);
-            } else armor2Table.setVisible(false);
+
+            } else
+            {
+
+                armor2Table.setVisible(false);
+            }
             table.add(armor2Table);
         }
 

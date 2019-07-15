@@ -22,6 +22,11 @@ public class FighterChangeEvent extends FightEvent implements Serializable {
     }
 
     @Override
+    public void setFinished(boolean finish) {
+
+    }
+
+    @Override
     public void begin(FightEventPlayer oEventPlayer) {
         super.begin(oEventPlayer);
         oEventPlayer.setFighter(fighter);

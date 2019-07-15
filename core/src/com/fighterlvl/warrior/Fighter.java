@@ -214,10 +214,11 @@ public class Fighter implements FightEventQueuer, Serializable {
         outPutText(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
         this.setRestOnce(false);
         //Different attacks based on weapon's attacks per turn
-        if(this.isAlive() && enemy.isAlive()) {
+
 
             for (int i = 0; i < this.getWeapon().getAttacksPerTurn(); i++) {
-                outPutText("Attack " + (i+1));
+                if(this.isAlive() && enemy.isAlive()) {
+                    outPutText("Attack " + (i+1));
 
                 int rand = randomNumberGenerator(1, 20);
                 outPutText("\tRandom : " + rand+
@@ -238,29 +239,32 @@ public class Fighter implements FightEventQueuer, Serializable {
 
     public void fightAttackBegin()
     {
-        outPutText(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
+        if(this.isAlive()) {
+            outPutText(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
 
 
-        outPutText( "Choose One Attack");
+            outPutText("Choose One Attack");
+        }
 
     }
 
     public void fight_attacks(Fighter enemy){
-        outPutText(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
-        this.setRestOnce(false);
-                int rand = getAttacks().get(this.choiceAttack).calculateImpact();
-                outPutText("\tAttack : " + getAttacks().get(this.choiceAttack).toString() + "\nRand : " + rand+
-                        "\nEnemy protection : " + enemy.getDefense());
-                if (rand > enemy.getArmor1().getProtection()) {
-                    int hitPower = randomNumberGenerator(getWeapon().getMinDamage(), getWeapon().getMaxDamage());
-                    enemy.takeDamage(hitPower);
-                    outPutText("\tHit : " + hitPower);
-                    outPutText("Life of " + enemy.getName()+ " is " + enemy.getHitPoints()+"\r\n");
-                } else {
-                    enemy.takeDamage(0);
-                    outPutText("This attack failed !");
-                }
-
+        if(this.isAlive() && enemy.isAlive()) {
+            outPutText(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
+            this.setRestOnce(false);
+            int rand = getAttacks().get(this.choiceAttack).calculateImpact();
+            outPutText("\tAttack : " + getAttacks().get(this.choiceAttack).toString() + "\nRand : " + rand +
+                    "\nEnemy protection : " + enemy.getDefense());
+            if (rand > enemy.getArmor1().getProtection()) {
+                int hitPower = randomNumberGenerator(getWeapon().getMinDamage(), getWeapon().getMaxDamage());
+                enemy.takeDamage(hitPower);
+                outPutText("\tHit : " + hitPower);
+                outPutText("Life of " + enemy.getName() + " is " + enemy.getHitPoints() + "\r\n");
+            } else {
+                enemy.takeDamage(0);
+                outPutText("This attack failed !");
+            }
+        }
 
 
 

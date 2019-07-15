@@ -1,20 +1,16 @@
 package com.Display;
 
 
-
 import com.adventuregames.MyGame;
-import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.connection.Client;
@@ -32,6 +28,7 @@ public class ServerClientDisplay implements Screen {
     private TextureAtlas buttonAtlas;
     private ImageTextButton buttonServer;
     private ImageTextButton buttonClient;
+    private ImageTextButton quit;
     private ImageTextButton showIP;
     private ImageTextButton.ImageTextButtonStyle textButtonStyle;
     private BitmapFont font;
@@ -101,6 +98,16 @@ public class ServerClientDisplay implements Screen {
         );
 
 
+        quit = new ImageTextButton("Quit", textButtonStyle);
+        quit.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                game.setScreen(new GameDisplay(game, player, coll));
+
+            }
+        });
+        quit.setPosition(500,10);
+
         table.add(buttonServer);
         table.add(buttonClient);
         table.row();
@@ -110,6 +117,7 @@ public class ServerClientDisplay implements Screen {
 
         stage.addActor(image);
         stage.addActor(table);
+        stage.addActor(quit);
 
 
     }

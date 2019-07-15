@@ -18,4 +18,6 @@ public abstract class FightEvent implements Serializable {
 
     public abstract boolean isFinished();
 
+    public abstract void setFinished(boolean finish);
+
 }

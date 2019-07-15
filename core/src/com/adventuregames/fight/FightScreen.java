@@ -11,6 +11,7 @@ import com.adventuregames.fight.event.FightEventPlayer;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -188,6 +189,11 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer, Ser
         }
         batch.end();
 
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+        {   fightAttackMode = 3;
+            queue.clear();
+
+        }
         //uiStage.act();
         uiStage.draw();
 
@@ -228,6 +234,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer, Ser
     @Override
     public void update(float delta) {
 
+
         while ( currentEvent == null || currentEvent.isFinished()){
             if(queue.isEmpty() ) { // Event queue is empty
                 if(fightAttackMode == 0 ) {
@@ -258,6 +265,11 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer, Ser
                             getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
                     }
 
+
+                }
+                if(fightAttackMode == 3)
+                {
+                    getGame().setScreen(new GameDisplay(getGame(),getGame().getCollection().getPlayer(),getGame().getCollection()));
                 }
                 break;
 

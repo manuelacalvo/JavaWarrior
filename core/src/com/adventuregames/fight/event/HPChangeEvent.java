@@ -67,4 +67,8 @@ public class HPChangeEvent extends FightEvent implements Serializable {
         return finished;
     }
 
+    @Override
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
 }
