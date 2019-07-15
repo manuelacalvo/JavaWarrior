@@ -1,8 +1,8 @@
-package com.PackAnimations;
+package com.openworld.PackAnimations;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.enumfile.WAY;
+import com.openworld.enumfile.WAY;
 
 import java.util.HashMap;
 import java.util.Map;

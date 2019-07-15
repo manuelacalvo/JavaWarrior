@@ -1,4 +1,4 @@
-package com.screen;
+package com.openworld.screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -6,11 +6,8 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.maps.MapProperties;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.Array;
-import com.enumfile.SCREEN_TYPE;
+import com.openworld.enumfile.SCREEN_TYPE;
 import com.javawarrior.JavaWarrior;
 
 public class LoadingScreen extends AbstractScreen{

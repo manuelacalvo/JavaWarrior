@@ -1,25 +1,17 @@
-package com.actor;
+package com.openworld.actor;
 
-import com.PackAnimations.EffectsInit;
+import com.openworld.PackAnimations.EffectsInit;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Interpolation;
-import com.badlogic.gdx.math.RandomXS128;
-import com.badlogic.gdx.math.Rectangle;
-import com.enumfile.ACTOR_STATE;
-import com.enumfile.WAY;
+import com.openworld.enumfile.ACTOR_STATE;
+import com.openworld.enumfile.WAY;
 import com.idea.Settings;
-import com.javawarrior.JavaWarrior;
-import com.screen.GameScreen;
-
-import java.util.Random;
 
 public class Actor {
 

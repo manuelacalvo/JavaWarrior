@@ -1,4 +1,4 @@
-package com.enumfile;
+package com.openworld.enumfile;
 
 public enum WAY {
 

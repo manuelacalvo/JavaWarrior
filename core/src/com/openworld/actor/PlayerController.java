@@ -1,8 +1,8 @@
-package com.actor;
+package com.openworld.actor;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.InputAdapter;
-import com.enumfile.WAY;
+import com.openworld.enumfile.WAY;
 
 public class PlayerController extends InputAdapter {
 

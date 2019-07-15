@@ -1,4 +1,4 @@
-package com.Map;
+package com.openworld.Map;
 
 import static com.idea.Settings.TILE_SIZE;
 

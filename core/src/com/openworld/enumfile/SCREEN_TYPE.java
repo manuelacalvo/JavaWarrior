@@ -1,9 +1,9 @@
-package com.enumfile;
+package com.openworld.enumfile;
 
-import com.screen.AbstractScreen;
-import com.screen.AnimationScreen;
-import com.screen.GameScreen;
-import com.screen.LoadingScreen;
+import com.openworld.screen.AbstractScreen;
+import com.openworld.screen.AnimationScreen;
+import com.openworld.screen.GameScreen;
+import com.openworld.screen.LoadingScreen;
 
 public enum SCREEN_TYPE {
     GAME(GameScreen.class),

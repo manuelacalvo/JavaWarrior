@@ -1,4 +1,4 @@
-package com.Map;
+package com.openworld.Map;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.maps.Map;

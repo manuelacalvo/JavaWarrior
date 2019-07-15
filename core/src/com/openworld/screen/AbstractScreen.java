@@ -1,4 +1,4 @@
-package com.screen;
+package com.openworld.screen;
 
 import com.javawarrior.JavaWarrior;
 import com.badlogic.gdx.Screen;
