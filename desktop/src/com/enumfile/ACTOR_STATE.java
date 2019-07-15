@@ -4,5 +4,6 @@ public enum ACTOR_STATE {
     WALKING,
     STANDING,
     REFACING,
+    RUNNING,
     ;
 }

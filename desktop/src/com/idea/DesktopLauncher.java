@@ -12,7 +12,6 @@ public class DesktopLauncher {
 		we add a title, a screen size and enable vSyn* (specific to a special amount of screen).
 		*/
         LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-
         config.title = "Game";
         config.height = 400;
         config.width = 600;

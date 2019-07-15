@@ -9,11 +9,16 @@ import java.util.Map;
 
 public class EffectsInit {
 
+    private Map<WAY, Animation> running;
     private Map<WAY, Animation> walking;
     private Map<WAY, TextureRegion> standing;
 
-    // #TODO "what the hell is the HashMap" ?
-    public EffectsInit(Animation walkUp, Animation walkDown, Animation walkLeft, Animation walkRight, TextureRegion standUp, TextureRegion standDown, TextureRegion standLeft, TextureRegion standRight){
+    public EffectsInit(Animation runUp, Animation runDown, Animation runLeft, Animation runRight, Animation walkUp, Animation walkDown, Animation walkLeft, Animation walkRight, TextureRegion standUp, TextureRegion standDown, TextureRegion standLeft, TextureRegion standRight){
+        running = new HashMap<WAY, Animation>();
+            running.put(WAY.UP, runUp);
+            running.put(WAY.DOWN, runDown);
+            running.put(WAY.LEFT, runLeft);
+            running.put(WAY.RIGHT, runRight);
         walking = new HashMap<WAY, Animation>();
             walking.put(WAY.UP, walkUp);
             walking.put(WAY.DOWN, walkDown);
@@ -26,6 +31,7 @@ public class EffectsInit {
             standing.put(WAY.RIGHT, standRight);
     }
 
+    public Animation getRunning(WAY dir) { return running.get(dir); }
     public Animation getWalking(WAY dir) { return walking.get(dir); }
     public TextureRegion getStanding(WAY dir) { return standing.get(dir); }
 }
