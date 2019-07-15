@@ -55,7 +55,8 @@ public class TakeFeatures implements Screen {
         textButtonStyle.font = font;
         textButtonStyle.up = skin.getDrawable("partyCancelSel");
         textButtonStyle.down = skin.getDrawable("partyCancelSel");
-        buttonWeapon = new ImageTextButton("Take weeapon", textButtonStyle);
+
+        buttonWeapon = new ImageTextButton("Take weapon", textButtonStyle);
         buttonWeapon.addListener(new ChangeListener() {
 
 
@@ -112,7 +113,6 @@ public class TakeFeatures implements Screen {
         weaponTable.add(weapon);
         weaponTable.row();
         weaponTable.add(buttonWeapon);
-        System.out.println(" weapon : " + player.getEnnemi().getWeapon().isTakeable() + ", " + player.getFighter().getWeapon().isBetter(player.getEnnemi().getWeapon()));
         if(player.getEnnemi().getWeapon().isTakeable() && !player.getFighter().getWeapon().isBetter(player.getEnnemi().getWeapon()))
         {
             weaponTable.setVisible(true);
@@ -132,7 +132,7 @@ public class TakeFeatures implements Screen {
         Table table = new Table();
         table.add(weaponTable);
         table.add(armor1Table);
-        table.setPosition(125,125);
+        table.setPosition(300, 300);
 
         if(player.getEnnemi().getArmor2().getName() == "null") {
             Texture texture4 = new Texture(Gdx.files.internal(player.getEnnemi().getArmor2().getRelativePathPicture()));

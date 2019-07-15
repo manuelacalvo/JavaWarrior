@@ -11,7 +11,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Fighter;
@@ -28,7 +31,6 @@ public class FightMenuDisplay implements Screen {
     private BitmapFont font;
     private Skin skin;
     private TextureAtlas buttonAtlas;
-    private int choice = 0;
     private Image image;
     private Sound sound;
 
@@ -36,6 +38,7 @@ public class FightMenuDisplay implements Screen {
 
 
     public FightMenuDisplay(MyGame aGame, final Player player) {
+        System.out.println(player.getName() + " hP : " + player.getFighter().getHitPoints());
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table=new Table();
@@ -59,7 +62,8 @@ public class FightMenuDisplay implements Screen {
 
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                game.setScreen(new PotionDisplay(game, player));
+                   game.setScreen(new PotionDisplay(game, player));
+
             }
         });
 
@@ -69,7 +73,7 @@ public class FightMenuDisplay implements Screen {
         buttonRest.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                game.setScreen(new RestDisplay(game, player));
+                   game.setScreen(new RestDisplay(game, player));
 
 
             }

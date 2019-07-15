@@ -11,10 +11,13 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Player;
+import com.fighterlvl.warrior.TREASURE_TYPE;
 
 
 public class PotionDisplay implements Screen{
@@ -33,6 +36,9 @@ public class PotionDisplay implements Screen{
     private TextureAtlas buttonAtlas;
     private int choice = 0;
     private Image image;
+    private Player player;
+    private int nbPotion = 0;
+    private  int nbScroll = 0;
 
 
 
@@ -46,8 +52,8 @@ public class PotionDisplay implements Screen{
         image = new Image(texture);
         image.setSize(stage.getWidth(), stage.getHeight());
         font = new BitmapFont();
-        str = "test";
-
+        str = "Actual HitPoints : " + player.getFighter().getHitPoints();
+        this.player = player;
 
         font = new BitmapFont();
         skin = new Skin();
@@ -65,7 +71,11 @@ public class PotionDisplay implements Screen{
 
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str = player.getFighter().usePotion();
+                if(nbPotion<player.getFighter().getTreasures().get(TREASURE_TYPE.POTION.ordinal()).getNumber()) {
+
+                    str = player.getFighter().usePotion();
+                    nbPotion++;
+                }else  str = "You don't have any potion ";
             }
         });
         buttonPotion.setPosition(50, 300);
@@ -85,7 +95,11 @@ public class PotionDisplay implements Screen{
 
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                str = player.getFighter().useScroll();
+                if(nbScroll<player.getFighter().getTreasures().get(TREASURE_TYPE.SCROLL.ordinal()).getNumber()) {
+
+                    str = player.getFighter().useScroll();
+                    nbScroll++;
+                }else  str = "You don't have any scroll ";
             }
         });
 
@@ -134,7 +148,10 @@ public class PotionDisplay implements Screen{
         font.draw(batch, str, 300, 380);
         batch.end();
 
-
+        if(player.getFighter().getHitPoints() == 0)
+        {
+            game.setScreen(new GameDisplay(game, player, game.getCollection()));
+        }
 
 
     }
