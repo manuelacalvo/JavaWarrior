@@ -7,10 +7,12 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.math.Polygon;
 import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.math.Rectangle;
 import com.enumfile.ACTOR_STATE;
@@ -33,8 +35,8 @@ public class Actor {
   private float EffectTimer;
   private float WALK_TIME_EFFECT = 0.3f;
   private float RUN_TIME_EFFECT = 0.3f;
-  private float WalkTimer;
-  private float RunTimer;
+  private float WalkTimer = 0;
+  private float RunTimer = 0;
   private boolean MRF; //Move Request on that Frame ?
   private WAY lookingAt;
   private EffectsInit Effect;
@@ -70,14 +72,14 @@ public class Actor {
 
     //todo here collision
     //bellow is the code to select a Fight zone interaction on my map
-    MapObject Fight = map.getLayers().get("Fight").getObjects().get("FightZone");
-    Rectangle FightRect = ((RectangleMapObject) Fight).getRectangle();
+  /*  MapObject Fight = map.getLayers().get("Collision").getObjects().get("Wall");
+    Polygon FightRect = ((PolygonMapObject) Fight).getPolygon();
     oxFight = (int) FightRect.getX();
     oyFight = (int) FightRect.getY();
-    wxFight = (int) FightRect.getX() + (int) FightRect.getWidth();
-    hyFight = (int) FightRect.getY() + (int) FightRect.getHeight();
+    wxFight = (int) FightRect.getX() + (int) FightRect.area();
+    hyFight = (int) FightRect.getY() + (int) FightRect.area();
     if ((x + dir.getDirx() <= wxFight/Settings.SCALED_TILE_SIZE) && (y + dir.getDiry() <= hyFight/Settings.SCALED_TILE_SIZE) && (x + dir.getDirx() >= oxFight/Settings.SCALED_TILE_SIZE) && (y + dir.getDiry() >= oyFight/Settings.SCALED_TILE_SIZE)){ return false; }
-
+  */
     initMove(dir);
     playerLayer.setCell(this.x,this.y,null);
     this.x += dir.getDirx();
