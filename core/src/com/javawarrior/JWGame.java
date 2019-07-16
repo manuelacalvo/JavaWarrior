@@ -1,6 +1,6 @@
 package com.javawarrior;
 
-import com.Display.AbstractScreen;
+import com.adventuregames.fight.FIGHT_PART;
 import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
@@ -37,8 +37,8 @@ public class JWGame extends Game {
 	private Skin skin;
 
 	//private static final String TAG = JWGame.class.getSimpleName();
-	private EnumMap<SCREEN_TYPE, AbstractScreen> screenCache;
-	//private AssetManager assetManager;
+	private EnumMap<SCREEN_TYPE, Screen> screenCache;
+
 	private TiledMap map;
 	private OrthogonalTiledMapRenderer mapRenderer;
 	private OrthographicCamera gameCamera;
@@ -49,12 +49,25 @@ public class JWGame extends Game {
 	private static final float FIXED_TIME = 1 / 60f;
 	private float accumulator;
 
+	/**
+	 * Standard constructor called from DesktopLauncher
+	 */
+	public JWGame(){
+		/* DO NOT use getInstance() here - results in error */
+		this.assetManager = null;
+	}
 
+	/**
+	 * Test&Debug constructor
+	 * @param screenType type of the screen to debug
+	 */
+	public JWGame(Class screenType){
+		this.debug=true;
+		this.screenType=screenType;
+	}
 
 	@Override
 	public void create() {
-
-		// TODO : Check ORDER
 		/* INIT ASSETS */
 		this.assetManager = JWAssetManager.getInstance();
 
@@ -62,32 +75,37 @@ public class JWGame extends Game {
 
 		accumulator = 0;
 	    world = new World(new Vector2(0, 0), true);
-		//assetManager = new AssetManager();
+
 		map = new TmxMapLoader().load("Ressources/Map/Map3.tmx");
 		mapRenderer = new OrthogonalTiledMapRenderer(map);
 		mapProperties = new MapProperties();
+
 		gameCamera = new OrthographicCamera();
-		screenCache = new EnumMap<SCREEN_TYPE, AbstractScreen>(SCREEN_TYPE.class);
+		screenCache = new EnumMap<>(SCREEN_TYPE.class);
 
 		if (!debug) { //Standard case
 			//setScreen(SCREEN_TYPE.LOADING);
-			setScreen(new LoadingScreen(this));
+			setScreen(SCREEN_TYPE.LOADING);
 		} else {
 			Gdx.app.setLogLevel(Application.LOG_DEBUG); //debug information
 			// DEBUG
 			if (screenType == FightScreen.class) {
-				this.setScreen(new FightScreen(this, 0, false));
+				this.setScreen(new FightScreen(this, FIGHT_PART.USUAL, false));
 			}
 		}
 	}
 
+	/**
+	 * Sets a screen
+	 * @param screen_type SCREEN_TYPE to set
+	 */
 	public void setScreen(final SCREEN_TYPE screen_type) {
 		final Screen screen = screenCache.get(screen_type);
 		//creat or change screen depending of needed + error display
 		if(screen == null){
 			try{
 				//Gdx.app.debug(TAG, "Creating new screen " + screen_type);  //debug information
-				final AbstractScreen newScreen = (AbstractScreen) ClassReflection.getConstructor(screen_type.getScreenClass(), JWGame.class).newInstance(this);
+				final Screen newScreen = (Screen) ClassReflection.getConstructor(screen_type.getScreenClass(), JWGame.class).newInstance(this);
 				screenCache.put(screen_type, newScreen);
 				setScreen(newScreen);
 			} catch (Exception e) {
@@ -130,23 +148,6 @@ public class JWGame extends Game {
 		map.dispose();
 		mapRenderer.dispose();
 		world.dispose();
-	}
-
-	/**
-	 * Standard constructor called from DesktopLauncher
-	 */
-	public JWGame(){
-		/* DO NOT use getInstance() here - results in error*/
-		this.assetManager = null;
-	}
-
-	/**
-	 * Test&Debug constructor
-	 * @param screenType type of the screen to debug
-	 */
-	public JWGame(Class screenType){
-		this.debug=true;
-		this.screenType=screenType;
 	}
 
 	public AssetManager getAssetManager() { return assetManager; }

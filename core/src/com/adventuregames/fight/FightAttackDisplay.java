@@ -40,11 +40,6 @@ public class FightAttackDisplay implements Screen, Serializable {
     private String text;
     private SpriteBatch batch;
 
-
-
-
-
-
     public FightAttackDisplay(JWGame aGame, Fighter fighter, Fighter enemy, boolean connected) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
@@ -60,13 +55,7 @@ public class FightAttackDisplay implements Screen, Serializable {
         font = new BitmapFont();
         skin = new Skin();
 
-
-
-
         text = fighter.getName() + "'s Turn + Life : " + fighter.getHitPoints() + "\nChoose your attack";
-
-
-
 
         buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
         skin.addRegions(buttonAtlas);
@@ -81,8 +70,7 @@ public class FightAttackDisplay implements Screen, Serializable {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 fighter.setChoiceAttack(0);
-                game.setScreen(new FightScreen(game, 2, connected));
-
+                game.setScreen(new FightScreen(game, FIGHT_PART.SECOND_PART, connected));
 
                 dispose();
             }
@@ -95,7 +83,7 @@ public class FightAttackDisplay implements Screen, Serializable {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 fighter.setChoiceAttack(1);
-                game.setScreen(new FightScreen(game, 2, connected));
+                game.setScreen(new FightScreen(game, FIGHT_PART.SECOND_PART, connected));
 
             }
         });
@@ -106,11 +94,10 @@ public class FightAttackDisplay implements Screen, Serializable {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 fighter.setChoiceAttack(2);
-                game.setScreen(new FightScreen(game, 2, connected));
+                game.setScreen(new FightScreen(game, FIGHT_PART.SECOND_PART, connected));
 
             }
         });
-
 
         Skin skin2 = new Skin(Gdx.files.internal("core/assets/graphics/ui/uiskin/uiskin.json"));
 
@@ -121,19 +108,9 @@ public class FightAttackDisplay implements Screen, Serializable {
         tableAttack.add(attack3);
         tableAttack.setPosition(0,100);
 
-
-
-
         stage.addActor(image);
         stage.addActor(tableAttack);
-
-
-
-
-
-
     }
-
 
     @Override
     public void dispose() {
@@ -141,8 +118,7 @@ public class FightAttackDisplay implements Screen, Serializable {
     }
 
     @Override
-    public void pause() {
-    }
+    public void pause() {}
 
     @Override
     public void render(float delta) {
@@ -163,29 +139,18 @@ public class FightAttackDisplay implements Screen, Serializable {
         {
             tableAttack.setVisible(true);
         }
-
-
     }
 
     @Override
-    public void resize(int width, int height) {
-
-    }
+    public void resize(int width, int height) {}
     @Override
-    public void resume() {
-
-    }
-
+    public void resume() {}
     @Override
-    public void hide() {
-
-    }
-
+    public void hide() {}
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
     }
-
 
 }

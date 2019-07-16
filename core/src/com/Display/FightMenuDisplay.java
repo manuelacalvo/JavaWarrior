@@ -1,5 +1,6 @@
 package com.Display;
 
+import com.adventuregames.fight.FIGHT_PART;
 import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -89,7 +90,7 @@ public class FightMenuDisplay implements Screen {
                 game.getCollection().getPlayer().setNbFights( game.getCollection().getPlayer().getNbFights()+1);
                 Fighter enemy = new Fighter(game.getCollection().getFighterVector().get(game.getCollection().getPlayer().getNbFights()+1));
                 player.setEnnemi(enemy);
-                game.setScreen(new FightScreen(game, 0, false));
+                game.setScreen(new FightScreen(game, FIGHT_PART.USUAL, false));
 
 
             }

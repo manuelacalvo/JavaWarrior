@@ -1,6 +1,8 @@
 package com.openworld.screen;
 
 import com.Display.AbstractScreen;
+import com.adventuregames.fight.FIGHT_PART;
+import com.adventuregames.fight.FightScreen;
 import com.openworld.PackAnimations.EffectsInit;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
@@ -125,7 +127,7 @@ public class GameScreen extends AbstractScreen {
 
     //Change screen if fight
     if ((Character.getMovementX() <= wxFight/Settings.SCALED_TILE_SIZE) && (Character.getMovementY() <= hyFight/Settings.SCALED_TILE_SIZE) && (Character.getMovementX() >= oxFight/Settings.SCALED_TILE_SIZE) && (Character.getMovementY() >= oyFight/Settings.SCALED_TILE_SIZE) && (randomNumberGenerator(1,9) == 3)){
-      getGame().setScreen(SCREEN_TYPE.ANIMATE);
+      getGame().setScreen(new FightScreen(getGame(), FIGHT_PART.FIRST_PART,false));
     }
   }
 

@@ -1,5 +1,6 @@
 package com.Display;
 
+import com.adventuregames.fight.FIGHT_PART;
 import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -75,7 +76,7 @@ public class GameDisplay implements Screen {
                         Fighter enemy = new Fighter(game.getCollection().getFighterVector().get(game.getCollection().getPlayer().getNbFights()+1));
                         player.setEnnemi(enemy);
                         System.out.println(player.getEnnemi().getHitPoints());
-                        game.setScreen(new FightScreen(game, 0, false));
+                        game.setScreen(new FightScreen(game, FIGHT_PART.USUAL, false));
 
                     }
                 }
@@ -94,7 +95,7 @@ public class GameDisplay implements Screen {
                 Fighter enemy = new Fighter(game.getCollection().getFighterVector().get(1));
                 player.setEnnemi(enemy);
 
-                game.setScreen(new FightScreen(game, 1, false));
+                game.setScreen(SCREEN_TYPE.GAME);
 
             }
         });

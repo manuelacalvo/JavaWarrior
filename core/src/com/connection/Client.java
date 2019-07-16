@@ -1,5 +1,6 @@
 package com.connection;
 
+import com.adventuregames.fight.FIGHT_PART;
 import com.adventuregames.fight.FightScreen;
 import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
@@ -43,7 +44,7 @@ public class Client
             ennemy = (Fighter) object ;
             player.setEnnemi(ennemy);
             printStream.println("player one is playing...");
-            game.setScreen(new FightScreen((game), 1, true));
+            game.setScreen(new FightScreen((game), FIGHT_PART.FIRST_PART, true));
             //player.getFighter().fight_attacks(ennemy);
            // game.setScreen(new FightAttackDisplay(game, player.getFighter(), player.getEnnemi()));
             printStream.println("turn of player two:");
@@ -68,7 +69,7 @@ public class Client
 
 
                     printStream.println("player one is playing...");
-                    game.setScreen(new FightScreen((game),1,true));
+                    game.setScreen(new FightScreen((game),FIGHT_PART.FIRST_PART,true));
                     player.setEnnemi(ennemy);
                     player.getFighter().fight_attacks(ennemy);
 

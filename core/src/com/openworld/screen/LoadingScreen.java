@@ -60,7 +60,7 @@ public class LoadingScreen extends AbstractScreen {
         batch.end();
         if ((Gdx.input.isKeyPressed(Input.Keys.ENTER) || (Gdx.input.isKeyPressed(Input.Keys.DEL))) && assetManager.update()){
             //TODO : Add a animation smooth to go to the Game screen
-            getGame().setScreen(SCREEN_TYPE.GAME);
+            getGame().setScreen(SCREEN_TYPE.ENTER_PLAYER);
         }
     }
     @Override

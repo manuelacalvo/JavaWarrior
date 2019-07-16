@@ -62,14 +62,14 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer, Ser
     //fightAttackMode = 0 --> usual fight
     //fightAttackMode = 1 --> first part of the fightAttack
     //fightAttackMode = 2 --> second part of the fightAttack
-    private int fightAttackMode = 0;
+    private FIGHT_PART fightAttackMode = FIGHT_PART.USUAL;
     private boolean connected;
 
     /**
      * Fighter Screen Constructor
      * @param pGame - Game instance
      */
-    public FightScreen(JWGame pGame, int attackChoosen, boolean connected){
+    public FightScreen(JWGame pGame, FIGHT_PART attackChoosen, boolean connected){
         super(pGame);
         this.connected = connected;
         this.playerFighter = getGame().getCollection().getPlayer().getFighter();
@@ -230,50 +230,48 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer, Ser
 
         while ( currentEvent == null || currentEvent.isFinished()){
             if(queue.isEmpty() ) { // Event queue is empty
-                if(fightAttackMode == 0 ) {
-                    currentEvent = null;
-                    if (playerFighter.isAlive()) {
-                        getGame().setScreen(new TakeFeatures(getGame(), getGame().getCollection().getPlayer()));
-                    } else
-                        getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
-                }
-                if(fightAttackMode ==1) {
-                    currentEvent = null;
-                    if (playerFighter.isAlive()) {
-                    getGame().setScreen(new FightAttackDisplay(getGame(), playerFighter, enemyFighter, connected));
-                    }
-                }
-                if(fightAttackMode == 2 )
-                {   currentEvent = null;
+                switch (fightAttackMode){
 
-                    if(connected == false) {
-                        enemyFighter = new Fighter(getGame().getCollection().getPlayer().getEnnemi());
-
-                        if (enemyFighter.isAlive()) {
-
-                            fightAttackMode = 1;
-                            getGame().setScreen(new FightScreen(getGame(), fightAttackMode, connected));
-
+                    case USUAL:{
+                        currentEvent = null;
+                        if (playerFighter.isAlive()) {
+                            getGame().setScreen(new TakeFeatures(getGame(), getGame().getCollection().getPlayer()));
                         } else
                             getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
+                        break;
                     }
+                    case FIRST_PART:{
+                        currentEvent = null;
+                        if (playerFighter.isAlive())
+                            getGame().setScreen(new FightAttackDisplay(getGame(), playerFighter, enemyFighter, connected));
+                        break;
+                    }
+                    case SECOND_PART:{
+                        currentEvent = null;
+                        if(!connected) {
+                            enemyFighter = new Fighter(getGame().getCollection().getPlayer().getEnnemi());
 
+                            if (enemyFighter.isAlive()) {
+
+                                fightAttackMode = FIGHT_PART.FIRST_PART;
+                                getGame().setScreen(new FightScreen(getGame(), fightAttackMode, connected));
+
+                            } else
+                                getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
+                        }
+                        break;
+                    }
                 }
                 break;
-
             }
             else {
                 currentEvent = queue.poll();
                 currentEvent.begin(this);
             }
         }
-
         if (currentEvent != null) {
             currentEvent.update(delta);
         }
-
-
-
         uiStage.act();
     }
 

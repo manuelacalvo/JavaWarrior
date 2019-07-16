@@ -1,5 +1,6 @@
 package com.Display;
 
+import com.adventuregames.fight.FIGHT_PART;
 import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -42,7 +43,7 @@ public class RestDisplay implements Screen {
         font = new BitmapFont();
         str = player.getFighter().takeARest(player.getEnnemi());
         if (str.charAt(0) == ' ') {
-            game.setScreen(new FightScreen(game, 0, false));
+            game.setScreen(new FightScreen(game, FIGHT_PART.USUAL, false));
         }
 
 
