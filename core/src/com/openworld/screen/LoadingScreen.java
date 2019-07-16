@@ -38,7 +38,7 @@ public class LoadingScreen extends AbstractScreen {
 
         font = new BitmapFont(Gdx.files.internal("Ressources/Font/arcade/arcade.fnt"));
         batch = new SpriteBatch();
-        splashAtlas = new TextureAtlas("assets/splash.atlas");
+        splashAtlas = new TextureAtlas("Ressources/Splash/splash.atlas");
         Array<TextureAtlas.AtlasRegion> runningFrames = splashAtlas.findRegions("Font");
         runningAnimation = new Animation(latency, runningFrames, Animation.PlayMode.LOOP);
         TextureRegion firstTexture = runningFrames.first();

@@ -19,7 +19,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.GdxRuntimeException;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.Display.SCREEN_TYPE;
-import com.openworld.screen.LoadingScreen;
 import com.shopmanagement.Collection;
 import com.tools.JWAssetManager;
 import com.tools.SkinGenerator;
@@ -45,6 +44,7 @@ public class JWGame extends Game {
 	private MapProperties mapProperties;
 	private World world;
 	private String PlayerGender;
+	private boolean flag;
 
 	private static final float FIXED_TIME = 1 / 60f;
 	private float accumulator;
@@ -81,6 +81,7 @@ public class JWGame extends Game {
 		mapProperties = new MapProperties();
 
 		gameCamera = new OrthographicCamera();
+
 		screenCache = new EnumMap<>(SCREEN_TYPE.class);
 
 		if (!debug) { //Standard case
@@ -106,13 +107,15 @@ public class JWGame extends Game {
 			try{
 				//Gdx.app.debug(TAG, "Creating new screen " + screen_type);  //debug information
 				final Screen newScreen = (Screen) ClassReflection.getConstructor(screen_type.getScreenClass(), JWGame.class).newInstance(this);
+
 				screenCache.put(screen_type, newScreen);
 				setScreen(newScreen);
 			} catch (Exception e) {
 				throw new GdxRuntimeException("Screen " + screen_type + " could not be loaded");  //debug information
 			}
-		} else {
+		} else if ((screen != null) && !flag) {
 			//Gdx.app.debug(TAG, "Switching to screen " + screen_type);  //debug information
+			flag = true;
 			setScreen(screen_type);
 		}
 	}
