@@ -17,7 +17,6 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.enumfile.SCREEN_TYPE;
 import com.screen.AbstractScreen;
 import com.screen.GameScreen;
-
 import java.util.EnumMap;
 
 public class JavaWarrior extends Game {
@@ -89,8 +88,6 @@ public class JavaWarrior extends Game {
 	@Override
 	public void render() {
 		super.render();
-		//Display value betwwen to calculated frames
-		//Gdx.app.debug(TAG, "Time between frames is actually : " + Gdx.graphics.getRawDeltaTime());
 		//correction of Frame stack (macking a pause in order to finish game engine and get a fixe time between every frame)
 		accumulator += Math.min(0.25f,Gdx.graphics.getRawDeltaTime());
 		while (accumulator >= FIXED_TIME){

@@ -134,7 +134,7 @@ public class GameScreen extends AbstractScreen {
             Character.getY() == (int) b/Settings.SCALED_TILE_SIZE &&
             Gdx.input.isKeyPressed(Input.Keys.C) &&
             (WAY.UP == Character.getLookingAt())) {
-      font.draw(batch, "Created By : Baptiste Larrezet, \n Manuella Calvo and François Louis", 30, 90);
+      font.draw(batch, "Created By : Baptiste Larrezet @2019", 25, 90);
     }
 
     batch.end();
