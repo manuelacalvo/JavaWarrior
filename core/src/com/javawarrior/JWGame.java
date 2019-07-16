@@ -85,8 +85,7 @@ public class JWGame extends Game {
 		screenCache = new EnumMap<>(SCREEN_TYPE.class);
 
 		if (!debug) { //Standard case
-			//setScreen(SCREEN_TYPE.LOADING);
-			setScreen(SCREEN_TYPE.LOADING);
+			setScreen(SCREEN_TYPE.CHARACTERSEL);
 		} else {
 			Gdx.app.setLogLevel(Application.LOG_DEBUG); //debug information
 			// DEBUG
@@ -111,7 +110,8 @@ public class JWGame extends Game {
 				screenCache.put(screen_type, newScreen);
 				setScreen(newScreen);
 			} catch (Exception e) {
-				throw new GdxRuntimeException("Screen " + screen_type + " could not be loaded");  //debug information
+				throw new GdxRuntimeException("Screen " + screen_type + " could not be loaded" +
+						"+ "+ e.toString());  //debug information
 			}
 		} else if ((screen != null) && !flag) {
 			//Gdx.app.debug(TAG, "Switching to screen " + screen_type);  //debug information

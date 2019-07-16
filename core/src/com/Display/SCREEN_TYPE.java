@@ -4,12 +4,14 @@ import com.openworld.screen.AnimationScreen;
 import com.openworld.screen.GameScreen;
 import com.openworld.screen.LoadingScreen;
 import com.badlogic.gdx.Screen;
+import com.screen.CharacterSelScreen;
 
 public enum SCREEN_TYPE {
     GAME(GameScreen.class),
     LOADING(LoadingScreen.class),
     ANIMATE(AnimationScreen.class),
-    ENTER_PLAYER(PlayerDisplay.class);
+    ENTER_PLAYER(PlayerDisplay.class),
+    CHARACTERSEL(CharacterSelScreen .class);
 
     private final Class<? extends Screen> screenClass;
 

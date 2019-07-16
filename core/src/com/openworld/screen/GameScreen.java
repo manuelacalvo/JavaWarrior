@@ -131,7 +131,7 @@ public class GameScreen extends AbstractScreen {
             (Character.getDestX() >= oxFight/Settings.SCALED_TILE_SIZE) &&
             (Character.getDestY() >= oyFight/Settings.SCALED_TILE_SIZE) &&
             (randomNumberGenerator(1,600) == 246)) {
-      getGame().setScreen(SCREEN_TYPE.ANIMATE);
+      getGame().setScreen(new FightScreen(getGame(), FIGHT_PART.FIRST_PART,false));
 
     }
   }

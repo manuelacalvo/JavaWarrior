@@ -33,13 +33,14 @@ public class LoadingScreen extends AbstractScreen {
         this.PlayerGender = game.setPlayerGender("F");
 
         //TODO set screen to choose character gender
-        assetManager.load("RessourcesTileset/Hero" + PlayerGender + ".atlas", TextureAtlas.class);
+        assetManager.load("Ressources/Tileset/Hero" + PlayerGender + ".atlas", TextureAtlas.class);
         assetManager.finishLoading();
 
         font = new BitmapFont(Gdx.files.internal("Ressources/Font/arcade/arcade.fnt"));
         batch = new SpriteBatch();
         splashAtlas = new TextureAtlas("Ressources/Splash/splash.atlas");
         Array<TextureAtlas.AtlasRegion> runningFrames = splashAtlas.findRegions("Font");
+
         runningAnimation = new Animation(latency, runningFrames, Animation.PlayMode.LOOP);
         TextureRegion firstTexture = runningFrames.first();
         origine_x = (Gdx.graphics.getWidth()  - firstTexture.getRegionWidth())/2;

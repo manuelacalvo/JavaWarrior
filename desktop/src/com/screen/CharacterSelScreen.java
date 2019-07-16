@@ -1,5 +1,7 @@
 package com.screen;
 
+import com.Display.AbstractScreen;
+import com.Display.SCREEN_TYPE;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,8 +10,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.utils.Array;
-import com.enumfile.SCREEN_TYPE;
-import com.javawarrior.JavaWarrior;
+import com.javawarrior.JWGame;
 
 public class CharacterSelScreen extends AbstractScreen {
     private boolean Begin;
@@ -18,9 +19,11 @@ public class CharacterSelScreen extends AbstractScreen {
     private Texture texture2;
     private BitmapFont font;
     private TextureAtlas splashAtlas;
+    private JWGame context;
 
-    public CharacterSelScreen(JavaWarrior context) {
+    public CharacterSelScreen(JWGame context) {
         super(context);
+        this.context=context;
         Begin = false;
         batch = new SpriteBatch();
         texture1 = new Texture(Gdx.files.internal("Ressources/Tileset/dp_01.png"));
@@ -44,7 +47,7 @@ public class CharacterSelScreen extends AbstractScreen {
                 Begin = true;
             }
             if (Begin == true){
-                getApp().setScreen(SCREEN_TYPE.LOADING);
+                getGame().setScreen(SCREEN_TYPE.LOADING);
         }
         batch.begin();
         batch.draw(texture1, 60, 40);
@@ -58,6 +61,12 @@ public class CharacterSelScreen extends AbstractScreen {
     public void resize(int width, int height) { }
     @Override
     public void pause() { }
+
+    @Override
+    public void update(float delta) {
+
+    }
+
     @Override
     public void resume() { }
     @Override
