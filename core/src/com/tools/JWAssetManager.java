@@ -20,15 +20,15 @@ public class JWAssetManager extends AssetManager {
     public final static String path_battlePack = "core/assets/graphics/ui/battle/battlepack.atlas";
 
     /* FIGHTERS */
-    public final static String path_fighterUser = "core/assets/graphics/fighter_picture/User.jpg";
-    public final static String path_fighterBerserker = "core/assets/graphics/fighter_picture/Berserker.jpg";
-    public final static String path_fighterOrc = "core/assets/graphics/fighter_picture/Orc.jpg";
-    public final static String path_fighterTroll = "core/assets/graphics/fighter_picture/Troll.jpg";
-    public final static String path_fighterWizzard = "core/assets/graphics/fighter_picture/Wizard.jpg";
-    public final static String path_fighterDragon = "core/assets/graphics/fighter_picture/Dragon.jpg";
-    public final static String path_fighterNinja = "core/assets/graphics/fighter_picture/Ninja.jpg";
-    public final static String path_fighterDoppleganger = "core/assets/graphics/fighter_picture/Doppleganger.jpg";
-    public final static String path_fighterNestOfSnakes = "core/assets/graphics/fighter_picture/Nest of snakes.jpg";
+    public final static String path_fighterUser = "core/assets/graphics/fighter_picture/User.png";
+    public final static String path_fighterBerserker = "core/assets/graphics/fighter_picture/Berserker.png";
+    public final static String path_fighterOrc = "core/assets/graphics/fighter_picture/Orc.png";
+    public final static String path_fighterTroll = "core/assets/graphics/fighter_picture/Troll.png";
+    public final static String path_fighterWizzard = "core/assets/graphics/fighter_picture/Wizard.png";
+    public final static String path_fighterDragon = "core/assets/graphics/fighter_picture/Dragon.png";
+    public final static String path_fighterNinja = "core/assets/graphics/fighter_picture/Ninja.png";
+    public final static String path_fighterDoppleganger = "core/assets/graphics/fighter_picture/Doppleganger.png";
+    public final static String path_fighterNestOfSnakes = "core/assets/graphics/fighter_picture/Nest of snakes.png";
     public final static String path_fighterMystery = "core/assets/graphics/fighter_picture/mystery.png";
 
     /* BACKGROUND *//*
@@ -105,7 +105,7 @@ public class JWAssetManager extends AssetManager {
         instance.load(path_pokefont, BitmapFont.class);
 
         instance.load(path_fighterUser, Texture.class);
-        instance.load(path_fighterMystery, Texture.class);
+        //instance.load(path_fighterMystery, Texture.class);
         instance.load(path_fighterBerserker, Texture.class);
         instance.load(path_fighterOrc, Texture.class);
         instance.load(path_fighterTroll, Texture.class);

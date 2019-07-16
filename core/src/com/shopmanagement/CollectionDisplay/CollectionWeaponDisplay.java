@@ -153,7 +153,7 @@ public class CollectionWeaponDisplay implements Screen {
         sword2.setSize(30,40);
         price3Gold = new TextArea(Integer.toString(coll.getWeaponVector().get(2).getPrice()), skin2);
 
-        Texture f4 = new Texture(Gdx.files.internal("core/assets/graphics/items/sword.jpg"));
+        Texture f4 = new Texture(Gdx.files.internal("core/assets/graphics/items/sword.png"));
         Drawable drawable4 = new TextureRegionDrawable(new TextureRegion(f4));
         superSword = new ImageButton(drawable4);
         superSword.setSize(30,40);
@@ -212,14 +212,14 @@ public class CollectionWeaponDisplay implements Screen {
         potion.setSize(30,40);
         price12Gold = new TextArea(Integer.toString(coll.getTreasureVector().get(0).getPrice()), skin2);
 
-        Texture f13 = new Texture(Gdx.files.internal("core/assets/graphics/items/scroll.jpg"));
+        Texture f13 = new Texture(Gdx.files.internal("core/assets/graphics/items/scroll.png"));
         Drawable drawable13 = new TextureRegionDrawable(new TextureRegion(f13));
         scroll = new ImageButton(drawable13);
         scroll.setSize(30,40);
         price13Gold = new TextArea(Integer.toString(coll.getTreasureVector().get(1).getPrice()), skin2);
 
 
-        Texture textureGold  = new Texture(Gdx.files.internal("core/assets/graphics/items/gold.PNG"));
+        Texture textureGold  = new Texture(Gdx.files.internal("core/assets/graphics/items/gold.png"));
         Drawable drawableGold = new TextureRegionDrawable(new TextureRegion(textureGold));
         gold = new Image(drawableGold);
         gold.setPosition(240, 10);

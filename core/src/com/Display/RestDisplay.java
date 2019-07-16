@@ -34,7 +34,7 @@ public class RestDisplay implements Screen {
     private TextureAtlas buttonAtlas;
 
 
-    public RestDisplay(JWGame aGame, Player player) {
+    public RestDisplay(JWGame aGame, final Player player) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);

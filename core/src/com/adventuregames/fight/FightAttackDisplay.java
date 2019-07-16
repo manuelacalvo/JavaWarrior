@@ -40,7 +40,7 @@ public class FightAttackDisplay implements Screen, Serializable {
     private String text;
     private SpriteBatch batch;
 
-    public FightAttackDisplay(JWGame aGame, Fighter fighter, Fighter enemy, boolean connected) {
+    public FightAttackDisplay(JWGame aGame, final Fighter fighter, Fighter enemy, final boolean connected) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         tableAttack=new Table();
