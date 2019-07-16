@@ -1,0 +1,244 @@
+
+TilesetGame.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Berserker
+  rotate: false
+  xy: 268, 847
+  size: 139, 128
+  orig: 139, 128
+  offset: 0, 0
+  index: -1
+Doppleganger
+  rotate: false
+  xy: 409, 847
+  size: 139, 128
+  orig: 139, 128
+  offset: 0, 0
+  index: -1
+Dragon
+  rotate: false
+  xy: 550, 847
+  size: 139, 128
+  orig: 139, 128
+  offset: 0, 0
+  index: -1
+Genius
+  rotate: false
+  xy: 127, 846
+  size: 139, 129
+  orig: 139, 129
+  offset: 0, 0
+  index: -1
+Nest of snakes
+  rotate: false
+  xy: 691, 847
+  size: 139, 128
+  orig: 139, 128
+  offset: 0, 0
+  index: -1
+Ninja
+  rotate: false
+  xy: 832, 847
+  size: 139, 128
+  orig: 139, 128
+  offset: 0, 0
+  index: -1
+Orc
+  rotate: false
+  xy: 2, 468
+  size: 139, 128
+  orig: 139, 128
+  offset: 0, 0
+  index: -1
+Sorcerer
+  rotate: false
+  xy: 2, 338
+  size: 139, 128
+  orig: 139, 128
+  offset: 0, 0
+  index: -1
+Troll
+  rotate: false
+  xy: 2, 208
+  size: 139, 128
+  orig: 139, 128
+  offset: 0, 0
+  index: -1
+User
+  rotate: false
+  xy: 2, 78
+  size: 139, 128
+  orig: 139, 128
+  offset: 0, 0
+  index: -1
+Valkyrie
+  rotate: false
+  xy: 127, 716
+  size: 139, 128
+  orig: 139, 128
+  offset: 0, 0
+  index: -1
+Wizard
+  rotate: false
+  xy: 268, 717
+  size: 139, 128
+  orig: 139, 128
+  offset: 0, 0
+  index: -1
+buy
+  rotate: false
+  xy: 588, 630
+  size: 173, 70
+  orig: 173, 70
+  offset: 0, 0
+  index: -1
+chain_mail
+  rotate: false
+  xy: 143, 142
+  size: 93, 123
+  orig: 93, 123
+  offset: 0, 0
+  index: -1
+connect
+  rotate: false
+  xy: 763, 629
+  size: 173, 71
+  orig: 173, 71
+  offset: 0, 0
+  index: -1
+continue
+  rotate: false
+  xy: 409, 772
+  size: 178, 73
+  orig: 178, 73
+  offset: 0, 0
+  index: -1
+dagger
+  rotate: false
+  xy: 2, 598
+  size: 108, 152
+  orig: 108, 152
+  offset: 0, 0
+  index: -1
+gold
+  rotate: false
+  xy: 287, 592
+  size: 93, 123
+  orig: 93, 123
+  offset: 0, 0
+  index: -1
+heavy_armor
+  rotate: false
+  xy: 143, 517
+  size: 102, 123
+  orig: 102, 123
+  offset: 0, 0
+  index: -1
+item725
+  rotate: false
+  xy: 247, 467
+  size: 93, 123
+  orig: 93, 123
+  offset: 0, 0
+  index: -1
+leather_armor
+  rotate: false
+  xy: 143, 392
+  size: 102, 123
+  orig: 102, 123
+  offset: 0, 0
+  index: -1
+ok
+  rotate: false
+  xy: 767, 774
+  size: 177, 71
+  orig: 177, 71
+  offset: 0, 0
+  index: -1
+options
+  rotate: false
+  xy: 2, 2
+  size: 172, 74
+  orig: 172, 74
+  offset: 0, 0
+  index: -1
+partyCancelSel
+  rotate: false
+  xy: 572, 580
+  size: 112, 48
+  orig: 112, 48
+  offset: 0, 0
+  index: -1
+play
+  rotate: false
+  xy: 409, 699
+  size: 177, 71
+  orig: 177, 71
+  offset: 0, 0
+  index: -1
+potion
+  rotate: false
+  xy: 247, 342
+  size: 93, 123
+  orig: 93, 123
+  offset: 0, 0
+  index: -1
+quit
+  rotate: false
+  xy: 589, 772
+  size: 176, 73
+  orig: 176, 73
+  offset: 0, 0
+  index: -1
+restart
+  rotate: false
+  xy: 767, 702
+  size: 174, 70
+  orig: 174, 70
+  offset: 0, 0
+  index: -1
+scroll
+  rotate: false
+  xy: 382, 574
+  size: 93, 123
+  orig: 93, 123
+  offset: 0, 0
+  index: -1
+sheild
+  rotate: false
+  xy: 143, 267
+  size: 102, 123
+  orig: 102, 123
+  offset: 0, 0
+  index: -1
+shop
+  rotate: false
+  xy: 112, 642
+  size: 173, 72
+  orig: 173, 72
+  offset: 0, 0
+  index: -1
+silver
+  rotate: false
+  xy: 477, 574
+  size: 93, 123
+  orig: 93, 123
+  offset: 0, 0
+  index: -1
+start
+  rotate: false
+  xy: 588, 702
+  size: 177, 68
+  orig: 177, 68
+  offset: 0, 0
+  index: -1
+sword
+  rotate: false
+  xy: 2, 752
+  size: 123, 223
+  orig: 123, 223
+  offset: 0, 0
+  index: -1
