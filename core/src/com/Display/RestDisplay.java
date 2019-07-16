@@ -39,7 +39,7 @@ public class RestDisplay implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         batch = new SpriteBatch();
-        Texture texture = new Texture(Gdx.files.internal("core/assets/graphics/Background/bg.png"));
+        Texture texture = new Texture(Gdx.files.internal("core/assets/graphics/Background/rest.png"));
         image = new Image(texture);
         image.setSize(stage.getWidth(), stage.getHeight());
         font = new BitmapFont();
@@ -50,7 +50,7 @@ public class RestDisplay implements Screen {
 
 
         Skin skin = new Skin();
-        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/map/TilesetGame.atlas")); //
         skin.addRegions(buttonAtlas);
         textButtonStyle3 = new ImageTextButton.ImageTextButtonStyle();
         textButtonStyle3.font = font;
@@ -97,7 +97,7 @@ public class RestDisplay implements Screen {
         stage.act();
         stage.draw();
         batch.begin();
-        font.draw(batch, str, 300, 380);
+        font.draw(batch, str, Gdx.graphics.getWidth()*3/10, Gdx.graphics.getHeight()/2);
         batch.end();
 
     }

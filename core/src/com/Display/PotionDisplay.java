@@ -48,7 +48,7 @@ public class PotionDisplay implements Screen{
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         batch = new SpriteBatch();
-        Texture texture = new Texture(Gdx.files.internal("core/assets/graphics/Background/bg.png"));
+        Texture texture = new Texture(Gdx.files.internal("core/assets/graphics/Background/pink.png"));
         image = new Image(texture);
         image.setSize(stage.getWidth(), stage.getHeight());
         font = new BitmapFont();
@@ -57,14 +57,14 @@ public class PotionDisplay implements Screen{
 
         font = new BitmapFont();
         skin = new Skin();
-        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/map/TilesetGame.atlas")); //
         skin.addRegions(buttonAtlas);
         textButtonStyle = new ImageTextButton.ImageTextButtonStyle();
         textButtonStyle.font = font;
         textButtonStyle.up = skin.getDrawable("potion");
         textButtonStyle.down = skin.getDrawable("potion");
         buttonPotion = new ImageTextButton("Potion", textButtonStyle);
-        buttonPotion.setPosition(50, 30);
+        buttonPotion.setPosition(Gdx.graphics.getWidth()*6/10, 50);
         buttonPotion.getImageCell().size(50,50);
         buttonPotion.addListener(new ChangeListener() {
 
@@ -78,7 +78,7 @@ public class PotionDisplay implements Screen{
                 }else  str = "You don't have any potion ";
             }
         });
-        buttonPotion.setPosition(50, 300);
+        buttonPotion.setPosition(Gdx.graphics.getWidth()*5/10, 50);
         buttonPotion.setSize(70,70);
 
 
@@ -88,7 +88,7 @@ public class PotionDisplay implements Screen{
         textButtonStyle2.down = skin.getDrawable("scroll");
 
         buttonScroll = new ImageTextButton("Scroll", textButtonStyle2);
-        buttonScroll.setPosition(50, 200);
+        buttonScroll.setPosition(Gdx.graphics.getWidth()*4/10, 50);
         buttonScroll.setSize(70,70);
         buttonScroll.addListener(new ChangeListener() {
 
@@ -145,7 +145,7 @@ public class PotionDisplay implements Screen{
         stage.act();
         stage.draw();
         batch.begin();
-        font.draw(batch, str, 300, 380);
+        font.draw(batch, str, Gdx.graphics.getWidth()*4/10, 40);
         batch.end();
 
         if(player.getFighter().getHitPoints() == 0)
