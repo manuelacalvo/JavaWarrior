@@ -280,6 +280,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer, Ser
                     }
 
                 }
+                break;
             }
             else {
                 currentEvent = queue.poll();
