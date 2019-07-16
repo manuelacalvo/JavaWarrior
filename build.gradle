@@ -15,11 +15,31 @@ buildscript {
     }
 }
 
+plugins {
+    id 'java'
+}
+
 allprojects {
     apply plugin: "eclipse"
     apply plugin: "idea"
+    compileJava {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    task fatJar(type: Jar) {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+        version = '1.0'
+        manifest {
+            attributes 'Implementation-Title': 'Gradle Jar File Example',
+                    'Implementation-Version': version,
+                    'Main-Class': 'com.idea.DesktopLauncher'
+        }
+        baseName = project.name + '-all'
+        from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+        with jar
+    }
 
-    version = '1.0'
     ext {
         appName = "Java-Warrior"
         gdxVersion = '1.9.9'
@@ -37,6 +57,7 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
     }
+
 }
 
 project(":desktop") {
