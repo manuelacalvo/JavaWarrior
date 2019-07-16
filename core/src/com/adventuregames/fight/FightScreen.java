@@ -32,6 +32,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer, Ser
 
     /* FightScreen Controller */
     private FightScreenController controller;
+    private boolean connected;
 
     /* VIEW */
     private Viewport gameViewport;
@@ -63,7 +64,6 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer, Ser
     //fightAttackMode = 1 --> first part of the fightAttack
     //fightAttackMode = 2 --> second part of the fightAttack
     private FIGHT_PART fightAttackMode = FIGHT_PART.USUAL;
-    private boolean connected;
 
     /**
      * Fighter Screen Constructor
@@ -72,6 +72,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer, Ser
     public FightScreen(JWGame pGame, FIGHT_PART attackChoosen, boolean connected){
         super(pGame);
         this.connected = connected;
+
         this.playerFighter = getGame().getCollection().getPlayer().getFighter();
         this.playerFighter.setParty(FIGHT_PARTY.PLAYER); // Make sure playerFighter is tagged as player
         fightAttackMode = attackChoosen;
@@ -279,11 +280,11 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer, Ser
      * Used to change a Fighter on the scene
      * @param oFighter
      */
-    public void setFighter(Fighter oFighter){
+    public void setFighter(Fighter oFighter,int HPInstant, int HPMax){
         if(oFighter.getParty()==FIGHT_PARTY.OPPONENT){
-            enemyStatusBox=new StatusBox(getGame(),oFighter);
+            enemyStatusBox.updateFighter(oFighter, HPInstant, HPMax);
         } else{
-            playerStatusBox=new StatusBox(getGame(),oFighter);
+            playerStatusBox.updateFighter(oFighter, HPInstant, HPMax);
         }
         fightRenderer.updatePlayerTexturePath(oFighter.getParty(),oFighter.getRelativePathPicture());
     }

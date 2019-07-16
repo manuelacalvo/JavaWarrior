@@ -78,7 +78,7 @@ public class FightScreenController extends InputAdapter implements FightEventQue
                         enemyFighter.fight_attacks(playerFighter);
                         enemyFighter.setChoiceAttack(enemyFighter.randomNumberGenerator(0, 2));
                     }
-                    playerFighter.fightTurnAtack(enemyFighter);
+                    playerFighter.fightTurnAttack(enemyFighter);
                     break;
             }
         } else {
@@ -90,7 +90,7 @@ public class FightScreenController extends InputAdapter implements FightEventQue
                     if (playerFighter.isAlive()) {
                         playerFighter.fight_attacks(enemyFighter);
                     }
-                    playerFighter.fightTurnAtack(enemyFighter);
+                    playerFighter.fightTurnAttack(enemyFighter);
                     break;
             }
         }
@@ -98,7 +98,6 @@ public class FightScreenController extends InputAdapter implements FightEventQue
 
     /**
      * Adds an event to the queue to be displayed
-     *
      * @param event
      */
     @Override

@@ -288,7 +288,11 @@ public class Fighter implements FightEventQueuer, Serializable {
         }
     }
 
-    public void fightTurnAtack(Fighter enemy)
+    /**
+     * Displays a Victory/Defeat Message
+     * @param enemy
+     */
+    public void fightTurnAttack(Fighter enemy)
     {
         if(!this.isAlive())
         {

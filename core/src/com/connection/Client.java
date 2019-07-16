@@ -9,94 +9,89 @@ import com.javawarrior.JWGame;
 import java.io.*;
 import java.net.Socket;
 
-
 public class Client
 {
     private boolean end = false;
     private Player player;
-    private Fighter ennemy;
+
+
     private JWGame game;
 
-    public Client(JWGame aGame, Player player)
+    private Fighter enemy;
+
+
+    public Client(JWGame oGame, Player player)
     {
+        this.game=oGame;
         this.player = player;
-        this.ennemy = null;
-        this.game = aGame;
+        this.enemy = null;
     }
 
     public void go(String ip)
     {
         try
         {
-            Socket incoming = new Socket(ip,4242);
-            BufferedReader bufIn = new BufferedReader(new InputStreamReader(System.in));
-            PrintStream printStream = new PrintStream(incoming.getOutputStream());
-            InputStreamReader stream = new InputStreamReader(incoming.getInputStream());
-            BufferedReader reader = new BufferedReader(stream);
+            Socket socket = new Socket("192.168.0.36",4242);
+
+            // PrintStream adds functionality to another output stream
+            PrintStream printStream = new PrintStream(socket.getOutputStream());
+
+            // InputStreamReader is a bridge from byte streams to character streams: It reads bytes and decodes them into characters using a specified charset
+            InputStreamReader inputStreamReader = new InputStreamReader(socket.getInputStream());
+
+            // Reads text from a character-input stream, buffering characters
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+
             System.out.println("Well connected");
 
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(incoming.getOutputStream());
+            // ObjectOutputStream writes primitive data types and graphs of Java objects to an OutputStream. objects can be read (reconstituted) using an ObjectInputStream
+            ObjectOutputStream objectOutputStream = new ObjectOutputStream(socket.getOutputStream());
             objectOutputStream.flush();
 
-            ObjectInputStream objectInputStream = new ObjectInputStream(incoming.getInputStream());
+            // ObjectInputStream deserializes primitive data and objects previously written using an ObjectOutputStream
+            ObjectInputStream objectInputStream = new ObjectInputStream(socket.getInputStream());
 
-            Object object= objectInputStream.readObject();
-            ennemy = (Fighter) object ;
-            player.setEnnemi(ennemy);
+            Object object = objectInputStream.readObject();
+            enemy = (Fighter) object ;
             printStream.println("player one is playing...");
+            player.getFighter().fight(enemy);
             game.setScreen(new FightScreen((game), FIGHT_PART.FIRST_PART, true));
-            //player.getFighter().fight_attacks(ennemy);
-           // game.setScreen(new FightAttackDisplay(game, player.getFighter(), player.getEnnemi()));
+
             printStream.println("turn of player two:");
-            String advice = reader.readLine();
+
+            String advice = bufferedReader.readLine();
             System.out.println(advice);
             if(advice.trim().equalsIgnoreCase("object needed")) {
-                objectOutputStream.writeObject(ennemy);
+                objectOutputStream.writeObject(enemy);
                 objectOutputStream.flush();
                 objectOutputStream.writeObject(player.getFighter());
                 objectOutputStream.flush();
             }
 
-            while(true)
+            while(!end)
             {
-                advice = reader.readLine();
+                advice = bufferedReader.readLine();
                 System.out.println(advice);
 
                 if (advice.equalsIgnoreCase("turn of player one: ") && !end) {
                     printStream.println("object needed");
                     player.setFighter((Fighter)objectInputStream.readObject());
-                    ennemy = (Fighter)objectInputStream.readObject();
-
+                    enemy = (Fighter)objectInputStream.readObject();
 
                     printStream.println("player one is playing...");
                     game.setScreen(new FightScreen((game),FIGHT_PART.FIRST_PART,true));
-                    player.setEnnemi(ennemy);
-                    player.getFighter().fight_attacks(ennemy);
-
+                    player.setEnnemi(enemy);
+                    player.getFighter().fight_attacks(enemy);
 
                     printStream.println("turn of player two: ");
 
-
-
                 }
                 if(advice.trim().equalsIgnoreCase("object needed")) {
-                    objectOutputStream.writeObject(ennemy);
+                    objectOutputStream.writeObject(enemy);
                     objectOutputStream.flush();
                     objectOutputStream.writeObject(player.getFighter());
                     objectOutputStream.flush();
                 }
-                /*if(!player.getFighter().isAlive())
-                {
-                    end = true;
-                    System.out.println("you are dead");
-                }
-                if(ennemy!= null) {
-                    if (!ennemy.isAlive()) {
-                        end = true;
-                        System.out.println("you win");
-                    }
-                }*/
-
             }
 
         }
