@@ -32,6 +32,7 @@ public class JavaWarrior extends Game {
 	private MapProperties mapProperties;
 	private World world;
 	private String PlayerGender;
+	private boolean flag;
 
 	private static final float FIXED_TIME = 1 / 60f;
 	private float accumulator;
@@ -41,6 +42,7 @@ public class JavaWarrior extends Game {
 		//To debug with TAG
 	    Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
+	    flag = false;
 		accumulator = 0;
 	    world = new World(new Vector2(0, 0), true);
 		assetManager = new AssetManager();
@@ -58,15 +60,16 @@ public class JavaWarrior extends Game {
 		//creat or change screen depending of needed + error display
 		if(screen == null){
 			try{
-				//Gdx.app.debug(TAG, "Creating new screen " + screen_type);  //debug information
+				Gdx.app.debug(TAG, "Creating new screen " + screen_type);  //debug information
 				final AbstractScreen newScreen = (AbstractScreen) ClassReflection.getConstructor(screen_type.getScreenClass(), JavaWarrior.class).newInstance(this);
 				screenCache.put(screen_type, newScreen);
 				setScreen(newScreen);
 			} catch (Exception e) {
 				throw new GdxRuntimeException("Screen " + screen_type + " could not be loaded");  //debug information
 			}
-		} else {
-			//Gdx.app.debug(TAG, "Switching to screen " + screen_type);  //debug information
+		} else if ((screen != null) && !flag) {
+			Gdx.app.debug(TAG, "Switching to screen " + screen_type);  //debug information
+			flag = true;
 			setScreen(screen_type);
 		}
 	}

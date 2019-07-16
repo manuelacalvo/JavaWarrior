@@ -127,8 +127,8 @@ public class GameScreen extends AbstractScreen {
     batch.end();
 
     //Change screen if fight
-    if ((Character.getDestX() <= wxFight/Settings.SCALED_TILE_SIZE) &&
-            (Character.getDestY() <= hyFight/Settings.SCALED_TILE_SIZE) &&
+    if ((Character.getDestX() <= wxFight/Settings.SCALED_TILE_SIZE - 1) &&
+            (Character.getDestY() <= hyFight/Settings.SCALED_TILE_SIZE - 1) &&
             (Character.getDestX() >= oxFight/Settings.SCALED_TILE_SIZE) &&
             (Character.getDestY() >= oyFight/Settings.SCALED_TILE_SIZE) &&
             (randomNumberGenerator(1,600) == 246)) {
