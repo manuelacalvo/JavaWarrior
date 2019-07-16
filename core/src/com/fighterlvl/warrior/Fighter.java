@@ -127,7 +127,7 @@ public class Fighter implements FightEventQueuer, Serializable {
      * Defense is the sum of armors points.
      * @return defense value
      */
-    private int getDefense(){
+    public int getDefense(){
         return (getArmor1()!=null ? getArmor1().getProtection():0)
                 + (getArmor2()!=null ? getArmor2().getProtection():0);
     }
@@ -195,7 +195,7 @@ public class Fighter implements FightEventQueuer, Serializable {
 
 
     public void setHitPoints(int iHitPoints){
-        this.hitPoints = iHitPoints>0 && iHitPoints<=this.hitPoints ? iHitPoints:0;
+        this.hitPoints = (iHitPoints>0) ? iHitPoints:0;
     }
 
     public FIGHT_PARTY getParty(){ return this.party; }
@@ -214,10 +214,11 @@ public class Fighter implements FightEventQueuer, Serializable {
         outPutText(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
         this.setRestOnce(false);
         //Different attacks based on weapon's attacks per turn
-        if(this.isAlive() && enemy.isAlive()) {
+
 
             for (int i = 0; i < this.getWeapon().getAttacksPerTurn(); i++) {
-                outPutText("Attack " + (i+1));
+                if(this.isAlive() && enemy.isAlive()) {
+                    outPutText("Attack " + (i+1));
 
                 int rand = randomNumberGenerator(1, 20);
                 outPutText("\tRandom : " + rand+
@@ -238,30 +239,34 @@ public class Fighter implements FightEventQueuer, Serializable {
 
     public void fightAttackBegin()
     {
-        outPutText(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
+        if(this.isAlive()) {
+            outPutText(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
 
 
-        outPutText( "Choose One Attack");
+            outPutText("Choose One Attack");
+        }
 
     }
 
     public void fight_attacks(Fighter enemy){
-        outPutText(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
-        this.setRestOnce(false);
-                int rand = getAttacks().get(this.choiceAttack).calculateImpact();
-                outPutText("\tAttack : " + getAttacks().get(this.choiceAttack).toString() + "\nRand : " + rand+
-                        "\nEnemy protection : " + enemy.getDefense());
-                if (rand > enemy.getArmor1().getProtection()) {
-                    int hitPower = randomNumberGenerator(getWeapon().getMinDamage(), getWeapon().getMaxDamage());
-                    enemy.takeDamage(hitPower);
-                    outPutText("\tHit : " + hitPower);
-                    outPutText("Life of " + enemy.getName()+ " is " + enemy.getHitPoints()+"\r\n");
-                } else {
-                    enemy.takeDamage(0);
-                    outPutText("This attack failed !");
-                }
+        if(this.isAlive() && enemy.isAlive()) {
+            outPutText(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
+            this.setRestOnce(false);
+            int rand = getAttacks().get(this.choiceAttack).calculateImpact();
+            outPutText("\tAttack : " + getAttacks().get(this.choiceAttack).toString() + "\nRand : " + rand +
+                    "\nEnemy protection : " + enemy.getDefense());
+            if (rand > enemy.getArmor1().getProtection()) {
+                int hitPower = randomNumberGenerator(getWeapon().getMinDamage(), getWeapon().getMaxDamage());
+                enemy.takeDamage(hitPower);
+                outPutText("\tHit : " + hitPower);
+                outPutText("Life of " + enemy.getName() + " is " + enemy.getHitPoints() + "\r\n");
+            } else {
+                enemy.takeDamage(0);
+                outPutText("This attack failed !");
+            }
+        }
 
-        System.out.println("Player : " + this.getName() + " isAlive : " + this.isAlive());
+
 
     }
 
@@ -284,7 +289,7 @@ public class Fighter implements FightEventQueuer, Serializable {
         if(!enemy.isAlive())
         {
             outPutText("You won");
-            //getEnnemyRessources(enemy); FIXME Interraction
+
         }
     }
 
@@ -301,7 +306,7 @@ public class Fighter implements FightEventQueuer, Serializable {
         if(!enemy.isAlive())
         {
             outPutText("You won");
-            //getEnnemyRessources(enemy);
+
         }
     }
 
@@ -327,8 +332,7 @@ public class Fighter implements FightEventQueuer, Serializable {
 
     public void getEnnemyArmor2(Fighter enemy)
     {
-                    this.setArmor2(enemy.getArmor2());
-
+        this.setArmor2(enemy.getArmor2());
     }
 
     public void getEnnemyTreasure(Fighter enemy)
@@ -340,7 +344,9 @@ public class Fighter implements FightEventQueuer, Serializable {
 
                 if(this.getTreasures().get(j).getName() == enemy.getTreasures().get(i).getName())
                 {
+
                     this.getTreasures().get(j).setNumber(this.getTreasures().get(j).getNumber() + 1);
+
                 }
             }
         }
@@ -382,23 +388,32 @@ public class Fighter implements FightEventQueuer, Serializable {
             if (random <= 3) // 30%
             {
                 min = 5 ; max = 10;
+                hitPoint = this.randomNumberGenerator(min, max);
+                this.gainLife(hitPoint);
+                str = "You earn " + hitPoint + " points";
             } else if (random <= 7) //40%
             {
                 min = 11; max = 20;
+                hitPoint = this.randomNumberGenerator(min, max);
+                this.gainLife(hitPoint);
+                str = "You earn " + hitPoint + " points";
             } else if (random <= 9) //20%
             {
                 min = 21; max = 30;
+                hitPoint = this.randomNumberGenerator(min, max);
+                this.gainLife(hitPoint);
+                str = "You earn " + hitPoint + " points";
             } else //10%
             {
                 min = 1; max = 20;
+                hitPoint = this.randomNumberGenerator(min, max);
+                this.takeDamage(hitPoint);
+                str = "You lose " + hitPoint + " points";
             }
-            hitPoint = this.randomNumberGenerator(min, max);
-            this.gainLife(hitPoint);
-            str = "You earn " + hitPoint + " points";
 
-            str += "\n" + "Hit points" + this.hitPoints;
+            str += "\n" + "Hit points " + this.hitPoints;
         }
-        else str = "You don't have any potions ";
+
 
         return str;
     }

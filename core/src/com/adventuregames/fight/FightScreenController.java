@@ -62,38 +62,27 @@ public class FightScreenController extends InputAdapter implements FightEventQue
 
         Collection coll = game.getCollection();
         enemyFighter = game.getCollection().getPlayer().getEnnemi();
-        if(!connected) {
-            switch (fightAttackMode){
-                case USUAL:
-                    playerFighter.fight(enemyFighter);
-                    break;
-                case FIRST_PART :
-                    playerFighter.fightAttackBegin();
-                    break;
-                case SECOND_PART :
-                    if (playerFighter.isAlive()) {
-                        playerFighter.fight_attacks(enemyFighter);
-                    }
-                    if (enemyFighter.isAlive()) {
-                        enemyFighter.fight_attacks(playerFighter);
-                        enemyFighter.setChoiceAttack(enemyFighter.randomNumberGenerator(0, 2));
-                    }
-                    playerFighter.fightTurnAttack(enemyFighter);
-                    break;
-            }
-        } else {
-            switch (fightAttackMode) {
-                case FIRST_PART:
-                    playerFighter.fightAttackBegin();
-                    break;
-                case SECOND_PART:
-                    if (playerFighter.isAlive()) {
-                        playerFighter.fight_attacks(enemyFighter);
-                    }
-                    playerFighter.fightTurnAttack(enemyFighter);
-                    break;
-            }
+
+        switch (fightAttackMode){
+            case USUAL:
+                playerFighter.fight(enemyFighter);
+                break;
+            case FIRST_PART :
+                playerFighter.fightAttackBegin();
+                break;
+            case SECOND_PART :
+                if (playerFighter.isAlive()) {
+                    playerFighter.fight_attacks(enemyFighter);
+                }
+                if (enemyFighter.isAlive()) {
+                    enemyFighter.fight_attacks(playerFighter);
+                    enemyFighter.setChoiceAttack(enemyFighter.randomNumberGenerator(0, 2));
+                }
+                playerFighter.fightTurnAttack(enemyFighter);
+                break;
         }
+
+
     }
 
     /**

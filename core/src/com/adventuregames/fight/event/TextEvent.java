@@ -57,4 +57,9 @@ public class TextEvent extends FightEvent implements Serializable {
 
     @Override
     public boolean isFinished(){return finished;}
+
+    @Override
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
 }

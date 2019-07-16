@@ -10,6 +10,7 @@ import com.adventuregames.fight.event.FightEventPlayer;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -189,6 +190,11 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer, Ser
         }
         batch.end();
 
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+        {   fightAttackMode = FIGHT_PART.STOP;
+            queue.clear();
+
+        }
         //uiStage.act();
         uiStage.draw();
 
@@ -229,27 +235,33 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer, Ser
     @Override
     public void update(float delta) {
 
+
         while ( currentEvent == null || currentEvent.isFinished()){
             if(queue.isEmpty() ) { // Event queue is empty
-                switch (fightAttackMode){
 
-                    case USUAL:{
+                switch (fightAttackMode) {
+
+                    case USUAL: {
                         currentEvent = null;
-                        if (playerFighter.isAlive()) {
-                            getGame().setScreen(new TakeFeatures(getGame(), getGame().getCollection().getPlayer()));
+                        if (!connected) {
+                            if (playerFighter.isAlive()) {
+                                getGame().setScreen(new TakeFeatures(getGame(), getGame().getCollection().getPlayer()));
+                            } else
+                                getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
                         } else
                             getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
                         break;
                     }
-                    case FIRST_PART:{
+                    case FIRST_PART: {
                         currentEvent = null;
-                        if (playerFighter.isAlive())
+                        if (playerFighter.isAlive()) {
                             getGame().setScreen(new FightAttackDisplay(getGame(), playerFighter, enemyFighter, connected));
+                        }
                         break;
                     }
-                    case SECOND_PART:{
+                    case SECOND_PART: {
                         currentEvent = null;
-                        if(!connected) {
+                        if (!connected) {
                             enemyFighter = new Fighter(getGame().getCollection().getPlayer().getEnnemi());
 
                             if (enemyFighter.isAlive()) {
@@ -262,8 +274,12 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer, Ser
                         }
                         break;
                     }
+                    case STOP: {
+                        getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
+                        break;
+                    }
+
                 }
-                break;
             }
             else {
                 currentEvent = queue.poll();

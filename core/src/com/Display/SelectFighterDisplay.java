@@ -4,7 +4,9 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.*;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
@@ -78,6 +80,8 @@ public class SelectFighterDisplay implements Screen {
                 }
                 Fighter fighter = new Fighter(player.getCollectionFighter().get(i));
                 player.selectFighter(fighter, player.getCollectionWeapon().get(j), player.getCollectionArmor1().get(k),armor);
+
+
                 game.setScreen(new GameDisplay(game, player, coll));
             }
         });
@@ -104,11 +108,11 @@ public class SelectFighterDisplay implements Screen {
         f4Name = " ";
         if(player.getCollectionArmor2().size() !=0)
         {
-            player.getCollectionArmor2().get(l).getRelativePathPicture();
+            f4Name = player.getCollectionArmor2().get(l).getRelativePathPicture();
         }
         else f4Name = "core/assets/graphics/items/no.png";
 
-        f4 = new Texture("core/assets/graphics/items/no.png");
+        f4 = new Texture(f4Name);
         drawable4 = new TextureRegionDrawable(new TextureRegion(f4));
         armor2 = new Image(drawable4);
         armor2.setSize(30,40);
@@ -291,7 +295,13 @@ public class SelectFighterDisplay implements Screen {
         drawable3 = new TextureRegionDrawable(new TextureRegion(f3));
         armor1.setDrawable(drawable3);
 
-        f4 = new Texture(player.getCollectionArmor1().get(l).getRelativePathPicture());
+        f4Name = " ";
+        if(player.getCollectionArmor2().size() !=0)
+        {
+            f4Name = player.getCollectionArmor2().get(l).getRelativePathPicture();
+        }
+        else f4Name = "core/assets/graphics/items/no.png";
+        f4 = new Texture(f4Name);
         drawable4 = new TextureRegionDrawable(new TextureRegion(f4));
         armor2.setDrawable(drawable4);
 

@@ -1,6 +1,5 @@
 package com.shopmanagement;
 
-import com.shopmanagement.CollectionDisplay.CollectionFighterDisplay;
 import com.fighterlvl.warrior.*;
 
 import java.io.File;
@@ -125,7 +124,7 @@ public class Collection {
             read_f = new Scanner(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            System.out.println("pas de fichier");
+
 
         }
         read_f.useDelimiter(Pattern.compile("\n"));
@@ -142,7 +141,7 @@ public class Collection {
             String[] attributes = read_f.nextLine().split(";");
             Map<String, String> tmpFighter = new HashMap<>();
             if(attributeNames.length < attributes.length){
-                System.err.println("GROSS ERREUR");
+
                 return;
             }
             for(int i = 0; i < attributeNames.length; i++){
@@ -312,7 +311,7 @@ public class Collection {
             read_f = new Scanner(new FileInputStream(file));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            System.out.println("pas de fichier");
+
 
         }
         read_f.useDelimiter(Pattern.compile("\n"));
@@ -331,7 +330,7 @@ public class Collection {
             String[] attributes = read_f.nextLine().split(";");
             Map<String, String> tmpWeaponAttack = new HashMap<>();
             if(attributeNames.length < attributes.length){
-                System.err.println("GROSS ERREUR");
+
                 return;
             }
             for(int i = 0; i < attributeNames.length; i++){
@@ -360,7 +359,7 @@ public class Collection {
             read_f = new Scanner(file);
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-            System.out.println("pas de fichier");
+
 
         }
         read_f.useDelimiter(Pattern.compile("\n"));
@@ -377,7 +376,7 @@ public class Collection {
             String[] attributes = read_f.nextLine().split(";");
             Map<String, String> tmpWeaponAttack = new HashMap<>();
             if(attributeNames.length < attributes.length){
-                System.err.println("GROSS ERREUR");
+
                 return;
             }
             for(int i = 0; i < attributeNames.length; i++){

@@ -1,6 +1,7 @@
 package com.connection;
 
 import com.adventuregames.fight.FIGHT_PART;
+
 import com.adventuregames.fight.FightScreen;
 import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
@@ -53,13 +54,14 @@ public class Client
 
             Object object = objectInputStream.readObject();
             enemy = (Fighter) object ;
-            printStream.println("player one is playing...");
             player.getFighter().fight(enemy);
+
+            printStream.println("player one is playing...");
+
             game.setScreen(new FightScreen((game), FIGHT_PART.FIRST_PART, true));
-
-            printStream.println("turn of player two:");
-
+             printStream.println("turn of player two:");
             String advice = bufferedReader.readLine();
+
             System.out.println(advice);
             if(advice.trim().equalsIgnoreCase("object needed")) {
                 objectOutputStream.writeObject(enemy);
@@ -71,6 +73,7 @@ public class Client
             while(!end)
             {
                 advice = bufferedReader.readLine();
+
                 System.out.println(advice);
 
                 if (advice.equalsIgnoreCase("turn of player one: ") && !end) {
@@ -79,19 +82,34 @@ public class Client
                     enemy = (Fighter)objectInputStream.readObject();
 
                     printStream.println("player one is playing...");
-                    game.setScreen(new FightScreen((game),FIGHT_PART.FIRST_PART,true));
+
+                    game.setScreen(new FightScreen((game),FIGHT_PART.USUAL,true));
                     player.setEnnemi(enemy);
                     player.getFighter().fight_attacks(enemy);
+
 
                     printStream.println("turn of player two: ");
 
                 }
-                if(advice.trim().equalsIgnoreCase("object needed")) {
+
+                if(advice.trim().equalsIgnoreCase("object needed") && !end) {
                     objectOutputStream.writeObject(enemy);
                     objectOutputStream.flush();
                     objectOutputStream.writeObject(player.getFighter());
                     objectOutputStream.flush();
                 }
+                if(!player.getFighter().isAlive())
+                {
+                    end = true;
+
+                }
+                if(enemy!= null) {
+                    if (!enemy.isAlive()) {
+                        end = true;
+
+                    }
+                }
+
             }
 
         }
@@ -99,9 +117,5 @@ public class Client
         {
             System.out.println("Client Side Error");
         }
-
-
     }
-
-
 }

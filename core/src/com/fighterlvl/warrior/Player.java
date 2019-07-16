@@ -153,7 +153,17 @@ public class Player implements Serializable {
         getFighter().setArmor2(armor2);
     }
 
+    public void takeMoney()
+    {
+        for(int i=0; i<this.getFighter().getTreasures().size(); i++)
+        {
+            if(this.getFighter().getTreasures().get(i).getName().equals("gold"))
+            {
+                setMoney(this.money + 1);
+            }
+        }
 
+    }
     public void save()
     {
 

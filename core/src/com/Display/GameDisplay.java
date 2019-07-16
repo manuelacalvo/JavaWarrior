@@ -11,7 +11,10 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Fighter;
@@ -65,19 +68,28 @@ public class GameDisplay implements Screen {
         textButtonStyleShop.font = font;
         textButtonStyleShop.up = skin.getDrawable("item725");
         textButtonStyleShop.down = skin.getDrawable("item725");
-
+        game.getCollection().getPlayer().setNbFights(0);
         buttonFightMode = new ImageTextButton("Fight", textButtonStyle);
         buttonFightMode.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed (ChangeEvent event, Actor actor) {
                         sound.stop();
-                        coll.getFighterVector().get(1).setHitPoints(3);
-                        Fighter enemy = new Fighter(game.getCollection().getFighterVector().get(game.getCollection().getPlayer().getNbFights()+1));
-                        player.setEnnemi(enemy);
-                        System.out.println(player.getEnnemi().getHitPoints());
-                        game.setScreen(new FightScreen(game, FIGHT_PART.USUAL, false));
 
+                        for(int i=0; i< game.getCollection().getFighterVector().size(); i++)
+                        {
+                            if(player.getFighter().getName().equalsIgnoreCase(game.getCollection().getFighterVector().get(i).getName()))
+                            {
+                                player.getFighter().setHitPoints(game.getCollection().getFighterVector().get(i).getHitPoints());
+                            }
+                        }
+
+
+                        if((game.getCollection().getPlayer().getNbFights()+1) <game.getCollection().getFighterVector().size()) {
+                            Fighter enemy = new Fighter(game.getCollection().getFighterVector().get(game.getCollection().getPlayer().getNbFights() + 1));
+                            player.setEnnemi(enemy);
+                            game.setScreen(new FightScreen(game, FIGHT_PART.USUAL, false));
+                        }
                     }
                 }
         );
@@ -88,10 +100,13 @@ public class GameDisplay implements Screen {
             public void changed (ChangeEvent event, Actor actor) {
                 sound.stop();
 
-                // TODO To LTB
-                Fighter fighter = new Fighter(game.getCollection().getFighterVector().get(0));
-                player.setFighter(fighter);
-                coll.getFighterVector().get(1).setHitPoints(3);
+                for(int i=0; i< game.getCollection().getFighterVector().size(); i++)
+                {
+                    if(player.getFighter().getName().equalsIgnoreCase(game.getCollection().getFighterVector().get(i).getName()))
+                    {
+                        player.getFighter().setHitPoints(game.getCollection().getFighterVector().get(i).getHitPoints());
+                    }
+                }
                 Fighter enemy = new Fighter(game.getCollection().getFighterVector().get(1));
                 player.setEnnemi(enemy);
 
@@ -104,12 +119,16 @@ public class GameDisplay implements Screen {
         buttonConnectedMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                Fighter fighter = new Fighter(coll.getFighterVector().get(0));
-                player.setFighter(fighter);
+                for(int i=0; i< game.getCollection().getFighterVector().size(); i++)
+                {
+                    if(player.getFighter().getName().equalsIgnoreCase(game.getCollection().getFighterVector().get(i).getName()))
+                    {
+                        player.getFighter().setHitPoints(game.getCollection().getFighterVector().get(i).getHitPoints());
+                    }
+                }
+
                 sound.stop();
                 game.setScreen(new ServerClientDisplay(game, player, coll));
-
-
             }
         });
 
@@ -151,9 +170,6 @@ public class GameDisplay implements Screen {
 
     }
 
-
-
-
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
@@ -167,24 +183,6 @@ public class GameDisplay implements Screen {
         stage.draw();
     }
 
-    void gameLoop()
-    {
-        Collection coll = game.getCollection();
-
-        for(int i=1; i< coll.getFighterVector().size(); i++)
-        {
-
-            player.setEnnemi(coll.getFighterVector().get(i));
-            player.getFighter().fight(player.getEnnemi());
-            if(player.getFighter().isAlive())
-            {
-                game.setScreen(new FightMenuDisplay(game, player));
-            }
-        }
-        if(!player.getFighter().isAlive())        {
-            System.out.println(" You are dead. You've got \" + fighter.getHitPoints() + \" life points and you've made \" + nbFights + \" fights\");");
-        }
-    }
 
     @Override
     public void resize(int width, int height) {
