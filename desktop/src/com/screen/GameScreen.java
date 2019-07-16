@@ -136,7 +136,6 @@ public class GameScreen extends AbstractScreen {
             (WAY.UP == Character.getLookingAt())) {
       font.draw(batch, "Created By : Baptiste Larrezet @2019", 25, 90);
     }
-
     batch.end();
 
     //Change screen if fight
