@@ -32,7 +32,7 @@ public class LoadingScreen extends AbstractScreen{
         super(context);
         this.assetManager = context.getAssetManager();
         this.gameCamera = context.getGameCamera();
-        this.PlayerGender = context.setPlayerGender("M");
+        this.PlayerGender = context.getPlayerGender();
 
         //TODO set screen to choose character gender
         assetManager.load("Ressources/Tileset/Hero" + PlayerGender + ".atlas", TextureAtlas.class);

@@ -52,7 +52,7 @@ public class JavaWarrior extends Game {
 		gameCamera = new OrthographicCamera();
 		screenCache = new EnumMap<SCREEN_TYPE, AbstractScreen>(SCREEN_TYPE.class);
 
-		setScreen(SCREEN_TYPE.LOADING);
+		setScreen(SCREEN_TYPE.CHARACTERSEL);
 	}
 
 	public void setScreen(final SCREEN_TYPE screen_type) {

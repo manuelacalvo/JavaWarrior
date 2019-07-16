@@ -1,13 +1,11 @@
 package com.enumfile;
 
-import com.screen.AbstractScreen;
-import com.screen.AnimationScreen;
-import com.screen.GameScreen;
-import com.screen.LoadingScreen;
+import com.screen.*;
 
 public enum SCREEN_TYPE {
     GAME(GameScreen.class),
     LOADING(LoadingScreen.class),
+    CHARACTERSEL(CharacterSelScreen.class),
     ANIMATE(AnimationScreen .class);
 
     private final Class<? extends AbstractScreen> screenClass;
