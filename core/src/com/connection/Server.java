@@ -16,14 +16,12 @@ public class Server {
     private Fighter ennemy;
     private JWGame game;
 
-
     public Server(JWGame aGame, Player player)
     {
         this.player = player;
         this.ennemy = null;
         this.game = aGame;
     }
-
         public void go() {
 
         try {
@@ -42,45 +40,32 @@ public class Server {
 
             while (true && !end) {
 
+                String received = bufferedReader.readLine();
+                System.out.println(received);
 
-                    String received = bufferedReader.readLine();
-                    System.out.println(received);
+                if(received.trim().equalsIgnoreCase("turn of player two:") && !end) {
+                    printStream.println("object needed");
+                    Object obj = objectInputStream.readObject();
+                    player.setFighter((Fighter) obj);
+                    obj = objectInputStream.readObject();
+                    ennemy = (Fighter) obj;
 
+                    printStream.println("player two is playing...");
+                    player.setEnnemi(ennemy);
+                    game.setScreen(new FightScreen(game, FIGHT_PART.USUAL, true));
 
-                    if(received.trim().equalsIgnoreCase("turn of player two:") && !end) {
-                        printStream.println("object needed");
-                        Object obj = objectInputStream.readObject();
-                        player.setFighter((Fighter) obj);
-                        obj = objectInputStream.readObject();
-                        ennemy = (Fighter) obj;
-
-                        printStream.println("player two is playing...");
-                        player.setEnnemi(ennemy);
-                        game.setScreen(new FightScreen(game, FIGHT_PART.USUAL, true));
-
-                        printStream.println("turn of player one: ");
-
-
+                    printStream.println("turn of player one: ");
 
                 }
-                    if(received.trim().equalsIgnoreCase("object needed") && !end) {
-                    objectOutputStream.writeObject(ennemy);
-                    objectOutputStream.flush();
-                    objectOutputStream.writeObject(player.getFighter());
+                if(received.trim().equalsIgnoreCase("object needed") && !end) {
+                objectOutputStream.writeObject(ennemy);
+                objectOutputStream.flush();
+                objectOutputStream.writeObject(player.getFighter());
                 }
 
-                  if(!player.getFighter().isAlive())
-                    {
-                        end = true;
-                    }
-                   if(ennemy != null)
-                   {
-                    if(!ennemy.isAlive())
-                    {
-                        end = true;
+                if(!player.getFighter().isAlive()) end = true;
 
-                    }
-                   }
+                if(ennemy != null && !ennemy.isAlive()) end = true;
 
             }
         } catch (Exception e) {
