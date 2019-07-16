@@ -57,7 +57,7 @@ public class FightAttackDisplay implements Screen, Serializable {
 
         text = fighter.getName() + "'s Turn + Life : " + fighter.getHitPoints() + "\nChoose your attack";
 
-        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/map/TilesetGame.atlas")); //
         skin.addRegions(buttonAtlas);
         textButtonStyle = new ImageTextButton.ImageTextButtonStyle();
         textButtonStyle.font = font;

@@ -52,7 +52,7 @@ public class ServerClientDisplay implements Screen {
         ip = " ";
         font = new BitmapFont();
         skin = new Skin();
-        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/map/TilesetGame.atlas")); //
         skin.addRegions(buttonAtlas);
         textButtonStyle = new ImageTextButton.ImageTextButtonStyle();
         textButtonStyle.font = font;
