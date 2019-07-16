@@ -67,14 +67,14 @@ Troll
   orig: 139, 128
   offset: 0, 0
   index: -1
-User
+User1
   rotate: false
   xy: 2, 78
   size: 139, 128
   orig: 139, 128
   offset: 0, 0
   index: -1
-Valkyrie
+User
   rotate: false
   xy: 127, 716
   size: 139, 128
@@ -238,6 +238,13 @@ start
 sword
   rotate: false
   xy: 2, 752
+  size: 123, 223
+  orig: 123, 223
+  offset: 0, 0
+  index: -1
+But
+  rotate: false
+  xy: 400, 90
   size: 123, 223
   orig: 123, 223
   offset: 0, 0

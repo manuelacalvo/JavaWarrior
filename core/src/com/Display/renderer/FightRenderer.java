@@ -41,30 +41,19 @@ public class FightRenderer {
         if(playerTexture != null){
             batch.draw(
                     playerTexture,
-                    windowWidth/5,
-                    windowHeight/2,
-                    100,
-                    100,
-                    0,
-                    0,
-                    100,
-                    100,
-                    true,
-                    false
+                    windowWidth/50,
+                    windowHeight/4,
+                    300,
+                    300
             );
         }
         if(enemyTexture !=  null){
             batch.draw(enemyTexture,
-                    windowWidth*3/5,
-                    windowHeight/2,
-                    100,
-                    100,
-                    0,
-                    0,
-                    100,
-                    100,
-                    false,
-                    false);
+                    windowWidth*25/50,
+                    windowHeight/4,
+                    300,
+                    300
+            );
         }
     }
 

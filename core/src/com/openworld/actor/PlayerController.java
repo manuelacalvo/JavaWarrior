@@ -7,7 +7,7 @@ import com.openworld.enumfile.WAY;
 public class PlayerController extends InputAdapter {
 
   private Actor actor;
-  private float REFACE_OR_WALK = 0.07f;
+  private float REFACE_OR_WALK = 0.2f;
   /* give ability to hold down a direction or just reface */
   private boolean[] wichWay;
   private float[] holdWay;

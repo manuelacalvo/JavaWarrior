@@ -24,6 +24,7 @@ import com.shopmanagement.Collection;
 import com.shopmanagement.CollectionDisplay.CollectionFighterDisplay;
 
 public class GameDisplay implements Screen {
+    private final ImageTextButton.ImageTextButtonStyle textButtonStyleShop2;
     private Stage stage;
     private JWGame game;
     private Skin skin;
@@ -32,6 +33,7 @@ public class GameDisplay implements Screen {
     private ImageTextButton buttonMapMode;
     private ImageTextButton buttonConnectedMode;
     private ImageTextButton buttonShop;
+    private ImageTextButton buttonShop2;
     private ImageTextButton quit;
     private ImageTextButton.ImageTextButtonStyle textButtonStyle;
     private ImageTextButton.ImageTextButtonStyle textButtonStyleShop;
@@ -57,12 +59,17 @@ public class GameDisplay implements Screen {
         sound.play();
         font = new BitmapFont();
         skin = new Skin();
-        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/map/TilesetGame.atlas")); //
         skin.addRegions(buttonAtlas);
         textButtonStyle = new ImageTextButton.ImageTextButtonStyle();
         textButtonStyle.font = font;
         textButtonStyle.up = skin.getDrawable("partyCancelSel");
         textButtonStyle.down = skin.getDrawable("partyCancelSel");
+
+        textButtonStyleShop2 = new ImageTextButton.ImageTextButtonStyle();
+        textButtonStyleShop2.font = font;
+        textButtonStyleShop2.up = skin.getDrawable("But");
+        textButtonStyleShop2.down = skin.getDrawable("But");
 
         textButtonStyleShop = new ImageTextButton.ImageTextButtonStyle();
         textButtonStyleShop.font = font;
@@ -144,7 +151,7 @@ public class GameDisplay implements Screen {
         });
         quit.setPosition(500,10);
 
-        buttonShop = new ImageTextButton("Shop", textButtonStyleShop);
+        buttonShop = new ImageTextButton("       ", textButtonStyleShop);
         buttonShop.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
@@ -154,9 +161,19 @@ public class GameDisplay implements Screen {
 
             }
         });
-
         buttonShop.setPosition(10, 10);
 
+        buttonShop2 = new ImageTextButton(" Shop ", textButtonStyleShop2);
+        buttonShop2.addListener(new ChangeListener() {
+            @Override
+            public void changed (ChangeEvent event, Actor actor) {
+                Fighter fighter = new Fighter(coll.getFighterVector().get(0));
+                player.setFighter(fighter);
+                game.setScreen(new CollectionFighterDisplay(game, player, coll));
+
+            }
+        });
+        buttonShop2.setPosition(-35, -75);
 
         table.add(buttonFightMode);
         table.add(buttonMapMode);
@@ -166,6 +183,7 @@ public class GameDisplay implements Screen {
         stage.addActor(image);
         stage.addActor(table);
         stage.addActor(buttonShop);
+        stage.addActor(buttonShop2);
         stage.addActor(quit);
 
     }

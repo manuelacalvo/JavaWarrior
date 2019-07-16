@@ -59,7 +59,7 @@ public class SelectFighterDisplay implements Screen {
 
         font = new BitmapFont();
         skin = new Skin();
-        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/map/TilesetGame.atlas")); //
         skin.addRegions(buttonAtlas);
         textButtonStyle = new ImageTextButton.ImageTextButtonStyle();
         textButtonStyle.font = font;
@@ -118,7 +118,7 @@ public class SelectFighterDisplay implements Screen {
         armor2.setSize(30,40);
 
 
-        Texture f5 = new Texture(Gdx.files.internal("core/assets/graphics/buttons/arrow_double_left.jpg"));
+        Texture f5 = new Texture(Gdx.files.internal("core/assets/graphics/buttons/arrow_double_left.png"));
         drawable5 = new TextureRegionDrawable(new TextureRegion(f5));
         arrowf1 = new ImageButton(drawable5);
         arroww1 = new ImageButton(drawable5);
@@ -126,7 +126,7 @@ public class SelectFighterDisplay implements Screen {
         arrowa21 = new ImageButton(drawable5);
 
 
-        Texture f7 = new Texture(Gdx.files.internal("core/assets/graphics/buttons/arrow_double_right.jpg"));
+        Texture f7 = new Texture(Gdx.files.internal("core/assets/graphics/buttons/arrow_double_right.png"));
         drawable7 = new TextureRegionDrawable(new TextureRegion(f7));
         arrowf2 = new ImageButton(drawable7);
         arroww2 = new ImageButton(drawable7);
