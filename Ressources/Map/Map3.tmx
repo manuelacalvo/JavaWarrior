@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="52" height="40" tilewidth="24" tileheight="24" infinite="0" nextlayerid="25" nextobjectid="34">
+<map version="1.2" tiledversion="1.2.3" orientation="orthogonal" renderorder="right-down" width="52" height="40" tilewidth="24" tileheight="24" infinite="0" nextlayerid="25" nextobjectid="35">
  <tileset firstgid="1" source="Crystal24.tsx"/>
  <layer id="9" name="Floor" width="52" height="40">
   <data encoding="csv">
@@ -597,6 +597,9 @@
   <object id="31" name="WallRight" x="1200" y="96" width="48" height="864"/>
   <object id="32" name="House3" x="1008" y="336" width="48" height="96"/>
   <object id="33" name="House4" x="960" y="336" width="48" height="48"/>
+  <object id="34" name="Read" x="912" y="912">
+   <point/>
+  </object>
  </objectgroup>
  <objectgroup id="22" name="Fight">
   <object id="2" name="FightZone" x="48" y="360" width="192" height="192"/>

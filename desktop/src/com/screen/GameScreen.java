@@ -1,20 +1,20 @@
 package com.screen;
 
 import com.PackAnimations.EffectsInit;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
-import com.badlogic.gdx.maps.MapProperties;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Rectangle;
-import com.brashmonkey.spriter.Player;
 import com.enumfile.SCREEN_TYPE;
+import com.enumfile.WAY;
 import com.idea.Settings;
 import com.javawarrior.JavaWarrior;
 import com.actor.Actor;
@@ -22,7 +22,6 @@ import com.actor.PlayerController;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import java.awt.*;
 import java.util.Random;
 
 public class GameScreen extends AbstractScreen {
@@ -36,6 +35,7 @@ public class GameScreen extends AbstractScreen {
   private SpriteBatch batch;
   private String PlayerGender;
   private String GenderAtlas;
+  private BitmapFont font;
 
   private int oxFight;
   private int oyFight;
@@ -51,6 +51,7 @@ public class GameScreen extends AbstractScreen {
     this.tiledMap = context.getMap();
     this.gameCamera = context.getGameCamera();
     this.PlayerGender = context.getPlayerGender();
+    font = new BitmapFont(Gdx.files.internal("Ressources/Font/arcade/arcade.fnt"));
 
     if ( PlayerGender.equals("M")){ GenderAtlas = "M"; }
     else if (PlayerGender.equals("F")){ GenderAtlas = "F"; }
@@ -124,6 +125,18 @@ public class GameScreen extends AbstractScreen {
             Settings.SCALED_TILE_SIZE,
             Settings.SCALED_TILE_SIZE * 1.5f
     );
+
+    MapObject read = tiledMap.getLayers().get("Collision").getObjects().get("Read");
+    Rectangle panel = ((RectangleMapObject) read).getRectangle();
+    int a = (int) panel.getX();
+    int b = (int) panel.getY();
+    if(Character.getX() == (int) a/Settings.SCALED_TILE_SIZE &&
+            Character.getY() == (int) b/Settings.SCALED_TILE_SIZE &&
+            Gdx.input.isKeyPressed(Input.Keys.C) &&
+            (WAY.UP == Character.getLookingAt())) {
+      font.draw(batch, "Created By : Baptiste Larrezet, \n Manuella Calvo and François Louis", 30, 90);
+    }
+
     batch.end();
 
     //Change screen if fight

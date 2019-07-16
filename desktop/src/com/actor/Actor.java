@@ -359,4 +359,6 @@ public class Actor {
       sprite.draw(batch);
     }
   }
+
+  public WAY getLookingAt() { return lookingAt; }
 }
