@@ -3,7 +3,6 @@ package com.Display;
 import com.adventuregames.MyGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -30,7 +29,7 @@ public class TakeFeatures implements Screen {
     private Skin skin;
     private TextureAtlas buttonAtlas;
     private Image image;
-    private Sound sound;
+    private String str;
 
 
 
@@ -63,8 +62,6 @@ public class TakeFeatures implements Screen {
             }
         });
 
-
-
         buttonArmor1 = new ImageTextButton("take Armor 1", textButtonStyle);
         buttonArmor1.addListener(new ChangeListener() {
             @Override
@@ -88,6 +85,7 @@ public class TakeFeatures implements Screen {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 player.getFighter().getEnnemyTreasure(player.getEnnemi());
+                player.takeMoney();
                 game.setScreen(new FightMenuDisplay(game, player));
 
 

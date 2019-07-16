@@ -1,7 +1,6 @@
 package com.connection;
 
 import com.adventuregames.MyGame;
-import com.adventuregames.fight.FightAttackDisplay;
 import com.adventuregames.fight.FightScreen;
 import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
@@ -44,10 +43,8 @@ public class Client
             ennemy = (Fighter) object ;
             player.setEnnemi(ennemy);
             printStream.println("player one is playing...");
-            game.setScreen(new FightScreen((game), 1, true));
-            //player.getFighter().fight_attacks(ennemy);
-           // game.setScreen(new FightAttackDisplay(game, player.getFighter(), player.getEnnemi()));
-            printStream.println("turn of player two:");
+            game.setScreen(new FightScreen((game), 0, true));
+             printStream.println("turn of player two:");
             String advice = reader.readLine();
             System.out.println(advice);
             if(advice.trim().equalsIgnoreCase("object needed")) {
@@ -57,8 +54,9 @@ public class Client
                 objectOutputStream.flush();
             }
 
-            while(true)
+            while(true && !end)
             {
+
                 advice = reader.readLine();
                 System.out.println(advice);
 
@@ -69,7 +67,7 @@ public class Client
 
 
                     printStream.println("player one is playing...");
-                    game.setScreen(new FightScreen((game),1,true));
+                    game.setScreen(new FightScreen((game),0,true));
                     player.setEnnemi(ennemy);
                     player.getFighter().fight_attacks(ennemy);
 
@@ -79,23 +77,23 @@ public class Client
 
 
                 }
-                if(advice.trim().equalsIgnoreCase("object needed")) {
+                if(advice.trim().equalsIgnoreCase("object needed") && !end) {
                     objectOutputStream.writeObject(ennemy);
                     objectOutputStream.flush();
                     objectOutputStream.writeObject(player.getFighter());
                     objectOutputStream.flush();
                 }
-                /*if(!player.getFighter().isAlive())
+                if(!player.getFighter().isAlive())
                 {
                     end = true;
-                    System.out.println("you are dead");
+
                 }
                 if(ennemy!= null) {
                     if (!ennemy.isAlive()) {
                         end = true;
-                        System.out.println("you win");
+
                     }
-                }*/
+                }
 
             }
 

@@ -38,7 +38,6 @@ public class FightMenuDisplay implements Screen {
 
 
     public FightMenuDisplay(MyGame aGame, final Player player) {
-        System.out.println(player.getName() + " hP : " + player.getFighter().getHitPoints());
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table=new Table();

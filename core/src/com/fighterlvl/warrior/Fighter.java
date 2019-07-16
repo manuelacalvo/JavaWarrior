@@ -127,7 +127,7 @@ public class Fighter implements FightEventQueuer, Serializable {
      * Defense is the sum of armors points.
      * @return defense value
      */
-    private int getDefense(){
+    public int getDefense(){
         return (getArmor1()!=null ? getArmor1().getProtection():0)
                 + (getArmor2()!=null ? getArmor2().getProtection():0);
     }
@@ -328,8 +328,7 @@ public class Fighter implements FightEventQueuer, Serializable {
 
     public void getEnnemyArmor2(Fighter enemy)
     {
-                    this.setArmor2(enemy.getArmor2());
-
+        this.setArmor2(enemy.getArmor2());
     }
 
     public void getEnnemyTreasure(Fighter enemy)
@@ -341,7 +340,9 @@ public class Fighter implements FightEventQueuer, Serializable {
 
                 if(this.getTreasures().get(j).getName() == enemy.getTreasures().get(i).getName())
                 {
+
                     this.getTreasures().get(j).setNumber(this.getTreasures().get(j).getNumber() + 1);
+
                 }
             }
         }

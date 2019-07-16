@@ -68,16 +68,22 @@ public class GameDisplay implements Screen {
         textButtonStyleShop.font = font;
         textButtonStyleShop.up = skin.getDrawable("item725");
         textButtonStyleShop.down = skin.getDrawable("item725");
-
+        game.getCollection().getPlayer().setNbFights(0);
         buttonFightMode = new ImageTextButton("Fight", textButtonStyle);
         buttonFightMode.addListener(
                 new ChangeListener() {
                     @Override
                     public void changed (ChangeEvent event, Actor actor) {
                         sound.stop();
-                        Fighter fighter = new Fighter(game.getCollection().getFighterVector().get(0));
-                        player.setFighter(fighter);
-                        coll.getFighterVector().get(1).setHitPoints(3);
+                        for(int i=0; i< game.getCollection().getFighterVector().size(); i++)
+                        {
+                            if(player.getFighter().getName().equalsIgnoreCase(game.getCollection().getFighterVector().get(i).getName()))
+                            {
+                                player.getFighter().setHitPoints(game.getCollection().getFighterVector().get(i).getHitPoints());
+                            }
+                        }
+
+
                         if((game.getCollection().getPlayer().getNbFights()+1) <game.getCollection().getFighterVector().size()) {
                             Fighter enemy = new Fighter(game.getCollection().getFighterVector().get(game.getCollection().getPlayer().getNbFights() + 1));
                             player.setEnnemi(enemy);
@@ -95,8 +101,14 @@ public class GameDisplay implements Screen {
             public void changed (ChangeEvent event, Actor actor) {
                 sound.stop();
 
-                Fighter fighter = new Fighter(game.getCollection().getFighterVector().get(0));
-                player.setFighter(fighter);
+                for(int i=0; i< game.getCollection().getFighterVector().size(); i++)
+                {
+                    if(player.getFighter().getName().equalsIgnoreCase(game.getCollection().getFighterVector().get(i).getName()))
+                    {
+                        Fighter fighter = new Fighter(game.getCollection().getFighterVector().get(i));
+                        player.setFighter(fighter);
+                    }
+                }
                 coll.getFighterVector().get(1).setHitPoints(3);
                 Fighter enemy = new Fighter(game.getCollection().getFighterVector().get(1));
                 player.setEnnemi(enemy);
@@ -110,8 +122,14 @@ public class GameDisplay implements Screen {
         buttonConnectedMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                Fighter fighter = new Fighter(coll.getFighterVector().get(0));
-                player.setFighter(fighter);
+                for(int i=0; i< game.getCollection().getFighterVector().size(); i++)
+                {
+                    if(player.getFighter().getName().equalsIgnoreCase(game.getCollection().getFighterVector().get(i).getName()))
+                    {
+                        Fighter fighter = new Fighter(game.getCollection().getFighterVector().get(i));
+                        player.setFighter(fighter);
+                    }
+                }
                 sound.stop();
                 game.setScreen(new ServerClientDisplay(game, player, coll));
 

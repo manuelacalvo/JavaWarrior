@@ -1,13 +1,13 @@
 package com.connection;
 
 import com.adventuregames.MyGame;
-import com.adventuregames.fight.FightAttackDisplay;
 import com.adventuregames.fight.FightScreen;
 import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
 
 import java.io.*;
-import java.net.*;
+import java.net.ServerSocket;
+import java.net.Socket;
 
 public class Server {
     private boolean end = false;
@@ -39,14 +39,14 @@ public class Server {
             objectOutputStream.writeObject(player.getFighter());
             objectOutputStream.flush();
 
-            while (true) {
+            while (true && !end) {
 
 
                     String received = bufferedReader.readLine();
                     System.out.println(received);
 
 
-                    if(received.trim().equalsIgnoreCase("turn of player two:") && end == false) {
+                    if(received.trim().equalsIgnoreCase("turn of player two:") && !end) {
                         printStream.println("object needed");
                         Object obj = objectInputStream.readObject();
                         player.setFighter((Fighter) obj);
@@ -55,24 +55,21 @@ public class Server {
 
                         printStream.println("player two is playing...");
                         player.setEnnemi(ennemy);
-                        game.setScreen(new FightScreen(game, 1, true));
+                        game.setScreen(new FightScreen(game, 0, true));
 
-                        // game.setScreen(new FightAttackDisplay((game)));
-                       // player.getFighter().fight(ennemy);
                         printStream.println("turn of player one: ");
 
 
 
                 }
-                    if(received.trim().equalsIgnoreCase("object needed")) {
+                    if(received.trim().equalsIgnoreCase("object needed") && !end) {
                     objectOutputStream.writeObject(ennemy);
                     objectOutputStream.flush();
                     objectOutputStream.writeObject(player.getFighter());
                 }
 
-                /*   if(!player.getFighter().isAlive())
+                  if(!player.getFighter().isAlive())
                     {
-                        System.out.println("you are dead");
                         end = true;
                     }
                    if(ennemy != null)
@@ -80,9 +77,9 @@ public class Server {
                     if(!ennemy.isAlive())
                     {
                         end = true;
-                        System.out.println("you win");
+
                     }
-                   }*/
+                   }
 
             }
         } catch (Exception e) {

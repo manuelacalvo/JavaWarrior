@@ -85,16 +85,9 @@ public class FightScreenController extends InputAdapter implements FightEventQue
             }
         }
         if(connected == true) {
-            if (fightAttackMode == 1) {
-                playerFighter.fightAttackBegin();
-            }
-            if (fightAttackMode == 2) {
+            if (fightAttackMode == 0) {
 
-                if (playerFighter.isAlive()) {
-                    playerFighter.fight_attacks(enemyFighter);
-                }
-                playerFighter.fightTurnAtack(enemyFighter);
-
+                playerFighter.fight(enemyFighter);
             }
         }
 

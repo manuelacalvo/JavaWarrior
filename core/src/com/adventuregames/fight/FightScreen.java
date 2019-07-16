@@ -239,10 +239,13 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer, Ser
             if(queue.isEmpty() ) { // Event queue is empty
                 if(fightAttackMode == 0 ) {
                     currentEvent = null;
-                    if (playerFighter.isAlive()) {
-                        getGame().setScreen(new TakeFeatures(getGame(), getGame().getCollection().getPlayer()));
-                    } else
-                        getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
+                    if(!connected) {
+                        if (playerFighter.isAlive()) {
+                            getGame().setScreen(new TakeFeatures(getGame(), getGame().getCollection().getPlayer()));
+                        } else
+                            getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
+                    }else  getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
+
                 }
                 if(fightAttackMode ==1) {
                     currentEvent = null;
