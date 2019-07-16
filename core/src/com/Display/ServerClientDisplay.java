@@ -1,15 +1,10 @@
 package com.Display;
 
-
-
-import com.adventuregames.MyGame;
-import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -20,6 +15,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.connection.Client;
 import com.connection.Server;
 import com.fighterlvl.warrior.Player;
+import com.javawarrior.JWGame;
 import com.shopmanagement.Collection;
 
 import java.net.InetAddress;
@@ -27,7 +23,7 @@ import java.net.UnknownHostException;
 
 public class ServerClientDisplay implements Screen {
     private Stage stage;
-    private MyGame game;
+    private JWGame game;
     private Skin skin;
     private TextureAtlas buttonAtlas;
     private ImageTextButton buttonServer;
@@ -42,7 +38,7 @@ public class ServerClientDisplay implements Screen {
     private TextField ipSet;
 
 
-    public ServerClientDisplay(MyGame aGame, final Player player, final Collection coll) {
+    public ServerClientDisplay(JWGame aGame, final Player player, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table=new Table();

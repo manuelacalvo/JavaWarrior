@@ -1,8 +1,6 @@
 package com.Display;
 
-
-
-import com.adventuregames.MyGame;
+import com.adventuregames.fight.FIGHT_PART;
 import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -18,12 +16,13 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
+import com.javawarrior.JWGame;
 import com.shopmanagement.Collection;
 import com.shopmanagement.CollectionDisplay.CollectionFighterDisplay;
 
 public class GameDisplay implements Screen {
     private Stage stage;
-    private MyGame game;
+    private JWGame game;
     private Skin skin;
     private TextureAtlas buttonAtlas;
     private ImageTextButton buttonFightMode;
@@ -40,7 +39,7 @@ public class GameDisplay implements Screen {
     private Sound sound;
 
 
-    public GameDisplay(MyGame aGame, final Player player, final Collection coll) {
+    public GameDisplay(JWGame aGame, final Player player, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table=new Table();
@@ -73,17 +72,30 @@ public class GameDisplay implements Screen {
                     @Override
                     public void changed (ChangeEvent event, Actor actor) {
                         sound.stop();
-                        game.setScreen(new FightScreen(game));
+                        coll.getFighterVector().get(1).setHitPoints(3);
+                        Fighter enemy = new Fighter(game.getCollection().getFighterVector().get(game.getCollection().getPlayer().getNbFights()+1));
+                        player.setEnnemi(enemy);
+                        System.out.println(player.getEnnemi().getHitPoints());
+                        game.setScreen(new FightScreen(game, FIGHT_PART.USUAL, false));
 
                     }
                 }
         );
+
         buttonMapMode = new ImageTextButton("Adventure", textButtonStyle);
         buttonMapMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
                 sound.stop();
-                gameLoopAttack();
+
+                // TODO To LTB
+                Fighter fighter = new Fighter(game.getCollection().getFighterVector().get(0));
+                player.setFighter(fighter);
+                coll.getFighterVector().get(1).setHitPoints(3);
+                Fighter enemy = new Fighter(game.getCollection().getFighterVector().get(1));
+                player.setEnnemi(enemy);
+
+                game.setScreen(SCREEN_TYPE.GAME);
 
             }
         });
@@ -92,6 +104,8 @@ public class GameDisplay implements Screen {
         buttonConnectedMode.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
+                Fighter fighter = new Fighter(coll.getFighterVector().get(0));
+                player.setFighter(fighter);
                 sound.stop();
                 game.setScreen(new ServerClientDisplay(game, player, coll));
 
@@ -103,6 +117,7 @@ public class GameDisplay implements Screen {
         quit.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
+
                 player.save();
                 sound.stop();
                 game.setScreen(new PlayerDisplay(game));
@@ -114,7 +129,8 @@ public class GameDisplay implements Screen {
         buttonShop.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-
+                Fighter fighter = new Fighter(coll.getFighterVector().get(0));
+                player.setFighter(fighter);
                 game.setScreen(new CollectionFighterDisplay(game, player, coll));
 
             }
@@ -135,20 +151,8 @@ public class GameDisplay implements Screen {
 
     }
 
-    public void gameLoopAttack()
-    {
-        for(int i=1; i< coll.getFighterVector().size(); i++)
-        {
-            if(player.getFighter().isAlive()) {
-                player.setNbFights(player.getNbFights()+1);
-                coll.getFighterVector().get(0).fightTurnAtack(coll.getFighterVector().get(i));
-            }
-        }
-        if(!player.getFighter().isAlive())
-        {
-            System.out.println(" You are dead. You've got " + player.getFighter().getHitPoints() + " life points and you've made " + player.getNbFights() + " fights");
-        }
-    }
+
+
 
     @Override
     public void show() {
@@ -161,6 +165,25 @@ public class GameDisplay implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         stage.act();
         stage.draw();
+    }
+
+    void gameLoop()
+    {
+        Collection coll = game.getCollection();
+
+        for(int i=1; i< coll.getFighterVector().size(); i++)
+        {
+
+            player.setEnnemi(coll.getFighterVector().get(i));
+            player.getFighter().fight(player.getEnnemi());
+            if(player.getFighter().isAlive())
+            {
+                game.setScreen(new FightMenuDisplay(game, player));
+            }
+        }
+        if(!player.getFighter().isAlive())        {
+            System.out.println(" You are dead. You've got \" + fighter.getHitPoints() + \" life points and you've made \" + nbFights + \" fights\");");
+        }
     }
 
     @Override

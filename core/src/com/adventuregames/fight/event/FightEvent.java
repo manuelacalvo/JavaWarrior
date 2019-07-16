@@ -1,9 +1,11 @@
 package com.adventuregames.fight.event;
 
+import java.io.Serializable;
+
 /**
  * Events occuring during a fight
  */
-public abstract class FightEvent {
+public abstract class FightEvent implements Serializable {
 
     /* children have to access player */
     protected FightEventPlayer player;

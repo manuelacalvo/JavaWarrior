@@ -1,11 +1,11 @@
 package com.ui;
 
-import com.adventuregames.MyGame;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.fighterlvl.warrior.Fighter;
+import com.javawarrior.JWGame;
 
 /**
  * Display name and life of a Fighter
@@ -37,7 +37,7 @@ public class StatusBox extends Table {
 
     }
 
-    public StatusBox(MyGame oGame, Fighter oFighter){
+    public StatusBox(JWGame oGame, Fighter oFighter){
         this(oGame.getSkin());
         updateFighter(oFighter);
     }

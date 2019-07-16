@@ -1,7 +1,10 @@
 package com.fighterlvl.warrior;
 
 
-import java.io.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Player implements Serializable {
@@ -10,7 +13,8 @@ public class Player implements Serializable {
     private Fighter ennemi;
     private ArrayList<Fighter> collectionFighter;
     private ArrayList<Weapon> collectionWeapon;
-    private ArrayList<Armor> collectionArmor;
+    private ArrayList<Armor> collectionArmor1;
+    private ArrayList<Armor> collectionArmor2;
     private ArrayList<Treasure> collectionTreasure;
     private int money;
     private int nbFights;
@@ -20,7 +24,8 @@ public class Player implements Serializable {
         this.name = name;
         this.fighter = null;
         this.collectionFighter = new ArrayList<Fighter>();
-        this.collectionArmor = new ArrayList<Armor>();
+        this.collectionArmor1 = new ArrayList<Armor>();
+        this.collectionArmor2 = new ArrayList<Armor>();
         this.collectionTreasure = new ArrayList<Treasure>();
         this.collectionWeapon = new ArrayList<Weapon>();
         this.money = 12;
@@ -33,7 +38,8 @@ public class Player implements Serializable {
         this.name = name;
         this.fighter = f;
         this.collectionFighter = collectionFighter;
-        this.collectionArmor = collectionArmor;
+        this.collectionArmor1 = collectionArmor;
+        this.collectionArmor2 = collectionArmor;
         this.collectionTreasure = collectionTreasure;
         this.collectionWeapon = collectionWeapon;
         this.money = money;
@@ -46,7 +52,8 @@ public class Player implements Serializable {
         this.name = player.getName();
         this.fighter = player.getFighter();
         this.collectionFighter =player.getCollectionFighter();
-        this.collectionArmor = player.getCollectionArmor();
+        this.collectionArmor1 = player.getCollectionArmor1();
+        this.collectionArmor2 = player.getCollectionArmor2();
         this.collectionTreasure = player.getCollectionTreasure();
         this.collectionWeapon = player.getCollectionWeapon();
         this.money = player.getMoney();
@@ -82,8 +89,12 @@ public class Player implements Serializable {
         return collectionFighter;
     }
 
-    public ArrayList<Armor> getCollectionArmor() {
-        return collectionArmor;
+    public ArrayList<Armor> getCollectionArmor1() {
+        return collectionArmor1;
+    }
+
+    public ArrayList<Armor> getCollectionArmor2() {
+        return collectionArmor2;
     }
 
     public ArrayList<Treasure> getCollectionTreasure() {
@@ -102,8 +113,11 @@ public class Player implements Serializable {
         this.collectionFighter.add(f);
     }
 
-    public void setCollectionArmor(Armor armor) {
-        this.collectionArmor.add(armor);
+    public void setCollectionArmor1(Armor armor) {
+        this.collectionArmor1.add(armor);
+    }
+    public void setCollectionArmor2(Armor armor) {
+        this.collectionArmor2.add(armor);
     }
 
     public void setCollectionWeapon(Weapon weapon) {
@@ -145,7 +159,7 @@ public class Player implements Serializable {
 
         try {
             FileOutputStream fos;
-            fos = new FileOutputStream(getName().hashCode() + ".txt");
+            fos = new FileOutputStream("user/" + getName().hashCode() + ".txt");
 
             ObjectOutputStream oos;
             oos = new ObjectOutputStream(fos);

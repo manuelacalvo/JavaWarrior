@@ -1,7 +1,5 @@
 package com.shopmanagement.CollectionDisplay;
 
-
-import com.adventuregames.MyGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -15,13 +13,14 @@ import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Player;
+import com.javawarrior.JWGame;
 import com.shopmanagement.Collection;
 
 
 public class CollectionFighterDisplay implements Screen {
 
     private Stage stage;
-    private MyGame game;
+    private JWGame game;
     private Image shop;
     private ImageButton fighter1;
     private ImageButton fighter2;
@@ -66,7 +65,7 @@ public class CollectionFighterDisplay implements Screen {
     private Table price8Table;
     private Player player;
 
-    public CollectionFighterDisplay(MyGame aGame, final Player player, final Collection coll) {
+    public CollectionFighterDisplay(JWGame aGame, final Player player, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         batch = new SpriteBatch();

@@ -1,6 +1,7 @@
 package com.Display;
 
-import com.adventuregames.MyGame;
+import com.adventuregames.fight.FIGHT_PART;
+import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
@@ -13,11 +14,13 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
+import com.javawarrior.JWGame;
 
 public class FightMenuDisplay implements Screen {
     private Stage stage;
-    private MyGame game;
+    private JWGame game;
     private ImageTextButton buttonPotion;
     private ImageTextButton buttonRest;
     private ImageTextButton buttonQuit;
@@ -33,7 +36,7 @@ public class FightMenuDisplay implements Screen {
 
 
 
-    public FightMenuDisplay(MyGame aGame, final Player player) {
+    public FightMenuDisplay(JWGame aGame, final Player player) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table=new Table();
@@ -84,7 +87,10 @@ public class FightMenuDisplay implements Screen {
         buttonFight.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-              //  game.setScreen(new GameDisplay(game, player));
+                game.getCollection().getPlayer().setNbFights( game.getCollection().getPlayer().getNbFights()+1);
+                Fighter enemy = new Fighter(game.getCollection().getFighterVector().get(game.getCollection().getPlayer().getNbFights()+1));
+                player.setEnnemi(enemy);
+                game.setScreen(new FightScreen(game, FIGHT_PART.USUAL, false));
 
 
             }

@@ -1,7 +1,5 @@
 package com.Display;
 
-
-import com.adventuregames.MyGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Player;
+import com.javawarrior.JWGame;
 import com.shopmanagement.Collection;
 
 
@@ -21,7 +20,7 @@ import java.io.*;
 
 public class PlayerDisplay implements Screen {
     private Stage stage;
-    private MyGame game;
+    private JWGame game;
     private Skin skin;
     private TextureAtlas buttonAtlas;
     private ImageTextButton Enter;
@@ -33,7 +32,7 @@ public class PlayerDisplay implements Screen {
 
 
 
-    public PlayerDisplay(final MyGame aGame) {
+    public PlayerDisplay(final JWGame aGame) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table = new Table();

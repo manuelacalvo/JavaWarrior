@@ -2,12 +2,10 @@ package com.fighterlvl.warrior;
 
 import com.adventuregames.fight.FIGHT_PARTY;
 import com.adventuregames.fight.event.*;
-import com.tools.JWAssetManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 public class Fighter implements FightEventQueuer, Serializable {
 
@@ -22,12 +20,33 @@ public class Fighter implements FightEventQueuer, Serializable {
     private boolean restOnce;
     private ArrayList<Attack> attacks;
     private String relativePathPicture;
-
+    private Boolean timeToChoseAttack;
+    private Boolean hadChoseAttack;
+    private int choiceAttack;
     private FIGHT_PARTY party;
-    private static FightEventPlayer eventPlayer;
+    private static FightEventPlayer eventPlayer ;
 
-    public static Fighter placeHolderFighter = new Fighter("???",null,null,null,0,0, JWAssetManager.path_fighterMystery,FIGHT_PARTY.OPPONENT);
+    private String str;
 
+
+    //public static Fighter placeHolderFighter = new Fighter("???",null,null,null,0,0, JWAssetManager.path_fighterMystery,FIGHT_PARTY.OPPONENT);
+
+    public Fighter(Fighter fighter)
+    {
+        this.name = fighter.getName();
+        this.weapon = fighter.getWeapon();
+        this.armor1 = fighter.getArmor1();
+        this.armor2 = fighter.getArmor2();
+        this.treasures = fighter.getTreasures();
+        this.hitPoints = fighter.getHitPoints();
+        this.maxHP = hitPoints;
+        this.price = getPrice();
+        this.str = " ";
+        this.timeToChoseAttack = false;
+        this.relativePathPicture = fighter.getRelativePathPicture();
+        this.attacks = fighter.getAttacks();
+        this.party=fighter.getParty(); // Default is OPPONENT
+    }
     public Fighter(String name, Weapon weapon, Armor armor1,  ArrayList<Treasure> treasures, int hitPoints, int price, String relativePathPicture ) {
         this.name = name;
         this.weapon = weapon;
@@ -37,9 +56,12 @@ public class Fighter implements FightEventQueuer, Serializable {
         this.hitPoints = hitPoints;
         this.maxHP = hitPoints;
         this.price = price;
+        this.str = " ";
+        this.timeToChoseAttack = false;
         this.relativePathPicture = relativePathPicture;
         this.attacks = new ArrayList<>();
         this.attacks.add(new Attack());
+        this.hadChoseAttack = false;
         if(weapon!=null){
             this.attacks.add(weapon.getAttack());
         }
@@ -50,15 +72,25 @@ public class Fighter implements FightEventQueuer, Serializable {
         this.party=eParty;
     }
 
+    public Fighter copyFigther(Fighter fighter)
+    {
+        Fighter fighterTest = new Fighter(fighter.getName(),fighter.getWeapon(), fighter.getArmor1(), fighter.getTreasures(), fighter.getHitPoints(), fighter.getPrice(), fighter.getRelativePathPicture(), fighter.getParty());
+        return fighterTest;
+    }
+
+    public String getStr() {
+        return str;
+    }
+
     public String getName()
     {
         return  name;
     }
 
-    public Weapon getWeapon() { return weapon; }
-    private Armor getArmor1() { return armor1; }
-    private Armor getArmor2() { return armor2; }
 
+    public Weapon getWeapon() { return weapon; }
+    public Armor getArmor1() { return armor1; }
+    public Armor getArmor2() { return armor2; }
     public int getHitPoints(){
         return this.hitPoints;
     }
@@ -66,11 +98,30 @@ public class Fighter implements FightEventQueuer, Serializable {
         return this.maxHP;
     }
 
+    public Boolean getTimeToChoseAttack() {
+        return timeToChoseAttack;
+    }
+
+    public Boolean getHadChoseAttack() {
+        return hadChoseAttack;
+    }
+
+    public void setHadChoseAttack(Boolean hadChoseAttack) {
+        this.hadChoseAttack = hadChoseAttack;
+    }
+
+    public void setChoiceAttack(int choiceAttack) {
+        this.choiceAttack = choiceAttack;
+    }
+
+
+
     public ArrayList<Treasure> getTreasures() { return treasures; }
 
     private boolean isRestOnce() { return restOnce; }
 
     private void setRestOnce(boolean restOnce) { this.restOnce = restOnce; }
+
 
     /**
      * Defense is the sum of armors points.
@@ -95,20 +146,8 @@ public class Fighter implements FightEventQueuer, Serializable {
 
     @Override
     public String toString() {
-        return "Fighter{" +
-                "name='" + name + '\'' +
-                ", weapon=" + weapon +
-                ", armor1=" + armor1 +
-                ", armor2=" + armor2 +
-                ", treasures=" + treasures +
-                ", hitPoints=" + hitPoints +
-                ", maxHP=" + maxHP +
-                ", price=" + price +
-                ", restOnce=" + restOnce +
-                ", attacks=" + attacks +
-                ", relativePathPicture='" + relativePathPicture + '\'' +
-                ", party=" + party +
-                '}';
+        return "name='" + name + '\'' +
+                ", hitPoints=" + hitPoints;
     }
 
     /**
@@ -153,7 +192,9 @@ public class Fighter implements FightEventQueuer, Serializable {
                 0.5f));
     }
 
-    private void setHitPoints(int iHitPoints){
+
+
+    public void setHitPoints(int iHitPoints){
         this.hitPoints = iHitPoints>0 && iHitPoints<=this.hitPoints ? iHitPoints:0;
     }
 
@@ -195,51 +236,36 @@ public class Fighter implements FightEventQueuer, Serializable {
         }
     }
 
+    public void fightAttackBegin()
+    {
+        outPutText(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
+
+
+        outPutText( "Choose One Attack");
+
+    }
+
     public void fight_attacks(Fighter enemy){
-        System.out.println(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
+        outPutText(this.name + "'s Turn \r\n\tLife : " + this.getHitPoints());
         this.setRestOnce(false);
-        //Different attacks based on weapon's attacks per turn
-        if(this.isAlive() && enemy.isAlive()) {
-
-            for (int i = 0; i < this.getWeapon().getAttacksPerTurn(); i++) {
-                System.out.println("Attack " + (i+1));
-
-
-                int rand = impactAttack();
-                System.out.println("\tRandom : " + rand+
-                        "\t\tEnemy protection : " + enemy.getArmor1().getProtection());
+                int rand = getAttacks().get(this.choiceAttack).calculateImpact();
+                outPutText("\tAttack : " + getAttacks().get(this.choiceAttack).toString() + "\nRand : " + rand+
+                        "\nEnemy protection : " + enemy.getDefense());
                 if (rand > enemy.getArmor1().getProtection()) {
                     int hitPower = randomNumberGenerator(getWeapon().getMinDamage(), getWeapon().getMaxDamage());
                     enemy.takeDamage(hitPower);
-                    System.out.println("\tHit : " + hitPower);
-                    System.out.println("Life of " + enemy.getName()+ " is " + enemy.getHitPoints()+"\r\n");
+                    outPutText("\tHit : " + hitPower);
+                    outPutText("Life of " + enemy.getName()+ " is " + enemy.getHitPoints()+"\r\n");
                 } else {
                     enemy.takeDamage(0);
-                    System.out.println("This attack failed !");
+                    outPutText("This attack failed !");
                 }
-            }
-            System.out.println("=====================================================");
-        }
-    }
 
-    public int impactAttack()
-    {
-        System.out.println("You have " + getAttacks().size() + " attacks available : ");
-        Scanner keyboard = new Scanner(System.in);
-        int choice = 0;
-        int random = 0;
-        for(int i=0; i<getAttacks().size(); i++)
-        {
-            System.out.println(i+". " + getAttacks().get(i). toString());
-        }
-
-        choice = keyboard.nextInt();
-
-        random = getAttacks().get(choice).calculateImpact();
-
-        return random;
+        System.out.println("Player : " + this.getName() + " isAlive : " + this.isAlive());
 
     }
+
+
     /**
      * Engage the fight between 2 Fighters
      * @param enemy
@@ -262,22 +288,20 @@ public class Fighter implements FightEventQueuer, Serializable {
         }
     }
 
-    public void fightTurnAtack(Fighter enemy)
+    /**
+     * Displays a Victory/Defeat Message
+     * @param enemy
+     */
+    public void fightTurnAttack(Fighter enemy)
     {
-        int i=1;
-        while(this.isAlive() && enemy.isAlive())
-        {
-            this.fight_attacks(enemy);
-            enemy.fight(this);
-        }
         if(!this.isAlive())
         {
-            System.out.println("You loose");
+          outPutText( "You loose");
         }
         if(!enemy.isAlive())
         {
-            System.out.println("You won");
-            getEnnemyRessources(enemy);
+            outPutText("You won");
+            //getEnnemyRessources(enemy);
         }
     }
 
@@ -290,66 +314,24 @@ public class Fighter implements FightEventQueuer, Serializable {
         queueEvent(new TextEvent(sText, true));
     }
 
-    private void getEnnemyWeapon(Fighter enemy)
+
+    public void getEnnemyWeapon(Fighter enemy)
     {
-        Scanner keyboard = new Scanner(System.in);
-
-        if(enemy.weapon.isTakeable() && this.weapon.isBetter(enemy.weapon))
-        {
-            System.out.println(" You won, do you want to take your enemy's weapon? (1: take it 0: don't take it");
-            System.out.println(enemy.weapon.toString());
-            int choice = keyboard.nextInt();
-
-            if(choice == 1)
-            {
-                System.out.println(" You change your weapon with success");
                 this.setWeapon(enemy.getWeapon());
-            }
-            if(choice == 2)
-            {
-                System.out.println(" You choose to keep your weapon");
-            }
-        }
     }
 
-    private void getEnnemyArmor(Fighter enemy)
+    public void getEnnemyArmor1(Fighter enemy) {
+
+        this.setArmor1(enemy.getArmor1());
+    }
+
+    public void getEnnemyArmor2(Fighter enemy)
     {
-        Scanner keyboard = new Scanner(System.in);
-
-        if(enemy.armor1.getTakeable() && this.armor1.isBetter(enemy.armor1)) {
-            System.out.println(" You won, do you want to take your enemy's first armor? (1: take it 0: don't take it");
-            System.out.println(enemy.armor1.toString());
-            int choice = keyboard.nextInt();
-
-            if (choice == 1) {
-                System.out.println(" You change your first armor with success");
-                this.setArmor1(enemy.getArmor1());
-            }
-            if (choice == 2) {
-                System.out.println(" You choose to keep your first armor");
-            }
-        }
-            if(enemy.getArmor2() != null && enemy.armor2.getTakeable() && this.armor2.isBetter(enemy.armor2))
-            {
-
-                System.out.println(" Do you want to take your enemy's second armor? (1: take it 0: don't take it");
-                System.out.println(enemy.armor2.toString());
-                int choice = keyboard.nextInt();
-
-                if(choice == 1)
-                {
-                    System.out.println(" You change your second armor with success");
                     this.setArmor2(enemy.getArmor2());
-                }
-                if(choice == 2)
-                {
-                    System.out.println(" You choose to keep your second armor");
-                }
-            }
 
     }
 
-    private void getEnnemyTreasure(Fighter enemy)
+    public void getEnnemyTreasure(Fighter enemy)
     {
 
         for(int j= 0; j<this.getTreasures().size(); j++) {
@@ -365,12 +347,6 @@ public class Fighter implements FightEventQueuer, Serializable {
 
     }
 
-    public void  getEnnemyRessources(Fighter enemy)
-    {
-        getEnnemyWeapon(enemy);
-        getEnnemyArmor(enemy);
-        getEnnemyTreasure(enemy);
-    }
 
     public String takeARest(Fighter enemy)
     {
@@ -417,7 +393,7 @@ public class Fighter implements FightEventQueuer, Serializable {
                 min = 1; max = 20;
             }
             hitPoint = this.randomNumberGenerator(min, max);
-            this.takeDamage(-hitPoint);
+            this.gainLife(hitPoint);
             str = "You earn " + hitPoint + " points";
 
             str += "\n" + "Hit points" + this.hitPoints;
@@ -453,32 +429,6 @@ public class Fighter implements FightEventQueuer, Serializable {
         return  str;
     }
 
-    public void takeItem()
-    {
-        int choice = 0;
-        Scanner keyboard = new Scanner(System.in);
-
-        while(this.treasures.get(0).getNumber() != 0 && choice != 2 && this.isAlive()) {
-            System.out.println("You have " + this.treasures.get(0).getNumber() + " potions, do you want to use one? (1: take it 2: don't take it");
-            choice =  keyboard.nextInt();
-
-            if(choice == 1)
-            {
-                this.usePotion();
-            }
-
-        }
-        choice = 0;
-        while(this.treasures.get(1).getNumber() != 0 && choice != 2 && this.isAlive()) {
-            System.out.println("You have " + this.treasures.get(1).getNumber() + " scroll, do you want to use one? (1: take it 2: don't take it");
-            choice =  keyboard.nextInt();
-
-            if(choice == 1)
-            {
-                this.useScroll();
-            }
-        }
-    }
 
     public static void setEventPlayer(FightEventPlayer oEventPlayer){
         eventPlayer = oEventPlayer;
@@ -487,6 +437,10 @@ public class Fighter implements FightEventQueuer, Serializable {
     public void queueEvent(FightEvent event) {
         eventPlayer.queueEvent(event);
     }
+
+
+
+
 
 }
 

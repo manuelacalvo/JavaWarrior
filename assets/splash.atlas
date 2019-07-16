@@ -1,0 +1,160 @@
+
+splash.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Font
+  rotate: false
+  xy: 2, 381
+  size: 511, 377
+  orig: 511, 377
+  offset: 0, 0
+  index: 1
+Font
+  rotate: false
+  xy: 2, 2
+  size: 511, 377
+  orig: 511, 377
+  offset: 0, 0
+  index: 10
+
+splash2.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Font
+  rotate: false
+  xy: 2, 381
+  size: 511, 377
+  orig: 511, 377
+  offset: 0, 0
+  index: 11
+Font
+  rotate: false
+  xy: 2, 2
+  size: 511, 377
+  orig: 511, 377
+  offset: 0, 0
+  index: 12
+
+splash3.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Font
+  rotate: false
+  xy: 2, 381
+  size: 511, 377
+  orig: 511, 377
+  offset: 0, 0
+  index: 13
+Font
+  rotate: false
+  xy: 2, 2
+  size: 511, 377
+  orig: 511, 377
+  offset: 0, 0
+  index: 14
+
+splash4.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Font
+  rotate: false
+  xy: 2, 381
+  size: 511, 377
+  orig: 511, 377
+  offset: 0, 0
+  index: 15
+Font
+  rotate: false
+  xy: 2, 2
+  size: 511, 377
+  orig: 511, 377
+  offset: 0, 0
+  index: 16
+
+splash5.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Font
+  rotate: false
+  xy: 2, 381
+  size: 511, 377
+  orig: 511, 377
+  offset: 0, 0
+  index: 2
+Font
+  rotate: false
+  xy: 2, 2
+  size: 511, 377
+  orig: 511, 377
+  offset: 0, 0
+  index: 3
+
+splash6.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Font
+  rotate: false
+  xy: 2, 381
+  size: 511, 377
+  orig: 511, 377
+  offset: 0, 0
+  index: 4
+Font
+  rotate: false
+  xy: 2, 2
+  size: 511, 377
+  orig: 511, 377
+  offset: 0, 0
+  index: 5
+
+splash7.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Font
+  rotate: false
+  xy: 2, 381
+  size: 511, 377
+  orig: 511, 377
+  offset: 0, 0
+  index: 6
+Font
+  rotate: false
+  xy: 2, 2
+  size: 511, 377
+  orig: 511, 377
+  offset: 0, 0
+  index: 7
+
+splash8.png
+size: 1024,1024
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Font
+  rotate: false
+  xy: 2, 381
+  size: 511, 377
+  orig: 511, 377
+  offset: 0, 0
+  index: 8
+Font
+  rotate: false
+  xy: 2, 2
+  size: 511, 377
+  orig: 511, 377
+  offset: 0, 0
+  index: 9

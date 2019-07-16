@@ -1,22 +1,22 @@
 package com.adventuregames.fight;
 
-import com.adventuregames.MyGame;
 import com.adventuregames.fight.event.FightEvent;
 import com.adventuregames.fight.event.FightEventPlayer;
 import com.adventuregames.fight.event.FightEventQueuer;
 import com.adventuregames.fight.event.FighterChangeEvent;
 import com.badlogic.gdx.InputAdapter;
 import com.fighterlvl.warrior.Fighter;
-import com.fighterlvl.warrior.Player;
+import com.javawarrior.JWGame;
 import com.shopmanagement.Collection;
 import com.ui.DialogueBox;
 
+import java.io.Serializable;
 import java.util.Queue;
 
-public class FightScreenController extends InputAdapter implements FightEventQueuer {
+public class FightScreenController extends InputAdapter implements FightEventQueuer, Serializable {
 
     private FIGHT_STATE state = FIGHT_STATE.DEACTIVATED;
-    private MyGame game;
+    private JWGame game;
     private FightEventPlayer eventPlayer;
 
     private DialogueBox dialogueBox;
@@ -24,10 +24,11 @@ public class FightScreenController extends InputAdapter implements FightEventQue
 
     private Fighter playerFighter;
     private Fighter enemyFighter;
+
     /*
     Add here more elements to update
      */
-    FightScreenController(MyGame oGame, FightScreen fightScreen, Queue<FightEvent> queue, DialogueBox dialogueBox){
+    FightScreenController(JWGame oGame, FightScreen fightScreen, Queue<FightEvent> queue, DialogueBox dialogueBox){
         this.game=oGame;
         this.eventPlayer=fightScreen;
         this.dialogueBox=dialogueBox;
@@ -47,7 +48,7 @@ public class FightScreenController extends InputAdapter implements FightEventQue
         dialogueBox.animateText("What do you wnat to do next ?");
     }
 
-    private boolean isDisplayingNextDialogue(){return this.state==FIGHT_STATE.SELECT_ACTION;}
+    private boolean isDisplayingNextDialogue(){return this.state==FIGHT_STATE.SELECT_NEW_FIGHTER;}
 
     @Override
     public boolean keyDown(int keycode) {
@@ -56,17 +57,42 @@ public class FightScreenController extends InputAdapter implements FightEventQue
 
     public FIGHT_STATE getState(){ return this.state; }
 
-    void gameLoop()
+    void gameLoop(FIGHT_PART fightAttackMode, boolean connected)
     {
-        Collection coll = game.getCollection();
 
-        for(int i=1; i< coll.getFighterVector().size(); i++)
-        {
-            setEnemyFighter(coll.getFighterVector().get(i));
-            playerFighter.fight(enemyFighter);
-        }
-        if(!playerFighter.isAlive())        {
-            System.out.println(" You are dead. You've got \" + fighter.getHitPoints() + \" life points and you've made \" + nbFights + \" fights\");");
+        Collection coll = game.getCollection();
+        enemyFighter = game.getCollection().getPlayer().getEnnemi();
+        if(!connected) {
+            switch (fightAttackMode){
+                case USUAL:
+                    playerFighter.fight(enemyFighter);
+                    break;
+                case FIRST_PART :
+                    playerFighter.fightAttackBegin();
+                    break;
+                case SECOND_PART :
+                    if (playerFighter.isAlive()) {
+                        playerFighter.fight_attacks(enemyFighter);
+                    }
+                    if (enemyFighter.isAlive()) {
+                        enemyFighter.fight_attacks(playerFighter);
+                        enemyFighter.setChoiceAttack(enemyFighter.randomNumberGenerator(0, 2));
+                    }
+                    playerFighter.fightTurnAttack(enemyFighter);
+                    break;
+            }
+        } else {
+            switch (fightAttackMode) {
+                case FIRST_PART:
+                    playerFighter.fightAttackBegin();
+                    break;
+                case SECOND_PART:
+                    if (playerFighter.isAlive()) {
+                        playerFighter.fight_attacks(enemyFighter);
+                    }
+                    playerFighter.fightTurnAttack(enemyFighter);
+                    break;
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package com.Display;
 
-import com.badlogic.gdx.Game;
+import com.adventuregames.fight.FIGHT_PART;
+import com.adventuregames.fight.FightScreen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -8,17 +9,19 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Player;
+import com.javawarrior.JWGame;
 
 public class RestDisplay implements Screen {
 
     private Stage stage;
-    private Game game;
+    private JWGame game;
     private BitmapFont font;
     private Batch batch;
     private String str;
@@ -26,9 +29,10 @@ public class RestDisplay implements Screen {
     private Image image;
     private ImageTextButton buttonContinue;
     private ImageTextButton.ImageTextButtonStyle textButtonStyle3;
+    private TextureAtlas buttonAtlas;
 
 
-    public RestDisplay(Game aGame, Player player) {
+    public RestDisplay(JWGame aGame, Player player) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -39,11 +43,13 @@ public class RestDisplay implements Screen {
         font = new BitmapFont();
         str = player.getFighter().takeARest(player.getEnnemi());
         if (str.charAt(0) == ' ') {
-            //game.setScreen(new GameDisplay(game, player));
+            game.setScreen(new FightScreen(game, FIGHT_PART.USUAL, false));
         }
 
 
         Skin skin = new Skin();
+        buttonAtlas = new TextureAtlas(Gdx.files.internal("core/assets/graphics/map/TilesetGame.atlas")); //
+        skin.addRegions(buttonAtlas);
         textButtonStyle3 = new ImageTextButton.ImageTextButtonStyle();
         textButtonStyle3.font = font;
         textButtonStyle3.up = skin.getDrawable("continue");

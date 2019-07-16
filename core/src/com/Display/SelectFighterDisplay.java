@@ -1,7 +1,6 @@
 package com.Display;
 
 import com.badlogic.gdx.Screen;
-import com.adventuregames.MyGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,13 +12,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.fighterlvl.warrior.Armor;
+import com.fighterlvl.warrior.Fighter;
 import com.fighterlvl.warrior.Player;
+import com.javawarrior.JWGame;
 import com.shopmanagement.Collection;
 
 
 public class SelectFighterDisplay implements Screen {
     private Stage stage;
-    private MyGame game;
+    private JWGame game;
     private Image shop;
     private Image fighter;
     private Image weapon;
@@ -38,8 +40,9 @@ public class SelectFighterDisplay implements Screen {
     private int i, j, k, l;
     private Texture f1, f2, f3, f4;
     private Drawable drawable, drawable2, drawable3, drawable4, drawable5, drawable6, drawable7;
+    private String f4Name;
 
-    public SelectFighterDisplay(MyGame aGame, final Player aplayer, final Collection coll) {
+    public SelectFighterDisplay(JWGame aGame, final Player aplayer, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         this.player = aplayer;
@@ -68,7 +71,13 @@ public class SelectFighterDisplay implements Screen {
 
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                player.selectFighter(player.getCollectionFighter().get(i), player.getCollectionWeapon().get(j), player.getCollectionArmor().get(k), player.getCollectionArmor().get(l));
+                Armor armor = new Armor();
+                if(player.getCollectionArmor2().size() != 0)
+                {
+                   armor = player.getCollectionArmor2().get(l);
+                }
+                Fighter fighter = new Fighter(player.getCollectionFighter().get(i));
+                player.selectFighter(fighter, player.getCollectionWeapon().get(j), player.getCollectionArmor1().get(k),armor);
                 game.setScreen(new GameDisplay(game, player, coll));
             }
         });
@@ -87,13 +96,19 @@ public class SelectFighterDisplay implements Screen {
         weapon.setSize(30,40);
 
 
-        f3 = new Texture(player.getCollectionArmor().get(k).getRelativePathPicture());
+        f3 = new Texture(player.getCollectionArmor1().get(k).getRelativePathPicture());
         drawable3 = new TextureRegionDrawable(new TextureRegion(f3));
         armor1 = new Image(drawable3);
         armor1.setSize(30,40);
 
+        f4Name = " ";
+        if(player.getCollectionArmor2().size() !=0)
+        {
+            player.getCollectionArmor2().get(l).getRelativePathPicture();
+        }
+        else f4Name = "core/assets/graphics/items/no.png";
 
-        f4 = new Texture(player.getCollectionArmor().get(l).getRelativePathPicture());
+        f4 = new Texture("core/assets/graphics/items/no.png");
         drawable4 = new TextureRegionDrawable(new TextureRegion(f4));
         armor2 = new Image(drawable4);
         armor2.setSize(30,40);
@@ -168,7 +183,7 @@ public class SelectFighterDisplay implements Screen {
         arrowa12.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                if(k<player.getCollectionArmor().size()-1)
+                if(k<player.getCollectionArmor1().size()-1)
                 {
                     k++;
                 }
@@ -190,7 +205,7 @@ public class SelectFighterDisplay implements Screen {
         arrowa22.addListener(new ChangeListener() {
             @Override
             public void changed (ChangeEvent event, Actor actor) {
-                if(l<player.getCollectionArmor().size()-1)
+                if(l<player.getCollectionArmor2().size()-1)
                 {
                     l++;
                 }
@@ -272,11 +287,11 @@ public class SelectFighterDisplay implements Screen {
         drawable2 = new TextureRegionDrawable(new TextureRegion(f2));
         weapon.setDrawable(drawable2);
 
-        f3 = new Texture(player.getCollectionArmor().get(k).getRelativePathPicture());
+        f3 = new Texture(player.getCollectionArmor1().get(k).getRelativePathPicture());
         drawable3 = new TextureRegionDrawable(new TextureRegion(f3));
         armor1.setDrawable(drawable3);
 
-        f4 = new Texture(player.getCollectionArmor().get(l).getRelativePathPicture());
+        f4 = new Texture(player.getCollectionArmor1().get(l).getRelativePathPicture());
         drawable4 = new TextureRegionDrawable(new TextureRegion(f4));
         armor2.setDrawable(drawable4);
 

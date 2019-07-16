@@ -1,6 +1,5 @@
 package com.connection.connectionDisplay;
 
-import com.adventuregames.MyGame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -9,12 +8,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.fighterlvl.warrior.Player;
+import com.javawarrior.JWGame;
 import com.shopmanagement.Collection;
-import com.uwsoft.editor.renderer.actor.TextBoxItem;
 
 public class connectionDisplay implements Screen {
     private Stage stage;
-    private MyGame game;
+    private JWGame game;
     private Image image;
     private ImageTextButton a1, a2;
     private Image player1;
@@ -24,7 +23,7 @@ public class connectionDisplay implements Screen {
     private Image textBackground;
 
 
-    public connectionDisplay(MyGame aGame, final Player player, final Collection coll) {
+    public connectionDisplay(JWGame aGame, final Player player, final Collection coll) {
         this.game = aGame;
         stage = new Stage(new ScreenViewport());
         Table table = new Table();

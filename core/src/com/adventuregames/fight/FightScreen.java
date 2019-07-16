@@ -1,9 +1,10 @@
 package com.adventuregames.fight;
 
 import com.Display.AbstractScreen;
+import com.Display.GameDisplay;
+import com.Display.TakeFeatures;
 import com.Display.renderer.EventQueueRenderer;
 import com.Display.renderer.FightRenderer;
-import com.adventuregames.MyGame;
 import com.adventuregames.fight.event.FightEvent;
 import com.adventuregames.fight.event.FightEventPlayer;
 import com.badlogic.gdx.ApplicationListener;
@@ -13,23 +14,25 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.*;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.fighterlvl.warrior.Fighter;
-import com.fighterlvl.warrior.Treasure;
+import com.javawarrior.JWGame;
 import com.ui.DialogueBox;
 import com.ui.StatusBox;
 
+import java.io.Serializable;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Queue;
 
-public class FightScreen extends AbstractScreen implements FightEventPlayer {
+public class FightScreen extends AbstractScreen implements FightEventPlayer, Serializable {
 
     /* FightScreen Controller */
     private FightScreenController controller;
+    private boolean connected;
 
     /* VIEW */
     private Viewport gameViewport;
@@ -57,16 +60,25 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
     private Fighter playerFighter;
     private Fighter enemyFighter;
 
+    //fightAttackMode = 0 --> usual fight
+    //fightAttackMode = 1 --> first part of the fightAttack
+    //fightAttackMode = 2 --> second part of the fightAttack
+    private FIGHT_PART fightAttackMode = FIGHT_PART.USUAL;
+
     /**
      * Fighter Screen Constructor
      * @param pGame - Game instance
      */
-    public FightScreen(MyGame pGame){
+    public FightScreen(JWGame pGame, FIGHT_PART attackChoosen, boolean connected){
         super(pGame);
+        this.connected = connected;
+
         this.playerFighter = getGame().getCollection().getPlayer().getFighter();
         this.playerFighter.setParty(FIGHT_PARTY.PLAYER); // Make sure playerFighter is tagged as player
-
-        enemyFighter = Fighter.placeHolderFighter;
+        fightAttackMode = attackChoosen;
+        this.enemyFighter = getGame().getCollection().getPlayer().getEnnemi();
+        this.enemyFighter.setParty(FIGHT_PARTY.OPPONENT);
+        // enemyFighter = Fighter.placeHolderFighter;
 
         gameViewport=new ScreenViewport();
 
@@ -83,7 +95,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
         controller = new FightScreenController(getGame(), this, queue, dialogueBox);
 
-        controller.gameLoop();
+        controller.gameLoop(fightAttackMode, connected);
     }
 
     private void initUI(){
@@ -112,6 +124,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
         dialogueRoot = new Table();
         dialogueRoot.setFillParent(true);
         uiStage.addActor(dialogueRoot);
+
 
         dialogueBox = new DialogueBox(getGame().getSkin());
         dialogueRoot.add(dialogueBox).expand().align(Align.bottom);
@@ -142,6 +155,8 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
      */
     public void queueEvent(FightEvent event){queue.add(event);}
 
+    public void queueAttack(FightEvent event){queue.add(event);}
+
     @Override
     public DialogueBox getDialogueBox() {
         return this.dialogueBox;
@@ -153,6 +168,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(uiStage);
+
     }
 
     /**
@@ -175,6 +191,7 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
 
         //uiStage.act();
         uiStage.draw();
+
     }
 
     /**
@@ -213,19 +230,49 @@ public class FightScreen extends AbstractScreen implements FightEventPlayer {
     public void update(float delta) {
 
         while ( currentEvent == null || currentEvent.isFinished()){
-            if(queue.isEmpty()){ // Event queue is empty
-                currentEvent = null;
+            if(queue.isEmpty() ) { // Event queue is empty
+                switch (fightAttackMode){
+
+                    case USUAL:{
+                        currentEvent = null;
+                        if (playerFighter.isAlive()) {
+                            getGame().setScreen(new TakeFeatures(getGame(), getGame().getCollection().getPlayer()));
+                        } else
+                            getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
+                        break;
+                    }
+                    case FIRST_PART:{
+                        currentEvent = null;
+                        if (playerFighter.isAlive())
+                            getGame().setScreen(new FightAttackDisplay(getGame(), playerFighter, enemyFighter, connected));
+                        break;
+                    }
+                    case SECOND_PART:{
+                        currentEvent = null;
+                        if(!connected) {
+                            enemyFighter = new Fighter(getGame().getCollection().getPlayer().getEnnemi());
+
+                            if (enemyFighter.isAlive()) {
+
+                                fightAttackMode = FIGHT_PART.FIRST_PART;
+                                getGame().setScreen(new FightScreen(getGame(), fightAttackMode, connected));
+
+                            } else
+                                getGame().setScreen(new GameDisplay(getGame(), getGame().getCollection().getPlayer(), getGame().getCollection()));
+                        }
+                        break;
+                    }
+                }
                 break;
-            }else {
+            }
+            else {
                 currentEvent = queue.poll();
                 currentEvent.begin(this);
             }
         }
-
         if (currentEvent != null) {
             currentEvent.update(delta);
         }
-
         uiStage.act();
     }
 
