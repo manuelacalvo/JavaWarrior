@@ -26,7 +26,7 @@ public class Actor {
   private float MovementX ,MovementY;
   private int srcX, srcY;
   private int destX, destY;
-  private float REFACE_TIME_EFFECT = 0.1F;
+  private float REFACE_TIME_EFFECT = 0.2f;
   private float EffectTimer;
   private float WALK_TIME_EFFECT = 0.3f;
   private float RUN_TIME_EFFECT = 0.3f;
@@ -359,4 +359,6 @@ public class Actor {
       sprite.draw(batch);
     }
   }
+
+  public WAY getLookingAt() { return lookingAt; }
 }

@@ -57,7 +57,7 @@ public class LoadingScreen extends AbstractScreen {
         currentFrame = (TextureRegion) runningAnimation.getKeyFrame(time);
         batch.begin();
         batch.draw(currentFrame, origine_x, origine_y);
-        font.draw(batch, "PRESS ENTER", Gdx.graphics.getWidth()/2 - 90, 18);
+        font.draw(batch, "PRESS ENTER", Gdx.graphics.getWidth()/2 - 90, 50);
         batch.end();
         if ((Gdx.input.isKeyPressed(Input.Keys.ENTER) || (Gdx.input.isKeyPressed(Input.Keys.DEL))) && assetManager.update()){
             //TODO : Add a animation smooth to go to the Game screen

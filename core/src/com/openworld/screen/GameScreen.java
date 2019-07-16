@@ -3,6 +3,8 @@ package com.openworld.screen;
 import com.Display.AbstractScreen;
 import com.adventuregames.fight.FIGHT_PART;
 import com.adventuregames.fight.FightScreen;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.openworld.PackAnimations.EffectsInit;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
@@ -21,6 +23,7 @@ import com.openworld.actor.Actor;
 import com.openworld.actor.PlayerController;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.openworld.enumfile.WAY;
 
 import java.util.Random;
 
@@ -35,6 +38,7 @@ public class GameScreen extends AbstractScreen {
   private SpriteBatch batch;
   private String PlayerGender;
   private String GenderAtlas;
+  private BitmapFont font;
 
   private int oxFight;
   private int oyFight;
@@ -50,6 +54,7 @@ public class GameScreen extends AbstractScreen {
     this.tiledMap = context.getMap();
     this.gameCamera = context.getGameCamera();
     this.PlayerGender = context.getPlayerGender();
+    font = new BitmapFont(Gdx.files.internal("Ressources/Font/arcade/arcade.fnt"));
 
     if ( PlayerGender.equals("M")){ GenderAtlas = "M"; }
     else if (PlayerGender.equals("F")){ GenderAtlas = "F"; }
@@ -123,6 +128,17 @@ public class GameScreen extends AbstractScreen {
             Settings.SCALED_TILE_SIZE,
             Settings.SCALED_TILE_SIZE * 1.5f
     );
+
+    MapObject read = tiledMap.getLayers().get("Collision").getObjects().get("Read");
+    Rectangle panel = ((RectangleMapObject) read).getRectangle();
+    int a = (int) panel.getX();
+    int b = (int) panel.getY();
+    if(Character.getX() == (int) a/Settings.SCALED_TILE_SIZE &&
+            Character.getY() == (int) b/Settings.SCALED_TILE_SIZE &&
+            Gdx.input.isKeyPressed(Input.Keys.C) &&
+            (WAY.UP == Character.getLookingAt())) {
+      font.draw(batch, "Created By : Manuela Calvo, \n Baptiste Larrezet and Francois Louis ", 25, 120);
+    }
     batch.end();
 
     //Change screen if fight
@@ -132,7 +148,6 @@ public class GameScreen extends AbstractScreen {
             (Character.getDestY() >= oyFight/Settings.SCALED_TILE_SIZE) &&
             (randomNumberGenerator(1,600) == 246)) {
       getGame().setScreen(new FightScreen(getGame(), FIGHT_PART.FIRST_PART,false));
-
     }
   }
 

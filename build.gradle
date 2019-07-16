@@ -60,7 +60,7 @@ allprojects {
 
 }
 
-project(":desktop") {
+project(":core") {
     apply plugin: "java"
 
 
